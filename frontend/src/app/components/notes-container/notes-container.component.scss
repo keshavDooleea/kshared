@@ -82,29 +82,37 @@
           overflow: hidden;
           min-height: 6vh;
           max-height: 10vh;
+          transition: 0.2s width;
+          cursor: pointer;
 
           p {
             color: white;
+            text-align: justify;
           }
         }
 
         .list-control {
           width: 25px;
-          height: 60%;
+          height: 31px;
           position: absolute;
           top: 50%;
-          right: -18px;
+          right: -10%;
           transform: translateY(-50%);
           border-radius: styles.$smallBorderRadius;
           border: 1px solid #32353b;
           background-color: #40444b;
           @include styles.displayFlex(row, center, center);
+          transition: 0.2s width, 0.35s right, 0.2s opacity;
           opacity: 0;
-          transition: 0.2s opacity;
         }
 
         &:hover {
+          .list-item-p {
+            width: 88%;
+          }
           .list-control {
+            width: 10%;
+            right: 4px;
             opacity: 1;
           }
         }
@@ -114,5 +122,17 @@
 
   .text-container {
     width: 65%;
+
+    textarea {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background-color: #40444b;
+      resize: none;
+      border-radius: styles.$borderRadius;
+      outline: none;
+      padding: 7px;
+      color: white;
+    }
   }
 }
