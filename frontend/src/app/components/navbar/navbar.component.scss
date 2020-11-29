@@ -1,0 +1,27 @@
+@use "../../../styles.scss" as styles;
+
+:host {
+  width: 97%;
+  height: 6%;
+  @include styles.displayFlex(row, center, flex-end);
+}
+
+h3 {
+  margin-right: 20px;
+  color: white;
+  user-select: none;
+
+  span {
+    color: #72767d;
+  }
+}
+
+i {
+  font-size: 22px;
+  color: styles.$itemNormal;
+  cursor: pointer;
+
+  &:hover {
+    color: styles.$itemHover;
+  }
+}
