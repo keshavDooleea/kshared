@@ -57,7 +57,6 @@
       padding: 15px 0;
       position: relative;
       overflow-y: auto;
-      transition: 0.3s;
 
       .list-item {
         width: 92%;
@@ -68,7 +67,6 @@
         text-overflow: ellipsis;
         position: relative;
         margin: 0 auto;
-        transition: 0.5s transform;
 
         &:not(:first-child) {
           margin-top: 10px;
@@ -92,22 +90,24 @@
           min-height: 6vh;
           max-height: 10vh;
           transition: 0.2s width;
+          cursor: pointer;
 
           .date {
             position: absolute;
             top: 50%;
-            left: -12px;
+            left: 2px;
             transform: translate(-50%, -55%) rotate(-90deg);
             font-weight: 900;
             color: #63676d;
+            font-size: 13px;
             opacity: 0;
-            transition: 0.3s opacity;
+            transition: 0.3s opacity, 0.4s left;
+            cursor: auto;
           }
 
           p {
             color: white;
             text-align: justify;
-            cursor: pointer;
           }
         }
 
@@ -124,22 +124,23 @@
           @include styles.displayFlex(row, center, center);
           transition: 0.1s width, 0.4s right, 0.2s opacity;
           opacity: 0;
+          pointer-events: none;
         }
 
         &:hover {
-          transform: translateX(8px);
-
           .list-item-p {
             width: 88%;
 
             .date {
               opacity: 1;
+              left: -6px;
             }
           }
           .list-control {
             width: 10%;
             right: 4px;
             opacity: 1;
+            pointer-events: auto;
           }
         }
       }
@@ -161,6 +162,7 @@
       outline: none;
       padding: 7px;
       color: white;
+      font-size: 17px;
     }
 
     i {
