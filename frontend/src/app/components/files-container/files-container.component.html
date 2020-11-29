@@ -1,4 +1,10 @@
-<div class="files-body" >
+<div class="files-body">
+
+    <div class="controls">
+        <i class="fas fa-plus-square icon"></i>
+        <i class="fas fa-trash icon"></i>
+        <i class="fas fa-arrow-circle-up icon arrow-up" *ngIf="!isEmpty"></i>
+    </div>
 
     <div *ngIf="isEmpty; else showEmptyFile">
         dwdwd
