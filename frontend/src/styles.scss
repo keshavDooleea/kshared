@@ -3,6 +3,7 @@
 $mainBkg: #2f3136;
 $containers: #36393f;
 $borderRadius: 10px;
+$smallBorderRadius: 5px;
 $itemNormal: #b9bbbe;
 $itemHover: #dcddde;
 
@@ -21,6 +22,10 @@ $itemHover: #dcddde;
   &:not(i) {
     font-family: "Barlow Condensed", sans-serif;
   }
+
+  ::-webkit-scrollbar {
+    width: 0;
+  }
 }
 
 body {
@@ -28,4 +33,14 @@ body {
   height: 100vh;
   overflow: hidden;
   background-color: $mainBkg;
+}
+
+// global
+.icon {
+  color: $itemNormal;
+  cursor: pointer;
+
+  &:hover {
+    color: $itemHover;
+  }
 }
