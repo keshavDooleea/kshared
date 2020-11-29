@@ -1,0 +1,147 @@
+@use "../../../../styles.scss" as styles;
+
+:host {
+  width: 32%;
+}
+
+.list-container {
+  width: 100%;
+  height: 100%;
+
+  .filter-container {
+    width: 100%;
+    height: 15%;
+    @include styles.displayFlex(row, center, center);
+
+    .input-container {
+      width: 50%;
+      height: 70%;
+      background-color: #40444b;
+      border-radius: styles.$smallBorderRadius;
+      @include styles.displayFlex(row, center, center);
+
+      input {
+        width: 83%;
+        height: 100%;
+        border: none;
+        background-color: #40444b;
+        outline: none;
+        border-radius: styles.$smallBorderRadius 0 0 styles.$smallBorderRadius;
+        padding: 0 5px;
+        color: white;
+      }
+
+      div {
+        width: 17%;
+        height: 100%;
+        @include styles.displayFlex(row, center, center);
+      }
+    }
+  }
+
+  .lists {
+    width: 100%;
+    height: 85%;
+    padding: 15px 0;
+    position: relative;
+    overflow-y: auto;
+
+    .list-item {
+      width: 92%;
+      padding: 2px 6px;
+      // background-color: #32353b;
+      background-color: #2f3136;
+      border-radius: styles.$smallBorderRadius;
+      text-overflow: ellipsis;
+      position: relative;
+      margin: 0 auto;
+
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 100%;
+        transform: translateX(-25%);
+        z-index: -1;
+      }
+
+      .list-item-p {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        min-height: 6vh;
+        max-height: 10vh;
+        transition: 0.2s width;
+        cursor: pointer;
+
+        .date {
+          position: absolute;
+          top: 50%;
+          left: 2px;
+          transform: translate(-50%, -55%) rotate(-90deg);
+          font-weight: 900;
+          color: #63676d;
+          font-size: 13px;
+          opacity: 0;
+          transition: 0.3s opacity, 0.4s left;
+          cursor: auto;
+        }
+
+        p {
+          color: white;
+          text-align: justify;
+        }
+      }
+
+      .list-control {
+        width: 25px;
+        height: 31px;
+        position: absolute;
+        top: 50%;
+        right: -10%;
+        transform: translateY(-50%);
+        border-radius: styles.$smallBorderRadius;
+        border: 1px solid #32353b;
+        background-color: #40444b;
+        @include styles.displayFlex(row, center, center);
+        transition: 0.1s width, 0.4s right, 0.2s opacity;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      &:hover {
+        .list-item-p {
+          width: 88%;
+
+          .date {
+            opacity: 1;
+            left: -6px;
+          }
+        }
+        .list-control {
+          width: 10%;
+          right: 4px;
+          opacity: 1;
+          pointer-events: auto;
+        }
+      }
+    }
+  }
+}
+
+.empty-list {
+  width: 100%;
+  height: 100%;
+  @include styles.displayFlex(column, center, center);
+
+  h4 {
+    letter-spacing: 0.7px;
+    color: #72767d;
+  }
+}

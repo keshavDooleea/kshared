@@ -1,3 +1,14 @@
-<div class="files-body">
+<div class="files-body" >
+
+    <div *ngIf="isEmpty; else showEmptyFile">
+        dwdwd
+    </div>
+
+    <ng-template #showEmptyFile>
+        <div class="empty-container">
+            <h4>No files added yet 😕</h4>
+        </div>
+    </ng-template>
 
 </div>
+

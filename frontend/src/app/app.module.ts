@@ -6,13 +6,15 @@ import { AppComponent } from './app.component';
 import { NotesContainerComponent } from './components/notes-container/notes-container.component';
 import { FilesContainerComponent } from './components/files-container/files-container.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NoteListContainerComponent } from './components/notes-container/note-list-container/note-list-container.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotesContainerComponent,
     FilesContainerComponent,
-    NavbarComponent
+    NavbarComponent,
+    NoteListContainerComponent
   ],
   imports: [
     BrowserModule,

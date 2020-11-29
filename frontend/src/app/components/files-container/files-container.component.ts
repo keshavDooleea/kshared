@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FilesContainerComponent implements OnInit {
 
-  constructor() { }
+  isEmpty: boolean;
+
+  constructor() { this.isEmpty = false; }
 
   ngOnInit(): void {
   }
