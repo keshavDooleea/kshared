@@ -122,6 +122,8 @@
 
   .text-container {
     width: 65%;
+    position: relative;
+    overflow: hidden;
 
     textarea {
       width: 100%;
@@ -133,6 +135,22 @@
       outline: none;
       padding: 7px;
       color: white;
+    }
+
+    i {
+      position: absolute;
+      bottom: -50%;
+      right: 15px;
+      font-size: 25px;
+      opacity: 0;
+      transition: 0.35s bottom, 0.2s opacity;
+    }
+
+    &:hover {
+      i {
+        bottom: 15px;
+        opacity: 1;
+      }
     }
   }
 }
