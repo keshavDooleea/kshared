@@ -1,6 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&display=swap");
+
 $mainBkg: #2f3136;
 $containers: #36393f;
 $borderRadius: 10px;
+$itemNormal: #b9bbbe;
+$itemHover: #dcddde;
 
 @mixin displayFlex($dir, $align, $justify) {
   display: flex;
@@ -13,6 +17,10 @@ $borderRadius: 10px;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+
+  &:not(i) {
+    font-family: "Barlow Condensed", sans-serif;
+  }
 }
 
 body {
