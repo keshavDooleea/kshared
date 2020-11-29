@@ -1,0 +1,14 @@
+@use "../../../styles.scss" as styles;
+
+:host {
+  width: 100%;
+  height: 47%;
+  @include styles.displayFlex(row, center, center);
+}
+
+.files-body {
+  width: 95%;
+  height: 90%;
+  background-color: styles.$containers;
+  border-radius: styles.$borderRadius;
+}

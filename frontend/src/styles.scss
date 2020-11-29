@@ -1,0 +1,23 @@
+$mainBkg: #2f3136;
+$containers: #36393f;
+$borderRadius: 10px;
+
+@mixin displayFlex($dir, $align, $justify) {
+  display: flex;
+  flex-direction: $dir;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: $mainBkg;
+}
