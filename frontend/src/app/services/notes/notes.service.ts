@@ -21,7 +21,7 @@ export class NotesService {
   addNote(newText: string): void {
     this.noteArray.push({
       text: newText,
-      date: '31/08/20'
+      date: Date.now()
     });
 
     // save to server
@@ -34,7 +34,7 @@ export class NotesService {
     this.noteArray.splice(index, 1);
 
     // save to server
-    
+
     this.noteSubscription.next(this.noteArray);
   }
 }

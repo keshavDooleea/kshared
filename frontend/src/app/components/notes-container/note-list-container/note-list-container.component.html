@@ -14,7 +14,7 @@
     <div class="lists">
         <div class="list-item" *ngFor="let note of noteList">
             <div class="list-item-p">
-                <small class="date">{{ note.date }}</small>
+                <small class="date">{{ note.date | date:'shortDate' }}</small>
                 <p>{{ note.text }}</p>
             </div>
             <div class="list-control">
