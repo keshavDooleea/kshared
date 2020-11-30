@@ -1,4 +1,4 @@
-<div class="list-container" *ngIf="isEmpty; else emptyList">
+<div class="list-container" *ngIf="noteList.length > 0; else emptyList">
     <div class="filter-container">
         <div class="input-container">
             <input 
@@ -12,19 +12,10 @@
         </div>
     </div>
     <div class="lists">
-        <div class="list-item">
+        <div class="list-item" *ngFor="let note of noteList">
             <div class="list-item-p">
-                <small class="date">30-12-20</small>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium ratione quas iste aspernatur maxime quod, repellendus dolore corrupti cupiditate, ea et repellat nihil esse recusandae sint voluptates maiores minus accusamus?</p>
-            </div>
-            <div class="list-control">
-                <i class="fas fa-times-circle icon"></i>
-            </div>
-        </div>
-        <div class="list-item">
-            <div class="list-item-p">
-                <small class="date">30-12-20</small>
-                <p>Lorem ipsum dolor sit amet adipisicing elit.</p>
+                <small class="date">{{ note.date }}</small>
+                <p>{{ note.text }}</p>
             </div>
             <div class="list-control">
                 <i class="fas fa-times-circle icon"></i>

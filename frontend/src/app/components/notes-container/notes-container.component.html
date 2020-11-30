@@ -1,7 +1,7 @@
 <div class="notes-body">
     <app-note-list-container></app-note-list-container>
     <div class="text-container">
-        <textarea spellcheck="false" placeholder="Quick note"></textarea>
-        <i class="fas fa-heart icon"></i>
+        <textarea [(ngModel)]="textareaValue" spellcheck="false" placeholder="Quick note"></textarea>
+        <i class="fas fa-heart icon" (click)="saveTextarea()"></i>
     </div>
 </div>

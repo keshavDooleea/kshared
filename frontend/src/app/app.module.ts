@@ -7,6 +7,7 @@ import { NotesContainerComponent } from './components/notes-container/notes-cont
 import { FilesContainerComponent } from './components/files-container/files-container.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NoteListContainerComponent } from './components/notes-container/note-list-container/note-list-container.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { NoteListContainerComponent } from './components/notes-container/note-li
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AppRoutingModule
   ],
   providers: [],
