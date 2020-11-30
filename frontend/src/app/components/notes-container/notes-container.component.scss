@@ -59,11 +59,16 @@
 
     i {
       position: absolute;
+      right: 60px;
       bottom: -50%;
-      right: 20px;
       font-size: 25px;
       opacity: 0;
       transition: 0.35s bottom, 0.2s opacity;
+
+      &:nth-child(2) {
+        right: 20px;
+        transition-delay: 0.1s;
+      }
     }
 
     &:hover {

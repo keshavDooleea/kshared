@@ -18,6 +18,11 @@ export class NotesContainerComponent implements OnInit {
   }
 
   saveTextarea(): void {
+    if(!this.textareaValue) return;
     this.noteService.addNote(this.textareaValue);
+  }
+
+  clearTextarea(): void {
+    this.textareaValue = "";
   }
 }

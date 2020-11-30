@@ -24,6 +24,17 @@ export class NotesService {
       date: '31/08/20'
     });
 
+    // save to server
+
+    this.noteSubscription.next(this.noteArray);
+  }
+
+  deleteNote(note: Note): void {
+    const index = this.noteArray.indexOf(note);
+    this.noteArray.splice(index, 1);
+
+    // save to server
+    
     this.noteSubscription.next(this.noteArray);
   }
 }

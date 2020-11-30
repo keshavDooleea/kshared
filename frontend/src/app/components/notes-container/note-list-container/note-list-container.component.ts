@@ -23,10 +23,13 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.noteSubscription.unsubscribe();
   }
 
+  deleteNote(note: Note): void {
+    this.noteService.deleteNote(note);
+  }
+
   private subscribeToNote(): void {
     this.noteSubscription = this.noteService.getNotesObservable().subscribe((newList: Note[]) => {
       this.noteList = newList;
-      console.log(this.noteList);
     });
   }
 }
