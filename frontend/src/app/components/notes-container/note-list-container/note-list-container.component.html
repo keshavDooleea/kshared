@@ -5,14 +5,16 @@
             type="text" 
             placeholder="Seach for note"
             spellcheck="false" 
-            autocomplete="off">
+            autocomplete="off"
+            [(ngModel)]="filterText"
+            (ngModelChange)="onFilterChange()">
             <div>
                 <i class="fas fa-times-circle icon"></i>
             </div>
         </div>
     </div>
     <div class="lists">
-        <div class="list-item" *ngFor="let note of noteList">
+        <div class="list-item" *ngFor="let note of noteList" [style.display]="note.canShow ? 'flex' : 'none'">
             <div class="list-item-p">
                 <small class="date">{{ note.date | date:'shortDate' }}</small>
                 <p>{{ note.text }}</p>

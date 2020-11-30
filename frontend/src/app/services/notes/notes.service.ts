@@ -21,7 +21,8 @@ export class NotesService {
   addNote(newText: string): void {
     this.noteArray.push({
       text: newText,
-      date: Date.now()
+      date: Date.now(),
+      canShow: true,
     });
 
     // save to server

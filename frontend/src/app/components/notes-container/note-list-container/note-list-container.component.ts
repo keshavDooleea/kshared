@@ -1,3 +1,4 @@
+import { not } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Note } from 'src/app/classes/Note';
@@ -12,6 +13,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
 
   private noteSubscription: Subscription;
   noteList: Note[];
+  filterText: string;
 
   constructor(private noteService: NotesService) { }
 
@@ -21,6 +23,12 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.noteSubscription.unsubscribe();
+  }
+
+  onFilterChange(): void {
+   this.noteList.forEach(note => {
+      note.canShow = note.text.includes(this.filterText);
+   });
   }
 
   deleteNote(note: Note): void {
