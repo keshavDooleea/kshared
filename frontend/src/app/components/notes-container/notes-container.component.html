@@ -2,7 +2,7 @@
     <app-note-list-container></app-note-list-container>
     <div class="text-container">
         <textarea [(ngModel)]="textareaValue" spellcheck="false" placeholder="Quick note"></textarea>
-        <i class="fas fa-times-circle icon" (click)="clearTextarea()"></i>
-        <i class="fas fa-heart icon" (click)="saveTextarea()"></i>
+        <i class="fas fa-times-circle" (click)="clearTextarea()" [ngClass]="textareaValue ? 'icon' : 'disable-icon'"></i>
+        <i class="fas fa-heart" (click)="saveTextarea()" [ngClass]="textareaValue ? 'icon' : 'disable-icon'"></i>
     </div>
 </div>

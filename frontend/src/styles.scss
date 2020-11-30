@@ -44,3 +44,9 @@ body {
     color: $itemHover;
   }
 }
+
+.disable-icon {
+  color: #b9bbbe;
+  opacity: 0.3 !important;
+  cursor: initial;
+}
