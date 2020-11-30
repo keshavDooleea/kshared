@@ -9,13 +9,13 @@
             [(ngModel)]="filterText"
             (ngModelChange)="onFilterChange()">
             <div>
-                <i class="fas fa-times-circle icon"></i>
+                <i class="fas fa-times-circle icon" (click)="clearFilter()"></i>
             </div>
         </div>
     </div>
     <div class="lists">
         <div class="list-item" *ngFor="let note of noteList" [style.display]="note.canShow ? 'flex' : 'none'">
-            <div class="list-item-p">
+            <div class="list-item-p" (click)="onNoteClicked(note)">
                 <small class="date">{{ note.date | date:'shortDate' }}</small>
                 <p>{{ note.text }}</p>
             </div>

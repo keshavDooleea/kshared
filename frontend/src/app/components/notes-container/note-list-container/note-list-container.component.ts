@@ -25,10 +25,17 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.noteSubscription.unsubscribe();
   }
 
+  clearFilter(): void {
+    this.filterText = "";
+    this.updateFilteredList();
+  }
+
   onFilterChange(): void {
-   this.noteList.forEach(note => {
-      note.canShow = note.text.includes(this.filterText);
-   });
+   this.updateFilteredList();
+  }
+
+  onNoteClicked(note: Note): void {
+    console.log(note);
   }
 
   deleteNote(note: Note): void {
@@ -39,5 +46,11 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.noteSubscription = this.noteService.getNotesObservable().subscribe((newList: Note[]) => {
       this.noteList = newList;
     });
+  }
+
+  private updateFilteredList(): void {
+    this.noteList.forEach(note => {
+      note.canShow = note.text.includes(this.filterText);
+   });
   }
 }
