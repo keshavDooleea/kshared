@@ -1,7 +1,13 @@
 <div class="files-body">
   <div class="controls">
-    <i class="fas fa-plus-square icon">
-      <input type="file" multiple (change)="onFileInput($event.target.files)" />
+    <i class="fas fa-plus-square icon" (click)="fileInput.click()">
+      <input
+        #fileInput
+        type="file"
+        style="display: none"
+        multiple
+        (change)="onFileInput($event.target.files)"
+      />
     </i>
     <i
       class="fas fa-trash"
@@ -13,7 +19,20 @@
     ></i>
   </div>
 
-  <div *ngIf="files.length > 0; else showEmptyFile">dwdwd</div>
+  <div class="files-container" *ngIf="files.length > 0; else showEmptyFile">
+    <div class="file-item" *ngFor="let file of files">
+      <a
+        class="img-container"
+        href="{{ file.base64 }}"
+        download="{{ file.name }}"
+      >
+        <img src="{{ file.base64 }}" alt="imageBase64" />
+      </a>
+      <div class="details-container">
+        <p>{{ file.name }}</p>
+      </div>
+    </div>
+  </div>
 
   <ng-template #showEmptyFile>
     <div class="empty-container">
