@@ -1,9 +1,16 @@
 <div class="login-body" [ngClass]="isRegister ? 'show-register' : 'show-login'">
-  <div class="register-container">
-    <button (click)="onRegisterClicked()">Register</button>
+  <div class="login-header">
+    <span class="why-container">
+      <h4>Why <i class="fas fa-question-circle"></i></h4>
+    </span>
   </div>
-  <div class="login-container">
-    <button routerLink="/home">Login</button>
-    <button (click)="onSignUpClicked()">Sign Up</button>
+  <div class="login-containers">
+    <div class="register-container">
+      <button (click)="onRegisterClicked()">Register</button>
+    </div>
+    <div class="login-container">
+      <button routerLink="/home">Login</button>
+      <button (click)="onSignUpClicked()">Sign Up</button>
+    </div>
   </div>
 </div>

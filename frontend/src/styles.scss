@@ -39,6 +39,7 @@ body {
 .icon {
   color: $itemNormal;
   cursor: pointer;
+  outline: none;
 
   &:hover {
     color: $itemHover;
