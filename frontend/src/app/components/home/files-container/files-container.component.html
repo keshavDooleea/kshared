@@ -1,20 +1,23 @@
 <div class="files-body">
+  <div class="controls">
+    <i class="fas fa-plus-square icon">
+      <input type="file" multiple (change)="onFileInput($event.target.files)" />
+    </i>
+    <i
+      class="fas fa-trash"
+      [ngClass]="files.length > 0 ? 'icon' : 'disable-icon'"
+    ></i>
+    <i
+      class="fas fa-arrow-circle-up icon arrow-up"
+      *ngIf="files.length === 0"
+    ></i>
+  </div>
 
-    <div class="controls">
-        <i class="fas fa-plus-square icon"></i>
-        <i class="fas fa-trash" [ngClass]="isEmpty ? 'icon' : 'disable-icon'"></i>
-        <i class="fas fa-arrow-circle-up icon arrow-up" *ngIf="!isEmpty"></i>
+  <div *ngIf="files.length > 0; else showEmptyFile">dwdwd</div>
+
+  <ng-template #showEmptyFile>
+    <div class="empty-container">
+      <h4>No files added yet 😕</h4>
     </div>
-
-    <div *ngIf="isEmpty; else showEmptyFile">
-        dwdwd
-    </div>
-
-    <ng-template #showEmptyFile>
-        <div class="empty-container">
-            <h4>No files added yet 😕</h4>
-        </div>
-    </ng-template>
-
+  </ng-template>
 </div>
-
