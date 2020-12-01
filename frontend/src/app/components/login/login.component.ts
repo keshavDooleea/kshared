@@ -7,9 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   isRegister: boolean;
+  shouldShowModal: boolean;
 
   constructor() {
     this.isRegister = false;
+    this.shouldShowModal = false;
   }
 
   ngOnInit(): void {}
@@ -20,5 +22,9 @@ export class LoginComponent implements OnInit {
 
   onSignUpClicked(): void {
     this.isRegister = true;
+  }
+
+  toggleModal(): void {
+    this.shouldShowModal = !this.shouldShowModal;
   }
 }

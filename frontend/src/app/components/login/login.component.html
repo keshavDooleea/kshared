@@ -1,6 +1,6 @@
 <div class="login-body" [ngClass]="isRegister ? 'show-register' : 'show-login'">
   <div class="login-header">
-    <span class="why-container btn">
+    <span class="why-button btn" (click)="toggleModal()">
       <h4>Why <i class="fas fa-question-circle"></i></h4>
     </span>
   </div>
@@ -12,5 +12,12 @@
       <button routerLink="/home">Login</button>
       <button (click)="onSignUpClicked()">Sign Up</button>
     </div>
+  </div>
+
+  <div
+    class="why-container"
+    [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'"
+  >
+    <button (click)="toggleModal()">Close</button>
   </div>
 </div>

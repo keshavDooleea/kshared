@@ -6,6 +6,7 @@ $borderRadius: 10px;
 $smallBorderRadius: 5px;
 $itemNormal: #b9bbbe;
 $itemHover: #dcddde;
+$modalBkg: #18191c;
 
 @mixin displayFlex($dir, $align, $justify) {
   display: flex;
