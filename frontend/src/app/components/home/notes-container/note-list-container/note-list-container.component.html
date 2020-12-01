@@ -1,0 +1,38 @@
+<div class="list-container" *ngIf="noteList.length > 0; else emptyList">
+  <div class="filter-container">
+    <div class="input-container">
+      <input
+        type="text"
+        placeholder="Seach for note"
+        spellcheck="false"
+        autocomplete="off"
+        [(ngModel)]="filterText"
+        (ngModelChange)="onFilterChange()"
+      />
+      <div>
+        <i class="fas fa-times-circle icon" (click)="clearFilter()"></i>
+      </div>
+    </div>
+  </div>
+  <div class="lists">
+    <div
+      class="list-item"
+      *ngFor="let note of noteList"
+      [style.display]="note.canShow ? 'flex' : 'none'"
+    >
+      <div class="list-item-p" (click)="onNoteClicked(note)">
+        <small class="date">{{ note.date | date: "shortDate" }}</small>
+        <p>{{ note.text }}</p>
+      </div>
+      <div class="list-control">
+        <i class="fas fa-times-circle icon" (click)="deleteNote(note)"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #emptyList>
+  <div class="empty-list">
+    <h4>No notes added yet 🤨</h4>
+  </div>
+</ng-template>

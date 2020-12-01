@@ -1,13 +1,14 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NotesContainerComponent } from './components/notes-container/notes-container.component';
-import { FilesContainerComponent } from './components/files-container/files-container.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { NoteListContainerComponent } from './components/notes-container/note-list-container/note-list-container.component';
-import { FormsModule } from '@angular/forms';
+import { FilesContainerComponent } from './components/home/files-container/files-container.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavbarComponent } from './components/home/navbar/navbar.component';
+import { NoteListContainerComponent } from './components/home/notes-container/note-list-container/note-list-container.component';
+import { NotesContainerComponent } from './components/home/notes-container/notes-container.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -15,14 +16,12 @@ import { FormsModule } from '@angular/forms';
     NotesContainerComponent,
     FilesContainerComponent,
     NavbarComponent,
-    NoteListContainerComponent
+    NoteListContainerComponent,
+    LoginComponent,
+    HomeComponent,
   ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    AppRoutingModule
-  ],
+  imports: [BrowserModule, FormsModule, AppRoutingModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
