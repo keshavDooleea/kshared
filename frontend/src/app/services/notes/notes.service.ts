@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Note} from "../../classes/Note"
+import { Note } from '../../classes/Note';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class NotesService {
   private noteArray: Note[];
@@ -12,11 +12,11 @@ export class NotesService {
   constructor() {
     this.noteArray = [];
     this.noteSubscription = new BehaviorSubject<Note[]>(this.noteArray);
-   }
+  }
 
-   getNotesObservable(): Observable<Note[]> {
-     return this.noteSubscription.asObservable();
-   }
+  getNotesObservable(): Observable<Note[]> {
+    return this.noteSubscription.asObservable();
+  }
 
   addNote(newText: string): void {
     this.noteArray.push({

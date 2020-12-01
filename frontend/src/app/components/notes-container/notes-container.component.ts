@@ -1,28 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { Note } from 'src/app/classes/Note';
-import { NotesService} from 'src/app/services/notes/notes.service';
+import { Component, OnInit } from '@angular/core';
+import { NotesService } from 'src/app/services/notes/notes.service';
 
 @Component({
   selector: 'app-notes-container',
   templateUrl: './notes-container.component.html',
-  styleUrls: ['./notes-container.component.scss']
+  styleUrls: ['./notes-container.component.scss'],
 })
 export class NotesContainerComponent implements OnInit {
-
   textareaValue: string;
 
-  constructor(private noteService: NotesService) { }
+  constructor(private noteService: NotesService) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   saveTextarea(): void {
-    if(!this.textareaValue) return;
+    if (!this.textareaValue) {
+      return;
+    }
+
     this.noteService.addNote(this.textareaValue);
   }
 
   clearTextarea(): void {
-    this.textareaValue = "";
+    this.textareaValue = '';
   }
 }

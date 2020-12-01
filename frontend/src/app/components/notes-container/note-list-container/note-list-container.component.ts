@@ -1,5 +1,4 @@
-import { not } from '@angular/compiler/src/output/output_ast';
-import { Component, Input, OnInit, OnChanges, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Note } from 'src/app/classes/Note';
 import { NotesService } from 'src/app/services/notes/notes.service';
@@ -7,15 +6,14 @@ import { NotesService } from 'src/app/services/notes/notes.service';
 @Component({
   selector: 'app-note-list-container',
   templateUrl: './note-list-container.component.html',
-  styleUrls: ['./note-list-container.component.scss']
+  styleUrls: ['./note-list-container.component.scss'],
 })
 export class NoteListContainerComponent implements OnInit, OnDestroy {
-
   private noteSubscription: Subscription;
   noteList: Note[];
   filterText: string;
 
-  constructor(private noteService: NotesService) { }
+  constructor(private noteService: NotesService) {}
 
   ngOnInit(): void {
     this.subscribeToNote();
@@ -26,12 +24,12 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   }
 
   clearFilter(): void {
-    this.filterText = "";
+    this.filterText = '';
     this.updateFilteredList();
   }
 
   onFilterChange(): void {
-   this.updateFilteredList();
+    this.updateFilteredList();
   }
 
   onNoteClicked(note: Note): void {
@@ -43,14 +41,16 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToNote(): void {
-    this.noteSubscription = this.noteService.getNotesObservable().subscribe((newList: Note[]) => {
-      this.noteList = newList;
-    });
+    this.noteSubscription = this.noteService
+      .getNotesObservable()
+      .subscribe((newList: Note[]) => {
+        this.noteList = newList;
+      });
   }
 
   private updateFilteredList(): void {
-    this.noteList.forEach(note => {
+    this.noteList.forEach((note) => {
       note.canShow = note.text.includes(this.filterText);
-   });
+    });
   }
 }
