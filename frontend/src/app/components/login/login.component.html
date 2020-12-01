@@ -1,1 +1,9 @@
-<p>login works!</p>
+<div class="login-body" [ngClass]="isRegister ? 'show-register' : 'show-login'">
+  <div class="register-container">
+    <button (click)="OnRegisterClicked()">Register</button>
+  </div>
+  <div class="login-container">
+    <button routerLink="/home">Login</button>
+    <button (click)="onSignUpClicked()">Sign Up</button>
+  </div>
+</div>
