@@ -51,3 +51,18 @@ body {
   opacity: 0.3 !important;
   cursor: initial;
 }
+
+.btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  user-select: none;
+  border-radius: $smallBorderRadius;
+  padding: 6px 0;
+  background-color: #68727f;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
+  &:active {
+    filter: brightness(1.2);
+  }
+}
