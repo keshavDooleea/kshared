@@ -21,6 +21,8 @@
 
   <div class="files-container" *ngIf="files.length > 0; else showEmptyFile">
     <div class="file-item" *ngFor="let file of files">
+      <i class="fas fa-times-circle icon delete-file-icon"></i>
+      <small class="date">{{ file.date | date: "shortDate" }}</small>
       <a
         class="img-container"
         href="{{ file.base64 }}"
