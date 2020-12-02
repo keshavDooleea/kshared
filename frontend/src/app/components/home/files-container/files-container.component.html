@@ -31,8 +31,8 @@
         class="img-container"
         href="{{ file.base64 }}"
         download="{{ file.name }}"
+        [innerHtml]="file.innerHtml"
       >
-        <img src="{{ file.base64 }}" alt="imageBase64" />
       </a>
       <div class="details-container">
         <p>{{ file.name }}</p>

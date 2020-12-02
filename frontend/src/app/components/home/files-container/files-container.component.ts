@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomFiles } from 'src/app/classes/files';
 import { FilesService } from 'src/app/services/files/files.service';
@@ -7,6 +7,7 @@ import { FilesService } from 'src/app/services/files/files.service';
   selector: 'app-files-container',
   templateUrl: './files-container.component.html',
   styleUrls: ['./files-container.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
@@ -37,7 +38,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   private subscribeToFile(): void {
     this.fileSubscription = this.fileService
       .getFilesObservable()
-      .subscribe(async (newFiles) => {
+      .subscribe((newFiles) => {
         this.files = newFiles;
       });
   }

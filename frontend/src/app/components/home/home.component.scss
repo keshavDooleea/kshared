@@ -5,3 +5,10 @@
   height: 100%;
   @include styles.displayFlex(column, center, center);
 }
+
+app-files-container {
+  width: 100vw;
+  height: 47vh;
+  @include styles.displayFlex(row, flex-end, center);
+  padding-bottom: 15px;
+}
