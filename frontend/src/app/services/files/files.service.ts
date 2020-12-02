@@ -66,7 +66,7 @@ export class FilesService {
 
     // videos
     if ((imageData as string).startsWith('data:video/mp4;base64,')) {
-      return `<video>
+      return `<video class="img-html">
           <source src="${imageData}" type="video/mp4" />
         </video>`;
     }
