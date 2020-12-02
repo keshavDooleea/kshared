@@ -35,6 +35,11 @@ export class FilesService {
     this.fileSubscription.next(this.files);
   }
 
+  deleteFile(index: number): void {
+    this.files.splice(index, 1);
+    this.fileSubscription.next(this.files);
+  }
+
   clearFiles(): void {
     this.files = [];
     this.fileSubscription.next(this.files);

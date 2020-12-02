@@ -74,11 +74,12 @@
           top: 5px;
           right: 5px;
           opacity: 1;
+          pointer-events: auto;
         }
 
         .date {
-          top: 50%;
           opacity: 1;
+          top: 50%;
         }
       }
 
@@ -88,13 +89,15 @@
         right: -8px;
         opacity: 0;
         transition: 0.4s right, 0.4s top, 0.3s opacity;
+        pointer-events: none;
       }
 
       .date {
         position: absolute;
         top: 40%;
-        right: -41px;
-        transform: translate(-50%, -50%) rotate(-90deg);
+        right: 0px;
+        transform: translate(0%, -50%) rotate(180deg);
+        writing-mode: vertical-lr;
         font-weight: 900;
         color: #63676d;
         opacity: 0;

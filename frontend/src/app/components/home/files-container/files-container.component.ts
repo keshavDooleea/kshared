@@ -26,6 +26,10 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.fileService.addFiles(newFiles);
   }
 
+  deleteFile(index: number): void {
+    this.fileService.deleteFile(index);
+  }
+
   clearFiles(): void {
     this.fileService.clearFiles();
   }
