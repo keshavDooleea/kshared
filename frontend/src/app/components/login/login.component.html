@@ -15,9 +15,11 @@
   </div>
 
   <div
-    class="why-container"
+    class="why-modal"
     [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'"
   >
-    <button (click)="toggleModal()">Close</button>
+    <div class="why-body">
+      <button (click)="toggleModal()">Close</button>
+    </div>
   </div>
 </div>
