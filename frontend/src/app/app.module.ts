@@ -9,6 +9,7 @@ import { NavbarComponent } from './components/home/navbar/navbar.component';
 import { NoteListContainerComponent } from './components/home/notes-container/note-list-container/note-list-container.component';
 import { NotesContainerComponent } from './components/home/notes-container/notes-container.component';
 import { LoginComponent } from './components/login/login.component';
+import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LoginComponent } from './components/login/login.component';
     NoteListContainerComponent,
     LoginComponent,
     HomeComponent,
+    SafeUrlPipe,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule],
   providers: [],
