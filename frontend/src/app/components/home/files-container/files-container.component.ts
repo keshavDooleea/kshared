@@ -23,9 +23,11 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   }
 
   onFileInput(newFiles: FileList): void {
-    console.log(newFiles);
-
     this.fileService.addFiles(newFiles);
+  }
+
+  clearFiles(): void {
+    this.fileService.clearFiles();
   }
 
   private subscribeToFile(): void {

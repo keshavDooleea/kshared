@@ -11,6 +11,7 @@
     </i>
     <i
       class="fas fa-trash"
+      (click)="clearFiles()"
       [ngClass]="files.length > 0 ? 'icon' : 'disable-icon'"
     ></i>
     <i

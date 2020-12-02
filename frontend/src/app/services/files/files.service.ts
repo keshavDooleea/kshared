@@ -20,7 +20,6 @@ export class FilesService {
 
   addFiles(newFiles: FileList): void {
     // tslint:disable-next-line: prefer-for-of
-
     for (let i = 0; i < newFiles.length; i++) {
       this.getBase64(newFiles[i])
         .then((imageData) => {
@@ -33,6 +32,11 @@ export class FilesService {
         .catch((error) => console.log(error));
     }
 
+    this.fileSubscription.next(this.files);
+  }
+
+  clearFiles(): void {
+    this.files = [];
     this.fileSubscription.next(this.files);
   }
 
