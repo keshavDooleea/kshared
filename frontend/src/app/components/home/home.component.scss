@@ -2,6 +2,7 @@
 
 .home-container {
   @include styles.displayFlex(row, center, center);
+  position: relative;
 }
 
 .main-app {
@@ -49,4 +50,12 @@ app-notes-container {
   .sidebar {
     width: 0;
   }
+}
+
+.sidebar-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
 }
