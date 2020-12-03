@@ -28,6 +28,7 @@ export class FilesService {
             name: newFiles[i].name,
             date: newFiles[i].lastModified,
             innerHtml: this.addInnerHTML(imageData),
+            isLocked: true,
           });
         })
         .catch((error) => console.log(error));

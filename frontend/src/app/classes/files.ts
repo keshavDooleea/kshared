@@ -3,4 +3,5 @@ export interface CustomFiles {
   base64: string | ArrayBuffer;
   date: number;
   innerHtml: string;
+  isLocked: boolean;
 }

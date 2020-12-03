@@ -83,6 +83,10 @@
           right: 5px;
           opacity: 0.4;
           pointer-events: auto;
+
+          &.is-lock {
+            opacity: 1;
+          }
         }
 
         .date {
