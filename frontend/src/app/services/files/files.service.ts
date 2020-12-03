@@ -38,12 +38,16 @@ export class FilesService {
   }
 
   deleteFile(index: number): void {
-    this.files.splice(index, 1);
-    this.fileSubscription.next(this.files);
+    if (!this.files[index].isLocked) {
+      this.files.splice(index, 1);
+      this.fileSubscription.next(this.files);
+    }
   }
 
   clearFiles(): void {
-    this.files = [];
+    this.files = this.files.filter((value) => {
+      return value.isLocked;
+    });
     this.fileSubscription.next(this.files);
   }
 
