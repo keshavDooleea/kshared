@@ -28,8 +28,9 @@
       ></i>
       <small class="date">{{ file.date | date: "mediumDate" }}</small>
       <a
+        #downloadTag
+        (click)="downloadFile(file, downloadTag)"
         class="img-container"
-        [href]="file.base64 | safeUrl"
         download="{{ file.name }}"
         [innerHtml]="file.innerHtml"
       >

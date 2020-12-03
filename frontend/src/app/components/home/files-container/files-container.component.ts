@@ -35,6 +35,17 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.fileService.clearFiles();
   }
 
+  downloadFile(file: CustomFiles, anchorTag: HTMLAnchorElement): void {
+    // [href]="file.base64 | safeUrl"
+    anchorTag.href = file.base64 as string;
+
+    setTimeout(() => {
+      anchorTag.href = '';
+    }, 200);
+  }
+
+  resetHref(): void {}
+
   private subscribeToFile(): void {
     this.fileSubscription = this.fileService
       .getFilesObservable()
