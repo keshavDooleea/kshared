@@ -102,6 +102,10 @@
           opacity: 1;
           top: 50%;
         }
+
+        .img-container .icon {
+          color: styles.$itemHover;
+        }
       }
 
       .delete-file-icon {
@@ -167,6 +171,7 @@
 
         .icon {
           font-size: 145px;
+          transition: 0.3s color;
         }
 
         .other-icon {
