@@ -103,6 +103,9 @@ export class FilesService {
     if (
       (imageData as string).startsWith(
         'data:application/vnd.ms-powerpoint;base64,'
+      ) ||
+      (imageData as string).startsWith(
+        'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,'
       )
     ) {
       return `<i class="fas fa-file-powerpoint icon"></i>`;
