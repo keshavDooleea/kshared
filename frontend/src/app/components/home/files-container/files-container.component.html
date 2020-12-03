@@ -21,7 +21,12 @@
   </div>
 
   <div class="files-container" *ngIf="files.length > 0; else showEmptyFile">
-    <div class="file-item" *ngFor="let file of files; index as i">
+    <div
+      class="file-item"
+      *ngFor="let file of files; index as i"
+      [ngClass]="file.isLocked ? 'locked-ui' : ''"
+    >
+      <small class="locked-text">LOCKED</small>
       <i
         class="fas fa-times-circle icon delete-file-icon"
         (click)="deleteFile(i)"
