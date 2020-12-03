@@ -126,6 +126,6 @@ export class FilesService {
     }
 
     // other types
-    return `<i class="fas fa-file icon"></i>`;
+    return `<i class="fas fa-file icon other-icon"></i>`;
   }
 }

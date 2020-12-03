@@ -1,4 +1,5 @@
 @use "../../../../styles.scss" as styles;
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&display=swap");
 
 :host {
   width: 100%;
@@ -120,6 +121,21 @@
 
         .icon {
           font-size: 145px;
+        }
+
+        .other-icon {
+          position: relative;
+
+          &::after {
+            content: "?";
+            color: #2f3136;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -35%) scale(1.2, 1.1);
+            font-size: 90px;
+            font-family: "Barlow Condensed", sans-serif;
+          }
         }
       }
 
