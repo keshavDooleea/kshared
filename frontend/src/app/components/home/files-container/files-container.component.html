@@ -26,6 +26,7 @@
         class="fas fa-times-circle icon delete-file-icon"
         (click)="deleteFile(i)"
       ></i>
+      <i class="fas fa-lock-open icon lock-icon"></i>
       <small class="date">{{ file.date | date: "mediumDate" }}</small>
       <a
         #downloadTag

@@ -78,6 +78,13 @@
           pointer-events: auto;
         }
 
+        .lock-icon {
+          bottom: 8px;
+          right: 5px;
+          opacity: 0.4;
+          pointer-events: auto;
+        }
+
         .date {
           opacity: 1;
           top: 50%;
@@ -90,6 +97,15 @@
         right: -8px;
         opacity: 0;
         transition: 0.4s right, 0.4s top, 0.3s opacity;
+        pointer-events: none;
+      }
+
+      .lock-icon {
+        position: absolute;
+        bottom: -8px;
+        right: -8px;
+        opacity: 0;
+        transition: 0.4s right, 0.4s bottom, 0.3s opacity;
         pointer-events: none;
       }
 
