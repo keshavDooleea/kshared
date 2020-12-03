@@ -28,7 +28,7 @@ export class FilesService {
             name: newFiles[i].name,
             date: newFiles[i].lastModified,
             innerHtml: this.addInnerHTML(imageData),
-            isLocked: true,
+            isLocked: false,
           });
         })
         .catch((error) => console.log(error));
@@ -44,6 +44,11 @@ export class FilesService {
 
   clearFiles(): void {
     this.files = [];
+    this.fileSubscription.next(this.files);
+  }
+
+  toggleLock(index: number): void {
+    this.files[index].isLocked = !this.files[index].isLocked;
     this.fileSubscription.next(this.files);
   }
 

@@ -27,10 +27,12 @@
         (click)="deleteFile(i)"
       ></i>
       <i
+        (click)="toggleLock(i)"
         class="fas fa-lock icon lock-icon is-lock"
         [style.display]="file.isLocked ? 'block' : 'none'"
       ></i>
       <i
+        (click)="toggleLock(i)"
         class="fas fa-lock-open icon lock-icon"
         [style.display]="!file.isLocked ? 'block' : 'none'"
       ></i>

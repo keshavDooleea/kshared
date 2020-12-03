@@ -111,6 +111,7 @@
         opacity: 0;
         transition: 0.4s right, 0.4s bottom, 0.3s opacity;
         pointer-events: none;
+        transform: scaleX(-1);
       }
 
       .date {
