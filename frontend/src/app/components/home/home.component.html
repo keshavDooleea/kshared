@@ -1,5 +1,11 @@
-<div class="main-app">
-  <app-navbar></app-navbar>
-  <app-notes-container></app-notes-container>
-  <app-files-container></app-files-container>
+<div
+  class="home-container"
+  [ngClass]="showNavbar ? 'show-navbar' : 'hide-navbar'"
+>
+  <div class="sidebar" (mouseover)="showNav()" (mouseleave)="hideNav()"></div>
+  <div class="main-app">
+    <app-navbar (showNavbarEmitter)="onNavbarChanged($event)"></app-navbar>
+    <app-notes-container></app-notes-container>
+    <app-files-container></app-files-container>
+  </div>
 </div>

@@ -1,9 +1,7 @@
 @use "../../../../styles.scss" as styles;
 
-:host {
-  width: 97%;
-  height: 6%;
-  @include styles.displayFlex(row, center, flex-end);
+.navbar-item {
+  display: flex;
 }
 
 h3 {

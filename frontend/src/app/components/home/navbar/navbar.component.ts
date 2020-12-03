@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-navbar',
@@ -6,11 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
+  @Output() showNavbarEmitter = new EventEmitter<boolean>();
+
   constructor() {}
 
   ngOnInit(): void {}
 
   onLogOutClicked(): void {
     console.log('Logged out clicked');
+  }
+
+  showNavbar(): void {
+    this.showNavbarEmitter.emit(true);
+  }
+
+  hideNavbar(): void {
+    this.showNavbarEmitter.emit(false);
   }
 }

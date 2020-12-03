@@ -1,14 +1,52 @@
 @use "../../../styles.scss" as styles;
 
-.main-app {
-  width: 100%;
-  height: 100%;
-  @include styles.displayFlex(column, center, center);
+.home-container {
+  @include styles.displayFlex(row, center, center);
 }
 
-app-files-container {
+.main-app {
   width: 100vw;
-  height: 47vh;
+  height: 100vh;
+  @include styles.displayFlex(column, center, center);
+  transition: 0.3s width;
+}
+
+app-navbar {
+  width: 97%;
+  height: 6%;
+  @include styles.displayFlex(row, center, space-between);
+}
+
+app-files-container,
+app-notes-container {
+  width: 100%;
+  height: 47%;
   @include styles.displayFlex(row, flex-end, center);
   padding-bottom: 15px;
+}
+
+.sidebar {
+  height: 100vh;
+  background-color: #202225;
+  transition: 0.3s width;
+  border-radius: 0 styles.$borderRadius styles.$borderRadius 0;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.show-navbar {
+  .main-app {
+    width: 85%;
+  }
+  .sidebar {
+    width: 15%;
+  }
+}
+
+.hide-navbar {
+  .main-app {
+    width: 100%;
+  }
+  .sidebar {
+    width: 0;
+  }
 }
