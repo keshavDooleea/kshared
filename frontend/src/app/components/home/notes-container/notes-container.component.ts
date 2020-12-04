@@ -21,6 +21,11 @@ export class NotesContainerComponent implements OnInit {
     this.noteService.addNote(this.textareaValue);
   }
 
+  onShiftEnter(event: Event): void {
+    (event.target as HTMLTextAreaElement).blur();
+    this.saveTextarea();
+  }
+
   clearTextarea(): void {
     this.textareaValue = '';
   }
