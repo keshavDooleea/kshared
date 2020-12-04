@@ -19,6 +19,13 @@ export class NotesService {
   }
 
   addNote(newText: string): void {
+    const checkIfExists = (note: Note) => note.text === newText;
+
+    // if exists, return to avoid duplicates
+    if (this.noteArray.some(checkIfExists)) {
+      return;
+    }
+
     this.noteArray.push({
       text: newText,
       date: Date.now(),
