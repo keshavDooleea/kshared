@@ -37,12 +37,12 @@ i {
     border-radius: styles.$smallBorderRadius;
 
     &:nth-child(1) {
+      height: 21%;
       width: 80%;
     }
 
     &:nth-child(2) {
       width: 55%;
-      margin: 2px 0;
     }
 
     &:nth-child(3) {
