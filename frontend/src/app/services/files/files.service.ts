@@ -27,7 +27,7 @@ export class FilesService {
             base64: imageData,
             name: newFiles[i].name,
             date: newFiles[i].lastModified,
-            innerHtml: this.addInnerHTML(imageData),
+            innerHtml: this.addInnerHTML(imageData, newFiles[i].name),
             isLocked: false,
           });
         })
@@ -65,22 +65,22 @@ export class FilesService {
     });
   }
 
-  private addInnerHTML(imageData: string | ArrayBuffer): string {
+  private addInnerHTML(
+    imageData: string | ArrayBuffer,
+    fileName: string
+  ): string {
     // images
     if (
-      (imageData as string).startsWith('data:image/jpeg;base64,') ||
-      (imageData as string).startsWith('data:image/png;base64,')
-      // (imageData as string).startsWith('data:image/svg+xml;base64,')
+      fileName.endsWith('jpeg') ||
+      fileName.endsWith('png')
+      // fileName.endsWith('svg')
     ) {
       return `<img src="${imageData}" alt="imageBase64" class="img-html"/>`;
     }
 
     // videos
-    if ((imageData as string).startsWith('data:video/mp4;base64,')) {
+    if (fileName.endsWith('mp4')) {
       return '<i class="fas fa-file-video icon"></i>';
-      // return `<video class="img-html">
-      //     <source src="${imageData}" type="video/mp4" />
-      //   </video>`;
     }
 
     // icon
@@ -89,69 +89,49 @@ export class FilesService {
     }
 
     // pdf
-    if ((imageData as string).startsWith('data:application/pdf;base64,')) {
+    if (fileName.endsWith('pdf')) {
       return `<i class="fas fa-file-pdf icon"></i>`;
     }
 
     // txt files
-    if ((imageData as string).startsWith('data:text/plain;base64,')) {
+    if (fileName.endsWith('txt') || fileName.endsWith('md')) {
       return `<i class="fas fa-file-alt icon"></i>`;
     }
 
     // word doc
-    if (
-      (imageData as string).startsWith(
-        'data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,'
-      )
-    ) {
+    if (fileName.endsWith('doc') || fileName.endsWith('docx')) {
       return `<i class="fas fa-file-word icon"></i>`;
     }
 
     // excel files
-    if (
-      (imageData as string).startsWith(
-        'data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,'
-      )
-    ) {
+    if (fileName.endsWith('xlsx')) {
       return `<i class="fas fa-file-excel icon"></i>`;
     }
 
     // powerpoint
-    if (
-      (imageData as string).startsWith(
-        'data:application/vnd.ms-powerpoint;base64,'
-      ) ||
-      (imageData as string).startsWith(
-        'data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,'
-      )
-    ) {
+    if (fileName.endsWith('ppt')) {
       return `<i class="fas fa-file-powerpoint icon"></i>`;
     }
 
     // audio
-    if ((imageData as string).startsWith('data:audio/mpeg;base64,')) {
+    if (fileName.endsWith('mp3')) {
       return `<i class="fas fa-file-audio icon"></i>`;
     }
 
     // zip files
-    if (
-      (imageData as string).startsWith(
-        'data:application/x-zip-compressed;base64,'
-      )
-    ) {
+    if (fileName.endsWith('zip') || fileName.endsWith('rar')) {
       return `<i class="fas fa-file-archive icon"></i>`;
     }
 
     // code files
     if (
-      (imageData as string).startsWith(
-        'data:application/octet-stream;base64,'
-      ) ||
-      (imageData as string).startsWith('data:text/javascript;base64,') ||
-      (imageData as string).startsWith('data:text/css;base64,') ||
-      (imageData as string).startsWith('data:text/html;base64,')
+      fileName.endsWith('ts') ||
+      fileName.endsWith('js') ||
+      fileName.endsWith('css') ||
+      fileName.endsWith('scss') ||
+      fileName.endsWith('c++') ||
+      fileName.endsWith('html')
     ) {
-      console.log('DWW');
       return `<i class="fas fa-file-code icon"></i>`;
     }
 
