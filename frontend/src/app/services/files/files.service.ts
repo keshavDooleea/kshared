@@ -70,8 +70,9 @@ export class FilesService {
     if (
       (imageData as string).startsWith('data:image/jpeg;base64,') ||
       (imageData as string).startsWith('data:image/png;base64,')
+      // (imageData as string).startsWith('data:image/svg+xml;base64,')
     ) {
-      return `<img src="${imageData}" alt="imageBase64" class="img-html" />`;
+      return `<img src="${imageData}" alt="imageBase64" class="img-html"/>`;
     }
 
     // videos
@@ -80,6 +81,11 @@ export class FilesService {
       // return `<video class="img-html">
       //     <source src="${imageData}" type="video/mp4" />
       //   </video>`;
+    }
+
+    // icon
+    if ((imageData as string).startsWith('data:image/x-icon;base64,')) {
+      return '<i class="fas fa-file-image icon"></i>';
     }
 
     // pdf
@@ -134,6 +140,19 @@ export class FilesService {
       )
     ) {
       return `<i class="fas fa-file-archive icon"></i>`;
+    }
+
+    // code files
+    if (
+      (imageData as string).startsWith(
+        'data:application/octet-stream;base64,'
+      ) ||
+      (imageData as string).startsWith('data:text/javascript;base64,') ||
+      (imageData as string).startsWith('data:text/css;base64,') ||
+      (imageData as string).startsWith('data:text/html;base64,')
+    ) {
+      console.log('DWW');
+      return `<i class="fas fa-file-code icon"></i>`;
     }
 
     // other types
