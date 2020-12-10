@@ -29,7 +29,7 @@ export class FilesService {
             base64: imageData,
             size: newFiles[i].size,
             name: newFiles[i].name,
-            date: newFiles[i].lastModified,
+            // date: newFiles[i].lastModified,
             innerHtml: this.innerHtmlService.getInnerHTML(
               imageData,
               newFiles[i].name
