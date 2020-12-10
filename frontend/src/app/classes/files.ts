@@ -4,4 +4,5 @@ export interface CustomFiles {
   date: number;
   innerHtml: string;
   isLocked: boolean;
+  size: number;
 }

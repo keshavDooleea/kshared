@@ -48,8 +48,6 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     }, 200);
   }
 
-  resetHref(): void {}
-
   private subscribeToFile(): void {
     this.fileSubscription = this.fileService
       .getFilesObservable()

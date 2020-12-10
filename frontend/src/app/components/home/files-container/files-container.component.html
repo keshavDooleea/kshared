@@ -51,7 +51,8 @@
       >
       </a>
       <div class="details-container">
-        <p>{{ file.name }}</p>
+        <p>{{ fileService.formatBytes(file.size) }}</p>
+        <!-- <p>{{ file.name }}</p> -->
       </div>
     </div>
   </div>
