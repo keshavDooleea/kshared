@@ -15,6 +15,7 @@
   border-radius: styles.$borderRadius;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  @include styles.displayFlex(row, center, center);
 
   .controls {
     height: 6vh;
@@ -45,11 +46,12 @@
   }
 
   .files-container {
-    width: 100%;
+    width: calc(100% - 26px);
     height: 100%;
     @include styles.displayFlex(row, center, flex-start);
     overflow-x: auto;
     overflow-y: hidden;
+    scroll-snap-type: x mandatory;
 
     &::-webkit-scrollbar {
       height: 0;
@@ -67,6 +69,7 @@
       transition: 0.2s background-color;
       transform-origin: top;
       position: relative;
+      scroll-snap-align: start;
 
       &.locked-ui {
         background-color: #3b3d44;
