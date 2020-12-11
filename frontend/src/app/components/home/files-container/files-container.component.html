@@ -41,7 +41,7 @@
         class="fas fa-lock-open icon lock-icon"
         [style.display]="!file.isLocked ? 'block' : 'none'"
       ></i>
-      <small class="date">{{ fileService.formatBytes(file.size) }}</small>
+      <small class="file-size">{{ fileService.formatBytes(file.size) }}</small>
       <!-- <small class="date">{{ file.date | date: "mediumDate" }}</small> -->
       <a
         #downloadTag
