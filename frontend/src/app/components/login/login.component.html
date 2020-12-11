@@ -4,13 +4,57 @@
       <h4>Why <i class="fas fa-question-circle"></i></h4>
     </span>
   </div>
-  <div class="login-containers">
+  <div class="entry-containers">
     <div class="register-container">
-      <button (click)="onRegisterClicked()">Register</button>
+      <div class="main">
+        <div class="main">
+          <div class="user-input">
+            <input type="text" placeholder="Username" />
+          </div>
+          <div class="user-input">
+            <input type="text" placeholder="Password" />
+          </div>
+          <div class="user-input">
+            <input type="text" placeholder="Confirm Password" />
+          </div>
+          <div class="actions">
+            <button (click)="onRegisterClicked()">Register</button>
+            <button (click)="onCancelClicked()">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar">
+        <span>R</span>
+        <span>E</span>
+        <span>G</span>
+        <span>I</span>
+        <span>S</span>
+        <span>T</span>
+        <span>E</span>
+        <span>R</span>
+      </div>
     </div>
     <div class="login-container">
-      <button routerLink="/home">Login</button>
-      <button (click)="onSignUpClicked()">Sign Up</button>
+      <div class="sidebar">
+        <span>L</span>
+        <span>O</span>
+        <span>G</span>
+        <span>I</span>
+        <span>N</span>
+      </div>
+      <div class="main">
+        <div class="user-input">
+          <input type="text" placeholder="Username" />
+        </div>
+        <div class="user-input">
+          <input type="text" placeholder="Password" />
+        </div>
+        <div class="actions">
+          <button routerLink="/home">Login</button>
+          <button (click)="onSignUpClicked()">Sign Up</button>
+        </div>
+      </div>
     </div>
   </div>
 

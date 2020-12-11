@@ -16,6 +16,10 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  onCancelClicked(): void {
+    this.isRegister = false;
+  }
+
   onRegisterClicked(): void {
     this.isRegister = false;
   }
