@@ -16,4 +16,8 @@ export class UserService {
   getUser(): User {
     return this.currentUser;
   }
+
+  getToken(): string {
+    return this.currentUser.user.token;
+  }
 }

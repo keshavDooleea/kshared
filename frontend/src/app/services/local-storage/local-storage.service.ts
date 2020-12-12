@@ -10,7 +10,7 @@ export class LocalStorageService {
   constructor(private userService: UserService) {}
 
   saveToken(): void {
-    const token: string = this.userService.getUser().user.token;
+    const token: string = this.userService.getToken();
     localStorage.setItem(STORAGE_KEY, token);
   }
 
