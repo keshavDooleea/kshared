@@ -133,7 +133,7 @@
         <span>I</span>
         <span>N</span>
       </div>
-      <div class="main">
+      <Form class="main" [formGroup]="loginForm">
         <div class="user-input">
           <div class="input-parent">
             <input
@@ -141,8 +141,23 @@
               autocomplete="off"
               spellcheck="false"
               placeholder="Username"
+              formControlName="loginUsername"
             />
-            <small>"SXS"</small>
+            <small *ngIf="loginForm.get('loginUsername').hasError('shortError')"
+              >Min 5 characters required</small
+            >
+            <i
+              class="fas fa-check-circle"
+              [ngClass]="
+                loginForm.get('loginUsername').hasError('shortError') ||
+                serverResponse.status === 205
+                  ? 'invalid-check'
+                  : 'valid-check'
+              "
+            ></i>
+            <small *ngIf="serverResponse.status === 205"
+              >Username is incorrect</small
+            >
           </div>
         </div>
 
@@ -154,12 +169,32 @@
               type="text"
               autocomplete="off"
               spellcheck="false"
+              formControlName="loginPassword"
             />
-            <small> inputMessage.loginPassword </small>
+            <small *ngIf="loginForm.get('loginPassword').hasError('shortError')"
+              >Min 5 characters required</small
+            >
+            <i
+              class="fas fa-check-circle"
+              [ngClass]="
+                loginForm.get('loginPassword').hasError('shortError') ||
+                serverResponse.status === 206
+                  ? 'invalid-check'
+                  : 'valid-check'
+              "
+            ></i>
+            <small *ngIf="serverResponse.status === 206"
+              >Password is incorrect</small
+            >
           </div>
         </div>
         <div class="actions">
-          <button class="btn" (click)="onLoginClicked()">
+          <button
+            class="btn"
+            type="submit"
+            (click)="onLoginClicked()"
+            [ngClass]="loginForm.invalid ? 'disable-btn' : 'enable-btn pop-btn'"
+          >
             <h4>Login</h4>
           </button>
           <!-- <button routerLink="/home">Login</button> -->
@@ -167,7 +202,7 @@
             <h4>Sign Up</h4>
           </button>
         </div>
-      </div>
+      </Form>
     </div>
   </div>
 

@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isRegister: boolean;
   shouldShowModal: boolean;
   registerForm: FormGroup;
+  loginForm: FormGroup;
   serverResponse: ServerResponse;
   showRegisteredMessage: boolean;
   private socketSubscription: Subscription;
@@ -38,6 +39,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       confirmPassword: new FormControl(
         '',
         Validators.compose([Validators.required])
+      ),
+    });
+
+    this.loginForm = new FormGroup({
+      loginUsername: new FormControl(
+        '',
+        Validators.compose([Validators.required, validateLength])
+      ),
+      loginPassword: new FormControl(
+        '',
+        Validators.compose([Validators.required, validateLength])
       ),
     });
   }
@@ -78,7 +90,13 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.isRegister = true;
   }
 
-  onLoginClicked(): void {}
+  onLoginClicked(): void {
+    if (this.loginForm.invalid) {
+      return;
+    }
+
+    console.log(this.loginPassword, this.loginUsername);
+  }
 
   toggleModal(): void {
     this.shouldShowModal = !this.shouldShowModal;
@@ -86,7 +104,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private handleRegistrationResponse(data: ServerResponse): void {
     this.serverResponse = data;
-    console.log(`Registration response: `, data);
 
     if (data.status === 200) {
       this.showRegisteredMessage = true;
@@ -101,6 +118,14 @@ export class LoginComponent implements OnInit, OnDestroy {
         this.showRegisteredMessage = false;
       }, 2700);
     }
+  }
+
+  get loginUsername(): string {
+    return this.loginForm.get('loginUsername').value;
+  }
+
+  get loginPassword(): string {
+    return this.loginForm.get('loginPassword').value;
   }
 
   get registerUsername(): string {
