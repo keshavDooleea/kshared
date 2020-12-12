@@ -49,6 +49,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
 
   clearTextarea(): void {
     this.textareaValue = '';
+    this.noteService.saveCurrentText(this.textareaValue);
   }
 
   private subscribeToSocket(): void {
