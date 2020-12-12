@@ -155,9 +155,9 @@
                   : 'valid-check'
               "
             ></i>
-            <small *ngIf="serverResponse.status === 205"
-              >Username is incorrect</small
-            >
+            <small *ngIf="serverResponse.status === 205">{{
+              serverResponse.message
+            }}</small>
           </div>
         </div>
 
@@ -183,9 +183,9 @@
                   : 'valid-check'
               "
             ></i>
-            <small *ngIf="serverResponse.status === 206"
-              >Password is incorrect</small
-            >
+            <small *ngIf="serverResponse.status === 206">{{
+              serverResponse.message
+            }}</small>
           </div>
         </div>
         <div class="actions">

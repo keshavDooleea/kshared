@@ -1,0 +1,53 @@
+const User = require("../modals/user").User;
+const jwt = require("jsonwebtoken");
+const wrapResponse = require("./wrap-response");
+
+const eventName = "newLoginResponse";
+const errorMessage = "Sorry, an error has occured!";
+
+const userLogin = async (loginForm, socket) => {
+  await User.findOne({ username: loginForm.username }, (err, user) => {
+    if (err) {
+      socket.emit(eventName, wrapResponse(500, errorMessage));
+    }
+
+    // user not found
+    if (user == null) {
+      const message = "User not found";
+      socket.emit(eventName, wrapResponse(205, message));
+    }
+    // user found
+    else {
+      // verify password
+      User.findOne({ username: loginForm.username, password: loginForm.password }, (err, userFound) => {
+        // incorrect password
+        if (userFound == null) {
+          const message = "Password is incorrect";
+          socket.emit(eventName, wrapResponse(206, message));
+        }
+        // user found
+        else {
+          const loggedUser = {
+            _id: userFound._id,
+            username: userFound.username,
+            password: userFound.password,
+            dateAccCreated: userFound.dateAccCreated,
+          };
+
+          // generate jwt token
+          let token = jwt.sign(loggedUser, process.env.JWT_TOKEN, {});
+
+          const response = {
+            status: 200,
+            token: token,
+            username: loggedUser.username,
+            message: "Signed in",
+          };
+          socket.emit(eventName, response);
+        }
+      });
+    }
+  });
+};
+
+module.exports = userLogin;

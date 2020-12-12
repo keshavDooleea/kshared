@@ -95,7 +95,18 @@ export class LoginComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(this.loginPassword, this.loginUsername);
+    const loginForm = {
+      username: this.loginUsername,
+      password: this.loginPassword,
+    };
+
+    this.socket.emit('newUserLogin', loginForm);
+
+    this.socketSubscription = this.socket
+      .listen('newLoginResponse')
+      .subscribe((data) => {
+        this.handleLoginResponse(data);
+      });
   }
 
   toggleModal(): void {
@@ -117,6 +128,14 @@ export class LoginComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         this.showRegisteredMessage = false;
       }, 2700);
+    }
+  }
+
+  private handleLoginResponse(data: ServerResponse): void {
+    this.serverResponse = data;
+
+    if (data.status === 200) {
+      console.log(data);
     }
   }
 

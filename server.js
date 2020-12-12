@@ -1,8 +1,9 @@
 require("dotenv/config");
 const SERVER_PORT = 5000;
 const registerUser = require("./server/logics/register");
-const mongo = require("mongoose");
+const userLogin = require("./server/logics/user-login");
 
+const mongo = require("mongoose");
 const app = require("express")();
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
@@ -29,6 +30,10 @@ io.on("connection", (socket) => {
 
   socket.on("newRegistration", async (data) => {
     await registerUser(data, socket);
+  });
+
+  socket.on("newUserLogin", async (data) => {
+    await userLogin(data, socket);
   });
 
   socket.emit("initialLanding", "GOT YOU");
