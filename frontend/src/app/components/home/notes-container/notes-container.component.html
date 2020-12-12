@@ -4,6 +4,7 @@
     <textarea
       [(ngModel)]="textareaValue"
       (keydown.shift.enter)="onShiftEnter($event)"
+      (keyup)="onKeyup()"
       spellcheck="false"
       placeholder="{{
         'Quick note\n\nPress Shift + Enter for quick save!\nTip: Your note stays here even without saving!'

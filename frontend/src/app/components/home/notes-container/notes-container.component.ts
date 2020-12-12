@@ -26,6 +26,10 @@ export class NotesContainerComponent implements OnInit {
     this.saveTextarea();
   }
 
+  onKeyup(): void {
+    this.noteService.saveCurrentText(this.textareaValue);
+  }
+
   clearTextarea(): void {
     this.textareaValue = '';
   }

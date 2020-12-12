@@ -3,6 +3,7 @@ export interface CurrentUser {
   token: string;
   id: string;
   dateCreated: string;
+  currentText: string;
 }
 
 export class User {

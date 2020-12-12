@@ -29,4 +29,9 @@ export class UserService {
   getToken(): string {
     return this.currentUser.user.token;
   }
+
+  setCurrentText(newText: string): void {
+    this.currentUser.user.currentText = newText;
+    this.behaviorSubject.next(this.currentUser);
+  }
 }

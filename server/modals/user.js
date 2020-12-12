@@ -18,10 +18,11 @@ const UserSchema = new mongo.Schema({
     type: Date,
     default: Date.now,
   },
-  socket_id: {
+  currentText: {
     type: String,
   },
 });
 
 var User = mongo.model("User", UserSchema);
+
 module.exports = { User: User };

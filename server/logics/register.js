@@ -7,6 +7,7 @@ const errorMessage = "Sorry, an error has occured!";
 const registerUser = async (registerForm, socket) => {
   await User.findOne({ username: registerForm.username }, async (err, user) => {
     if (err) {
+      console.log("Register User DB ERROR: ", err);
       socket.emit(eventName, wrapResponse(500, errorMessage));
     }
 
@@ -22,6 +23,7 @@ const registerUser = async (registerForm, socket) => {
         const message = "Your account has been registered!";
         socket.emit(eventName, wrapResponse(200, message));
       } catch (err) {
+        console.log("Register User DB save ERROR: ", err);
         socket.emit(eventName, wrapResponse(500, errorMessage));
       }
     }
@@ -29,7 +31,6 @@ const registerUser = async (registerForm, socket) => {
     // user exists in db
     else {
       const message = "This Username is taken";
-      console.log("INN");
       socket.emit(eventName, wrapResponse(204, message));
     }
   });

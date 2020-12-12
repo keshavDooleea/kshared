@@ -2,6 +2,7 @@ require("dotenv/config");
 const SERVER_PORT = 5000;
 const registerUser = require("./server/logics/register");
 const userLogin = require("./server/logics/user-login");
+const User = require("./server/modals/user").User;
 
 const jwt = require("jsonwebtoken");
 const mongo = require("mongoose");
@@ -51,6 +52,20 @@ io.on("connection", (socket) => {
     };
 
     socket.emit("initialLanding", JSON.stringify(userInfo));
+  });
+
+  socket.on("updateText", async (data) => {
+    let decodedUser = jwt.verify(data.token, process.env.JWT_TOKEN);
+
+    try {
+      let currentUser = await User.findById(decodedUser._id);
+      currentUser.currentText = data.text;
+      await currentUser.save();
+
+      socket.emit("updatedDBText", currentUser.currentText);
+    } catch (error) {
+      console.log("Updating current text error: ", error);
+    }
   });
 });
 
