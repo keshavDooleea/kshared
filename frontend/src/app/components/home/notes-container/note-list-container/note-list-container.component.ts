@@ -11,7 +11,6 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./note-list-container.component.scss'],
 })
 export class NoteListContainerComponent implements OnInit, OnDestroy {
-  private noteSubscription: Subscription;
   private socketSubscription: Subscription;
   private userSubscription: Subscription;
   noteList: Note[];
@@ -24,13 +23,11 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscribeToNote();
     this.subscribeToSocket();
     this.subscribeToUser();
   }
 
   ngOnDestroy(): void {
-    this.noteSubscription.unsubscribe();
     this.socketSubscription.unsubscribe();
     this.userSubscription.unsubscribe();
   }
@@ -52,14 +49,6 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.noteService.deleteNote(note);
   }
 
-  private subscribeToNote(): void {
-    this.noteSubscription = this.noteService
-      .getNotesObservable()
-      .subscribe((newList: Note[]) => {
-        this.noteList = newList;
-      });
-  }
-
   private updateFilteredList(): void {
     this.noteList.forEach((note) => {
       note.canShow = note.text.includes(this.filterText);
@@ -71,6 +60,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
       .listen('getNotes')
       .subscribe((data: Note[]) => {
         this.noteList = data;
+        this.noteService.setNotes(this.noteList);
       });
   }
 
@@ -80,6 +70,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
       .subscribe((user) => {
         if (user) {
           this.noteList = user.user.noteList;
+          this.noteService.setNotes(this.noteList);
         }
       });
   }

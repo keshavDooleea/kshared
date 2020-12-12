@@ -76,9 +76,10 @@ io.on("connection", (socket) => {
 
     try {
       let currentUser = await User.findById(user.id);
-      data.notes.forEach((note) => {
-        currentUser.notes.push(note);
-      });
+      // data.notes.forEach((note) => {
+      //   currentUser.notes.push(note);
+      // });
+      currentUser.notes = data.notes;
       await currentUser.save();
 
       io.emit("getNotes", currentUser.notes);

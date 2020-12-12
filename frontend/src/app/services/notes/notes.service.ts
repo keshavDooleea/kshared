@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Note } from '../../classes/Note';
 import { UserService } from '../user/user.service';
 import { SocketService } from '../web-socket/socket.service';
@@ -9,15 +8,9 @@ import { SocketService } from '../web-socket/socket.service';
 })
 export class NotesService {
   private noteArray: Note[];
-  private noteSubscription: BehaviorSubject<Note[]>;
 
   constructor(private socket: SocketService, private currentUser: UserService) {
     this.noteArray = [];
-    this.noteSubscription = new BehaviorSubject<Note[]>(this.noteArray);
-  }
-
-  getNotesObservable(): Observable<Note[]> {
-    return this.noteSubscription.asObservable();
   }
 
   addNote(newText: string): void {
@@ -39,12 +32,12 @@ export class NotesService {
   }
 
   deleteNote(note: Note): void {
+    console.log(this.noteArray);
     const index = this.noteArray.indexOf(note);
     this.noteArray.splice(index, 1);
 
     // save to server
-
-    this.noteSubscription.next(this.noteArray);
+    this.saveNote();
   }
 
   saveCurrentText(text: string): void {
@@ -63,5 +56,9 @@ export class NotesService {
       };
       this.socket.emit('saveNoteList', socketData);
     }
+  }
+
+  setNotes(newNote: Note[]): void {
+    this.noteArray = newNote;
   }
 }
