@@ -29,10 +29,18 @@ export class LoginComponent implements OnInit, OnDestroy {
     private localStorage: LocalStorageService,
     private router: Router
   ) {
+    this.checkUser();
     this.initialiseRegisterForm();
   }
 
-  initialiseRegisterForm(): void {
+  private checkUser(): void {
+    const token = this.localStorage.getToken();
+    if (token) {
+      this.router.navigate(['/home']);
+    }
+  }
+
+  private initialiseRegisterForm(): void {
     this.isRegister = false;
     this.serverResponse = {} as ServerResponse;
 
@@ -66,7 +74,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.socketSubscription.unsubscribe();
+    if (this.socketSubscription) {
+      this.socketSubscription.unsubscribe();
+    }
   }
 
   onCancelClicked(): void {
@@ -158,6 +168,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       const user = new User(currentUser);
       this.userService.setUser(user);
       this.localStorage.saveToken();
+      this.router.navigateByUrl('/home');
     }
   }
 
