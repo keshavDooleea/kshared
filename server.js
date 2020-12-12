@@ -1,6 +1,6 @@
 require("dotenv/config");
 const SERVER_PORT = 5000;
-const registerUser = require("./server/register");
+const registerUser = require("./server/logics/register");
 const mongo = require("mongoose");
 
 const app = require("express")();

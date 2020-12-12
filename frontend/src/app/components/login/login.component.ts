@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { validateLength } from 'src/app/classes/validator';
+import { ServerResponse } from 'src/app/declarations/server-params';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isRegister: boolean;
   shouldShowModal: boolean;
   registerForm: FormGroup;
-  showExistsUser: boolean;
+  serverResponse: ServerResponse;
   showRegisteredMessage: boolean;
   private socketSubscription: Subscription;
 
@@ -22,8 +23,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   initialiseRegisterForm(): void {
-    this.showExistsUser = false;
     this.isRegister = false;
+    this.serverResponse = {} as ServerResponse;
+
     this.registerForm = new FormGroup({
       username: new FormControl(
         '',
@@ -82,13 +84,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.shouldShowModal = !this.shouldShowModal;
   }
 
-  private handleRegistrationResponse(data: string): void {
-    console.log(`Registration response: ${data}`);
+  private handleRegistrationResponse(data: ServerResponse): void {
+    this.serverResponse = data;
+    console.log(`Registration response: `, data);
 
-    if (data === 'Exists') {
-      this.showExistsUser = true;
-    } else if (data === 'Registered') {
-      this.showExistsUser = false;
+    if (data.status === 200) {
       this.showRegisteredMessage = true;
 
       // hide register - show login

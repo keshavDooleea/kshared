@@ -1,10 +1,13 @@
-const User = require("./modals/user").User;
+const User = require("../modals/user").User;
+const wrapResponse = require("./wrap-response");
+
 const eventName = "registrationResponse";
+const errorMessage = "Sorry, an error has occured!";
 
 const registerUser = async (registerForm, socket) => {
   await User.findOne({ username: registerForm.username }, async (err, user) => {
     if (err) {
-      socket.emit(eventName, "Error");
+      socket.emit(eventName, wrapResponse(500, errorMessage));
     }
 
     // no user found
@@ -16,15 +19,18 @@ const registerUser = async (registerForm, socket) => {
         });
 
         await newUser.save();
-        socket.emit(eventName, "Registered");
+        const message = "Your account has been registered!";
+        socket.emit(eventName, wrapResponse(200, message));
       } catch (err) {
-        socket.emit(eventName, "Error");
+        socket.emit(eventName, wrapResponse(500, errorMessage));
       }
     }
 
     // user exists in db
     else {
-      socket.emit(eventName, "Exists");
+      const message = "This Username is taken";
+      console.log("INN");
+      socket.emit(eventName, wrapResponse(204, message));
     }
   });
 };

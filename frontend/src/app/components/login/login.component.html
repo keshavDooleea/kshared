@@ -25,12 +25,14 @@
               class="fas fa-check-circle"
               [ngClass]="
                 registerForm.get('username').hasError('shortError') ||
-                showExistsUser
+                serverResponse.status === 204
                   ? 'invalid-check'
                   : 'valid-check'
               "
             ></i>
-            <small *ngIf="showExistsUser">This Username is taken</small>
+            <small *ngIf="serverResponse.status === 204"
+              >This Username is taken</small
+            >
           </div>
         </div>
 
