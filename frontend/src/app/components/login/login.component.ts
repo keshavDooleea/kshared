@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { validateLength } from 'src/app/classes/validator';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
   shouldShowModal: boolean;
   registerForm: FormGroup;
 
-  constructor() {
+  constructor(private socket: SocketService) {
     this.isRegister = false;
     this.shouldShowModal = false;
 
@@ -56,7 +57,7 @@ export class LoginComponent implements OnInit {
       password: this.registerPassword,
     };
 
-    console.log(registerForm);
+    this.socket.emit('newRegistration', registerForm);
 
     // this.isRegister = false;
   }

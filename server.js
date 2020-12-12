@@ -10,6 +10,10 @@ const io = require("socket.io")(server, {
 io.on("connection", (socket) => {
   console.log("NEW USER");
 
+  socket.on("newRegistration", (data) => {
+    console.log(data);
+  });
+
   socket.emit("initialLanding", "GOT YOU");
 });
 
