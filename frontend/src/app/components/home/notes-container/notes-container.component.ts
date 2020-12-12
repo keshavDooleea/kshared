@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { NotesService } from 'src/app/services/notes/notes.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
@@ -8,8 +9,10 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   templateUrl: './notes-container.component.html',
   styleUrls: ['./notes-container.component.scss'],
 })
-export class NotesContainerComponent implements OnInit {
+export class NotesContainerComponent implements OnInit, OnDestroy {
   textareaValue: string;
+  private socketSubscription: Subscription;
+  private userSubscription: Subscription;
 
   constructor(
     private noteService: NotesService,
@@ -18,16 +21,13 @@ export class NotesContainerComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.socketService.listen('updatedText').subscribe((data) => {
-      console.log(data);
-      this.textareaValue = data;
-    });
+    this.subscribeToSocket();
+    this.subscribeToUser();
+  }
 
-    this.userService.getUserObservable().subscribe((user) => {
-      if (user) {
-        this.textareaValue = user.user.currentText;
-      }
-    });
+  ngOnDestroy(): void {
+    this.socketSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   saveTextarea(): void {
@@ -49,5 +49,24 @@ export class NotesContainerComponent implements OnInit {
 
   clearTextarea(): void {
     this.textareaValue = '';
+  }
+
+  private subscribeToSocket(): void {
+    this.socketSubscription = this.socketService
+      .listen('updatedText')
+      .subscribe((data) => {
+        console.log(data);
+        this.textareaValue = data;
+      });
+  }
+
+  private subscribeToUser(): void {
+    this.userSubscription = this.userService
+      .getUserObservable()
+      .subscribe((user) => {
+        if (user) {
+          this.textareaValue = user.user.currentText;
+        }
+      });
   }
 }

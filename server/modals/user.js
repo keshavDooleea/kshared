@@ -21,6 +21,13 @@ const UserSchema = new mongo.Schema({
   currentText: {
     type: String,
   },
+  notes: [
+    {
+      text: { type: String },
+      date: { type: Date },
+      canShow: { type: Boolean },
+    },
+  ],
 });
 
 var User = mongo.model("User", UserSchema);

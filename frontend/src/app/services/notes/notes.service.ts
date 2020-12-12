@@ -35,8 +35,7 @@ export class NotesService {
     });
 
     // save to server
-
-    this.noteSubscription.next(this.noteArray);
+    this.saveNote();
   }
 
   deleteNote(note: Note): void {
@@ -54,5 +53,15 @@ export class NotesService {
       text,
     };
     this.socket.emit('updateText', socketData);
+  }
+
+  private saveNote(): void {
+    if (this.currentUser) {
+      const socketData = {
+        token: this.currentUser.getToken(),
+        notes: this.noteArray,
+      };
+      this.socket.emit('saveNoteList', socketData);
+    }
   }
 }

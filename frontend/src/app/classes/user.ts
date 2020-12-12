@@ -1,9 +1,12 @@
+import { Note } from './Note';
+
 export interface CurrentUser {
   username: string;
   token: string;
   id: string;
   dateCreated: string;
-  currentText: string;
+  currentText?: string;
+  noteList?: Note[];
 }
 
 export class User {

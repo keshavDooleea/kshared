@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { Note } from 'src/app/classes/Note';
 import { NotesService } from 'src/app/services/notes/notes.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-note-list-container',
@@ -10,17 +12,27 @@ import { NotesService } from 'src/app/services/notes/notes.service';
 })
 export class NoteListContainerComponent implements OnInit, OnDestroy {
   private noteSubscription: Subscription;
+  private socketSubscription: Subscription;
+  private userSubscription: Subscription;
   noteList: Note[];
   filterText: string;
 
-  constructor(private noteService: NotesService) {}
+  constructor(
+    private noteService: NotesService,
+    private socketService: SocketService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.subscribeToNote();
+    this.subscribeToSocket();
+    this.subscribeToUser();
   }
 
   ngOnDestroy(): void {
     this.noteSubscription.unsubscribe();
+    this.socketSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   clearFilter(): void {
@@ -52,5 +64,23 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.noteList.forEach((note) => {
       note.canShow = note.text.includes(this.filterText);
     });
+  }
+
+  private subscribeToSocket(): void {
+    this.socketSubscription = this.socketService
+      .listen('getNotes')
+      .subscribe((data: Note[]) => {
+        this.noteList = data;
+      });
+  }
+
+  private subscribeToUser(): void {
+    this.userSubscription = this.userService
+      .getUserObservable()
+      .subscribe((user) => {
+        if (user) {
+          this.noteList = user.user.noteList;
+        }
+      });
   }
 }

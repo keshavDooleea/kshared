@@ -27,8 +27,6 @@ mongo.connect(
   }
 );
 
-const user = {};
-
 io.on("connection", (socket) => {
   console.log("NEW USER");
 
@@ -44,17 +42,14 @@ io.on("connection", (socket) => {
 
   // when browser refreshes, get user details
   socket.on("pageRefresh", async (data) => {
-    let decodedUser = jwt.verify(data, process.env.JWT_TOKEN);
-
-    user.username = decodedUser.username;
-    user.token = data;
-    user.id = decodedUser._id;
-    user.dateAccCreated = decodedUser.dateAccCreated;
-    console.log(user.id);
+    const user = findUser(data);
 
     try {
-      let currentUser = await User.findById(decodedUser._id);
-      user.currentText = currentUser.currentText; // add text to user info
+      let currentUser = await User.findById(user.id);
+
+      // update user details
+      user.currentText = currentUser.currentText;
+      user.noteList = currentUser.notes;
 
       socket.emit("initialLanding", user);
     } catch (error) {
@@ -63,19 +58,46 @@ io.on("connection", (socket) => {
   });
 
   socket.on("updateText", async (data) => {
+    const user = findUser(data.token);
+
     try {
-      console.log(user.id);
       let currentUser = await User.findById(user.id);
       currentUser.currentText = data.text;
       await currentUser.save();
 
-      user.currentText = currentUser.currentText; // add text to user
-
-      io.emit("updatedText", user.currentText);
+      io.emit("updatedText", currentUser.currentText);
     } catch (error) {
       console.log("Updating current text error: ", error);
     }
   });
+
+  socket.on("saveNoteList", async (data) => {
+    const user = findUser(data.token);
+
+    try {
+      let currentUser = await User.findById(user.id);
+      data.notes.forEach((note) => {
+        currentUser.notes.push(note);
+      });
+      await currentUser.save();
+
+      io.emit("getNotes", currentUser.notes);
+    } catch (error) {
+      console.log("Updating current note error: ", error);
+    }
+  });
 });
+
+const findUser = (data) => {
+  let decodedUser = jwt.verify(data, process.env.JWT_TOKEN);
+  const user = {};
+
+  user.username = decodedUser.username;
+  user.token = data;
+  user.id = decodedUser._id;
+  user.dateAccCreated = decodedUser.dateAccCreated;
+
+  return user;
+};
 
 server.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`));
