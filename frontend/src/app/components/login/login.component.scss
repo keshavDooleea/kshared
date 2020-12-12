@@ -205,6 +205,25 @@
   }
 }
 
+.registration-response {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: styles.$validColor;
+  padding: 10px 20px;
+  border-radius: styles.$smallBorderRadius;
+  letter-spacing: 0.3s;
+  transition: 0.7s bottom cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.show-response {
+  bottom: 5vh;
+}
+
+.hide-response {
+  bottom: -10vh;
+}
+
 .pop-btn {
   animation: pop-out 2s infinite ease-in-out;
 }

@@ -24,11 +24,13 @@
             <i
               class="fas fa-check-circle"
               [ngClass]="
-                registerForm.get('username').hasError('shortError')
+                registerForm.get('username').hasError('shortError') ||
+                showExistsUser
                   ? 'invalid-check'
                   : 'valid-check'
               "
             ></i>
+            <small *ngIf="showExistsUser">This Username is taken</small>
           </div>
         </div>
 
@@ -166,6 +168,13 @@
       </div>
     </div>
   </div>
+
+  <p
+    class="registration-response"
+    [ngClass]="showRegisteredMessage ? 'show-response' : 'hide-response'"
+  >
+    Your account has been registered!
+  </p>
 
   <div
     class="why-modal"

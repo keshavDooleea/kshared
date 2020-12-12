@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { validateLength } from 'src/app/classes/validator';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
@@ -8,19 +9,21 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   isRegister: boolean;
   shouldShowModal: boolean;
   registerForm: FormGroup;
+  showExistsUser: boolean;
+  showRegisteredMessage: boolean;
+  private socketSubscription: Subscription;
 
   constructor(private socket: SocketService) {
-    this.isRegister = false;
-    this.shouldShowModal = false;
-
     this.initialiseRegisterForm();
   }
 
   initialiseRegisterForm(): void {
+    this.showExistsUser = false;
+    this.isRegister = false;
     this.registerForm = new FormGroup({
       username: new FormControl(
         '',
@@ -39,8 +42,11 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  ngOnDestroy(): void {
+    this.socketSubscription.unsubscribe();
+  }
+
   onCancelClicked(): void {
-    this.isRegister = false;
     this.initialiseRegisterForm();
   }
 
@@ -59,7 +65,11 @@ export class LoginComponent implements OnInit {
 
     this.socket.emit('newRegistration', registerForm);
 
-    // this.isRegister = false;
+    this.socketSubscription = this.socket
+      .listen('registrationResponse')
+      .subscribe((data) => {
+        this.handleRegistrationResponse(data);
+      });
   }
 
   onSignUpClicked(): void {
@@ -70,6 +80,27 @@ export class LoginComponent implements OnInit {
 
   toggleModal(): void {
     this.shouldShowModal = !this.shouldShowModal;
+  }
+
+  private handleRegistrationResponse(data: string): void {
+    console.log(`Registration response: ${data}`);
+
+    if (data === 'Exists') {
+      this.showExistsUser = true;
+    } else if (data === 'Registered') {
+      this.showExistsUser = false;
+      this.showRegisteredMessage = true;
+
+      // hide register - show login
+      setTimeout(() => {
+        this.initialiseRegisterForm();
+      }, 500);
+
+      // hide message
+      setTimeout(() => {
+        this.showRegisteredMessage = false;
+      }, 2700);
+    }
   }
 
   get registerUsername(): string {
