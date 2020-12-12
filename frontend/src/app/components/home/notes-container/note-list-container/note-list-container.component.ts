@@ -69,7 +69,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
       .getUserObservable()
       .subscribe((user) => {
         if (user) {
-          this.noteList = user.user.noteList;
+          this.noteList = user.user.noteList ?? [];
           this.noteService.setNotes(this.noteList);
         }
       });

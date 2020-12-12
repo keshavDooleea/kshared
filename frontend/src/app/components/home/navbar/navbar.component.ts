@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 import { CurrentUser, User } from 'src/app/classes/user';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-navbar',
@@ -22,7 +23,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private localStorage: LocalStorageService,
-    private userService: UserService
+    private userService: UserService,
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +42,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   onLogOutClicked(): void {
+    const token = this.localStorage.getToken();
     this.localStorage.clearToken();
+    this.socketService.emit('onLogOut', token);
   }
 
   showNavbar(): void {

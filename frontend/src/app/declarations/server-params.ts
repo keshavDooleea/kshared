@@ -1,3 +1,5 @@
+import { Note } from '../classes/Note';
+
 export const SERVER_URL = 'http://localhost:5000/';
 
 export interface ServerResponse {
@@ -7,4 +9,6 @@ export interface ServerResponse {
   username?: string;
   id?: string;
   dateAccCreated: string;
+  currentText: string;
+  noteList: Note[];
 }

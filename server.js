@@ -27,8 +27,11 @@ mongo.connect(
   }
 );
 
+let currentTypingText = "";
+
 io.on("connection", (socket) => {
   console.log("NEW USER");
+  let token = socket.handshake.query.token;
 
   // new user has registered an acc
   socket.on("newRegistration", async (data) => {
@@ -37,7 +40,11 @@ io.on("connection", (socket) => {
 
   // user has logged in
   socket.on("newUserLogin", async (data) => {
-    await userLogin(data, socket);
+    token = await userLogin(data, socket);
+  });
+
+  socket.on("onLogOut", (oldToken) => {
+    saveText(oldToken);
   });
 
   // when browser refreshes, get user details
@@ -58,27 +65,21 @@ io.on("connection", (socket) => {
   });
 
   socket.on("updateText", async (data) => {
-    const user = findUser(data.token);
-
     try {
-      let currentUser = await User.findById(user.id);
-      currentUser.currentText = data.text;
-      await currentUser.save();
+      currentTypingText = data.text;
 
-      io.emit("updatedText", currentUser.currentText);
+      io.emit("updatedText", currentTypingText);
     } catch (error) {
       console.log("Updating current text error: ", error);
     }
   });
 
+  // new note being saved
   socket.on("saveNoteList", async (data) => {
     const user = findUser(data.token);
 
     try {
       let currentUser = await User.findById(user.id);
-      // data.notes.forEach((note) => {
-      //   currentUser.notes.push(note);
-      // });
       currentUser.notes = data.notes;
       await currentUser.save();
 
@@ -86,6 +87,10 @@ io.on("connection", (socket) => {
     } catch (error) {
       console.log("Updating current note error: ", error);
     }
+  });
+
+  socket.on("disconnect", () => {
+    saveText(token);
   });
 });
 
@@ -99,6 +104,19 @@ const findUser = (data) => {
   user.dateAccCreated = decodedUser.dateAccCreated;
 
   return user;
+};
+
+const saveText = async (token) => {
+  if (!token) return;
+  const user = findUser(token);
+
+  try {
+    let currentUser = await User.findById(user.id);
+    currentUser.currentText = currentTypingText;
+    await currentUser.save();
+  } catch (err) {
+    console.log("Disconnect error: ", err);
+  }
 };
 
 server.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`));

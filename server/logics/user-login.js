@@ -47,8 +47,11 @@ const userLogin = async (loginForm, socket) => {
             id: userFound._id,
             dateAccCreated: userFound.dateAccCreated,
             currentText: userFound.currentText,
+            noteList: userFound.notes,
           };
+
           socket.emit(eventName, response);
+          return token;
         }
       });
     }
