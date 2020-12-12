@@ -32,6 +32,5 @@ export class UserService {
 
   setCurrentText(newText: string): void {
     this.currentUser.user.currentText = newText;
-    this.behaviorSubject.next(this.currentUser);
   }
 }

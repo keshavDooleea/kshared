@@ -37,6 +37,8 @@ const userLogin = async (loginForm, socket) => {
           // generate jwt token
           let token = jwt.sign(loggedUser, process.env.JWT_TOKEN, {});
 
+          console.log(userFound);
+
           const response = {
             status: 200,
             token: token,
@@ -44,6 +46,7 @@ const userLogin = async (loginForm, socket) => {
             message: "Signed in",
             id: userFound._id,
             dateAccCreated: userFound.dateAccCreated,
+            currentText: userFound.currentText,
           };
           socket.emit(eventName, response);
         }

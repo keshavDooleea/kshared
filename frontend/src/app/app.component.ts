@@ -34,11 +34,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
     if (token) {
       // this.router.navigateByUrl('/home');
-      this.socketService.emit('JWT', token);
+      this.socketService.emit('pageRefresh', token);
       this.socketSubscription = this.socketService
         .listen('initialLanding')
         .subscribe((data) => {
-          const user = new User(JSON.parse(data));
+          const user = new User(data);
           this.userService.setUser(user);
         });
     }

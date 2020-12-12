@@ -6,5 +6,5 @@ export interface ServerResponse {
   token?: string;
   username?: string;
   id?: string;
-  dateCreated: string;
+  dateAccCreated: string;
 }

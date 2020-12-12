@@ -163,9 +163,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         id: data.id,
         username: data.username,
         token: data.token,
-        dateCreated: data.dateCreated,
+        dateCreated: data.dateAccCreated,
       };
       const user = new User(currentUser);
+      console.log(user);
       this.userService.setUser(user);
       this.localStorage.saveToken();
       this.router.navigateByUrl('/home');

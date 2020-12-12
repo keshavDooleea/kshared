@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NotesService } from 'src/app/services/notes/notes.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-notes-container',
@@ -9,9 +11,24 @@ import { NotesService } from 'src/app/services/notes/notes.service';
 export class NotesContainerComponent implements OnInit {
   textareaValue: string;
 
-  constructor(private noteService: NotesService) {}
+  constructor(
+    private noteService: NotesService,
+    private socketService: SocketService,
+    private userService: UserService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.socketService.listen('updatedText').subscribe((data) => {
+      console.log(data);
+      this.textareaValue = data;
+    });
+
+    this.userService.getUserObservable().subscribe((user) => {
+      if (user) {
+        this.textareaValue = user.user.currentText;
+      }
+    });
+  }
 
   saveTextarea(): void {
     if (!this.textareaValue) {

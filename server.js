@@ -27,6 +27,8 @@ mongo.connect(
   }
 );
 
+const user = {};
+
 io.on("connection", (socket) => {
   console.log("NEW USER");
 
@@ -41,28 +43,35 @@ io.on("connection", (socket) => {
   });
 
   // when browser refreshes, get user details
-  socket.on("JWT", (data) => {
+  socket.on("pageRefresh", async (data) => {
     let decodedUser = jwt.verify(data, process.env.JWT_TOKEN);
 
-    const userInfo = {
-      username: decodedUser.username,
-      token: data,
-      id: decodedUser._id,
-      dateCreated: decodedUser.dateAccCreated,
-    };
-
-    socket.emit("initialLanding", JSON.stringify(userInfo));
-  });
-
-  socket.on("updateText", async (data) => {
-    let decodedUser = jwt.verify(data.token, process.env.JWT_TOKEN);
+    user.username = decodedUser.username;
+    user.token = data;
+    user.id = decodedUser._id;
+    user.dateAccCreated = decodedUser.dateAccCreated;
+    console.log(user.id);
 
     try {
       let currentUser = await User.findById(decodedUser._id);
+      user.currentText = currentUser.currentText; // add text to user info
+
+      socket.emit("initialLanding", user);
+    } catch (error) {
+      console.log("Updating current text error: ", error);
+    }
+  });
+
+  socket.on("updateText", async (data) => {
+    try {
+      console.log(user.id);
+      let currentUser = await User.findById(user.id);
       currentUser.currentText = data.text;
       await currentUser.save();
 
-      socket.emit("updatedDBText", currentUser.currentText);
+      user.currentText = currentUser.currentText; // add text to user
+
+      io.emit("updatedText", user.currentText);
     } catch (error) {
       console.log("Updating current text error: ", error);
     }
