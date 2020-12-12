@@ -2,7 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
+import { User } from './classes/user';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
+import { UserService } from './services/user/user.service';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +17,12 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private socketService: SocketService,
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.checkUser();
-
-    this.socketSubscription = this.socketService
-      .listen('initialLanding')
-      .subscribe((data) => {
-        console.log(data);
-      });
   }
 
   ngOnDestroy(): void {
@@ -36,7 +33,14 @@ export class AppComponent implements OnInit, OnDestroy {
     const token = this.localStorage.getToken();
 
     if (token) {
-      this.router.navigateByUrl('/home');
+      // this.router.navigateByUrl('/home');
+      this.socketService.emit('JWT', token);
+      this.socketSubscription = this.socketService
+        .listen('initialLanding')
+        .subscribe((data) => {
+          const user = new User(JSON.parse(data));
+          this.userService.setUser(user);
+        });
     }
   }
 }

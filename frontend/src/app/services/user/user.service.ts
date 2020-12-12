@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from 'src/app/classes/user';
 
 @Injectable({
@@ -6,15 +7,23 @@ import { User } from 'src/app/classes/user';
 })
 export class UserService {
   private currentUser: User;
+  private behaviorSubject: BehaviorSubject<User>;
 
-  constructor() {}
+  constructor() {
+    this.behaviorSubject = new BehaviorSubject<User>(this.currentUser);
+  }
 
   setUser(newUser: User): void {
     this.currentUser = newUser;
+    this.behaviorSubject.next(this.currentUser);
   }
 
   getUser(): User {
     return this.currentUser;
+  }
+
+  getUserObservable(): Observable<User> {
+    return this.behaviorSubject.asObservable();
   }
 
   getToken(): string {
