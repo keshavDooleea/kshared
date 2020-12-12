@@ -42,6 +42,8 @@ const userLogin = async (loginForm, socket) => {
             token: token,
             username: loggedUser.username,
             message: "Signed in",
+            id: userFound._id,
+            dateAccCreated: userFound.dateAccCreated,
           };
           socket.emit(eventName, response);
         }

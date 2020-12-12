@@ -1,8 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { CurrentUser, User } from 'src/app/classes/user';
 import { validateLength } from 'src/app/classes/validator';
 import { ServerResponse } from 'src/app/declarations/server-params';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
@@ -19,7 +23,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   showRegisteredMessage: boolean;
   private socketSubscription: Subscription;
 
-  constructor(private socket: SocketService) {
+  constructor(
+    private socket: SocketService,
+    private userService: UserService,
+    private localStorage: LocalStorageService,
+    private router: Router
+  ) {
     this.initialiseRegisterForm();
   }
 
@@ -135,7 +144,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.serverResponse = data;
 
     if (data.status === 200) {
-      console.log(data);
+      const currentUser: CurrentUser = {
+        id: data.id,
+        username: data.username,
+        token: data.token,
+        dateCreated: data.dateCreated,
+      };
+      const user = new User(currentUser);
+      this.userService.setUser(user);
+      this.localStorage.saveToken();
+      this.router.navigateByUrl('/home');
     }
   }
 
