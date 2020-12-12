@@ -6,7 +6,7 @@
   </div>
   <div class="entry-containers">
     <div class="register-container">
-      <div class="main">
+      <Form class="main" [formGroup]="registerForm">
         <div class="user-input">
           <div class="input-parent">
             <input
@@ -16,8 +16,19 @@
               autocomplete="off"
               spellcheck="false"
               maxlength="10"
+              formControlName="username"
             />
-            <small>Min 5 characters required</small>
+            <small *ngIf="registerForm.get('username').hasError('shortError')"
+              >Min 5 characters required</small
+            >
+            <i
+              class="fas fa-check-circle"
+              [ngClass]="
+                registerForm.get('username').hasError('shortError')
+                  ? 'invalid-check'
+                  : 'valid-check'
+              "
+            ></i>
           </div>
         </div>
 
@@ -28,9 +39,21 @@
               placeholder="Password"
               type="text"
               autocomplete="off"
+              maxlength="10"
               spellcheck="false"
+              formControlName="password"
             />
-            <small>Min 5 characters required</small>
+            <small *ngIf="registerForm.get('password').hasError('shortError')"
+              >Min 5 characters required</small
+            >
+            <i
+              class="fas fa-check-circle"
+              [ngClass]="
+                registerForm.get('password').hasError('shortError')
+                  ? 'invalid-check'
+                  : 'valid-check'
+              "
+            ></i>
           </div>
         </div>
 
@@ -41,21 +64,51 @@
               placeholder="Confirm Password"
               type="text"
               autocomplete="off"
+              maxlength="10"
               spellcheck="false"
+              formControlName="confirmPassword"
             />
-            <small>Passwords do not match!</small>
+            <small
+              *ngIf="
+                registerForm.get('confirmPassword').value.length > 0 &&
+                registerForm.get('password').value !==
+                  registerForm.get('confirmPassword').value
+              "
+              >Passwords do not match</small
+            >
+            <i
+              class="fas fa-check-circle"
+              [ngClass]="
+                registerForm.get('confirmPassword').value.length === 0 ||
+                registerForm.get('password').value !==
+                  registerForm.get('confirmPassword').value
+                  ? 'invalid-check'
+                  : 'valid-check'
+              "
+            ></i>
           </div>
         </div>
 
         <div class="actions">
-          <button type="submit" class="btn" (click)="onRegisterClicked()">
+          <button
+            type="submit"
+            class="btn"
+            (click)="onRegisterClicked()"
+            [ngClass]="
+              registerForm.invalid ||
+              registerForm.get('password').value !==
+                registerForm.get('confirmPassword').value
+                ? 'disable-btn'
+                : 'enable-btn pop-btn'
+            "
+          >
             <h4>Register</h4>
           </button>
           <button class="btn" (click)="onCancelClicked()">
             <h4>Cancel</h4>
           </button>
         </div>
-      </div>
+      </Form>
 
       <div class="sidebar">
         <span>R</span>

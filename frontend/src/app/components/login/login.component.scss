@@ -113,6 +113,24 @@
           styles.$smallBorderRadius styles.$smallBorderRadius;
       }
 
+      i {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: styles.$validColor;
+        transition: 0.3s right, 0.3s opacity;
+
+        &.invalid-check {
+          right: -5px;
+          opacity: 0;
+        }
+
+        &.valid-check {
+          right: 15px;
+          opacity: 1;
+        }
+      }
+
       small {
         position: absolute;
         color: styles.$invalidColor;
@@ -184,5 +202,21 @@
   }
   .login-container {
     transform: translateX(0);
+  }
+}
+
+.pop-btn {
+  animation: pop-out 2s infinite ease-in-out;
+}
+
+@keyframes pop-out {
+  0% {
+    transform: scale(0.98);
+  }
+  50% {
+    transform: scale(1.03);
+  }
+  100% {
+    transform: scale(0.98);
   }
 }

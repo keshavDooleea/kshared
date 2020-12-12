@@ -9,6 +9,7 @@ $itemHover: #dcddde;
 $modalBkg: #18191c;
 $btnColor: #677bc4;
 $invalidColor: #ed5269;
+$validColor: #abe8ab;
 
 @mixin displayFlex($dir, $align, $justify) {
   display: flex;
@@ -72,6 +73,7 @@ input {
   padding: 6px 0;
   background-color: #68727f;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  transition: 0.15s opacity;
 
   h4 {
     text-align: center;
@@ -87,4 +89,14 @@ input {
   &:active {
     filter: brightness(1.2);
   }
+}
+
+.disable-btn {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
+.enable-btn {
+  pointer-events: all;
+  opacity: 1;
 }
