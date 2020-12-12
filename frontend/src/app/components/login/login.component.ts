@@ -21,12 +21,14 @@ export class LoginComponent implements OnInit {
   }
 
   onRegisterClicked(): void {
-    this.isRegister = false;
+    // this.isRegister = false;
   }
 
   onSignUpClicked(): void {
     this.isRegister = true;
   }
+
+  onLoginClicked(): void {}
 
   toggleModal(): void {
     this.shouldShowModal = !this.shouldShowModal;

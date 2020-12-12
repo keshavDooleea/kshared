@@ -7,20 +7,53 @@
   <div class="entry-containers">
     <div class="register-container">
       <div class="main">
-        <div class="main">
-          <div class="user-input">
-            <input type="text" placeholder="Username" />
+        <div class="user-input">
+          <div class="input-parent">
+            <input
+              type="text"
+              placeholder="Username"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              maxlength="10"
+            />
+            <small>Min 5 characters required</small>
           </div>
-          <div class="user-input">
-            <input type="text" placeholder="Password" />
+        </div>
+
+        <div class="user-input">
+          <div class="input-parent">
+            <input
+              type="text"
+              placeholder="Password"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <small>Min 5 characters required</small>
           </div>
-          <div class="user-input">
-            <input type="text" placeholder="Confirm Password" />
+        </div>
+
+        <div class="user-input">
+          <div class="input-parent">
+            <input
+              type="text"
+              placeholder="Confirm Password"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <small>Passwords do not match!</small>
           </div>
-          <div class="actions">
-            <button (click)="onRegisterClicked()">Register</button>
-            <button (click)="onCancelClicked()">Cancel</button>
-          </div>
+        </div>
+
+        <div class="actions">
+          <button type="submit" class="btn" (click)="onRegisterClicked()">
+            <h4>Register</h4>
+          </button>
+          <button class="btn" (click)="onCancelClicked()">
+            <h4>Cancel</h4>
+          </button>
         </div>
       </div>
 
@@ -45,14 +78,37 @@
       </div>
       <div class="main">
         <div class="user-input">
-          <input type="text" placeholder="Username" />
+          <div class="input-parent">
+            <input
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="Username"
+            />
+            <small>"SXS"</small>
+          </div>
         </div>
+
         <div class="user-input">
-          <input type="text" placeholder="Password" />
+          <div class="input-parent">
+            <input
+              type="text"
+              placeholder="Password"
+              type="text"
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <small> inputMessage.loginPassword </small>
+          </div>
         </div>
         <div class="actions">
-          <button routerLink="/home">Login</button>
-          <button (click)="onSignUpClicked()">Sign Up</button>
+          <button class="btn" (click)="onLoginClicked()">
+            <h4>Login</h4>
+          </button>
+          <!-- <button routerLink="/home">Login</button> -->
+          <button class="btn" (click)="onSignUpClicked()">
+            <h4>Sign Up</h4>
+          </button>
         </div>
       </div>
     </div>
