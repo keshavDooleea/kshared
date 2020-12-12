@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { LoginService } from 'src/app/services/auth/login.service';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FilesContainerComponent } from './components/home/files-container/files-container.component';
@@ -23,7 +24,7 @@ import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
     SafeUrlPipe,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
-  providers: [],
+  providers: [{ provide: LoginService, useClass: LoginService }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

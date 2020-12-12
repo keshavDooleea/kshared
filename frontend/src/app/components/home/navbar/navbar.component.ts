@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,12 +9,12 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class NavbarComponent implements OnInit {
   @Output() showNavbarEmitter = new EventEmitter<boolean>();
 
-  constructor() {}
+  constructor(private localStorage: LocalStorageService) {}
 
   ngOnInit(): void {}
 
   onLogOutClicked(): void {
-    console.log('Logged out clicked');
+    this.localStorage.clearToken();
   }
 
   showNavbar(): void {
