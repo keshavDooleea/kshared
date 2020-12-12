@@ -42,7 +42,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   }
 
   onNoteClicked(note: Note): void {
-    console.log(note);
+    this.noteService.saveCurrentText(note.text);
   }
 
   deleteNote(note: Note): void {
