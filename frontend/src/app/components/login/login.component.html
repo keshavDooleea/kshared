@@ -17,6 +17,7 @@
               spellcheck="false"
               maxlength="10"
               formControlName="username"
+              (keydown)="onInputKeydown()"
             />
             <small *ngIf="registerForm.get('username').hasError('shortError')"
               >Min 5 characters required</small
@@ -46,6 +47,7 @@
               maxlength="10"
               spellcheck="false"
               formControlName="password"
+              (keydown)="onInputKeydown()"
             />
             <small *ngIf="registerForm.get('password').hasError('shortError')"
               >Min 5 characters required</small
@@ -142,6 +144,7 @@
               spellcheck="false"
               placeholder="Username"
               formControlName="loginUsername"
+              (keydown)="onInputKeydown()"
             />
             <small *ngIf="loginForm.get('loginUsername').hasError('shortError')"
               >Min 5 characters required</small
@@ -170,6 +173,7 @@
               autocomplete="off"
               spellcheck="false"
               formControlName="loginPassword"
+              (keydown)="onInputKeydown()"
             />
             <small *ngIf="loginForm.get('loginPassword').hasError('shortError')"
               >Min 5 characters required</small

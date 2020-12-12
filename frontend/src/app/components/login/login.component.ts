@@ -73,6 +73,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initialiseRegisterForm();
   }
 
+  onInputKeydown(): void {
+    this.serverResponse = {} as ServerResponse;
+  }
+
   onRegisterClicked(): void {
     if (
       this.registerForm.invalid ||
@@ -130,12 +134,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
       // hide register - show login
       setTimeout(() => {
-        this.initialiseRegisterForm();
+        this.isRegister = false;
       }, 500);
 
       // hide message
       setTimeout(() => {
         this.showRegisteredMessage = false;
+        this.initialiseRegisterForm();
       }, 2700);
     }
   }
