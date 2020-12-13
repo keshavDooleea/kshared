@@ -217,11 +217,8 @@
     Your account has been registered!
   </p>
 
-  <div
-    class="why-modal"
-    [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'"
-  >
-    <div class="why-body">
+  <div class="modal" [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'">
+    <div class="modal-body">
       <button (click)="toggleModal()">Close</button>
     </div>
   </div>

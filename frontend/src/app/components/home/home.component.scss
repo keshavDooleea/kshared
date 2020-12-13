@@ -58,7 +58,7 @@ app-notes-container {
     height: 60%;
 
     small {
-      color: #72767d;
+      color: styles.$fadeText;
       font-weight: bolder;
       letter-spacing: 0.4px;
     }
@@ -131,4 +131,97 @@ app-notes-container {
   left: 0;
   width: 3px;
   height: 100%;
+}
+
+.modal-delete-body {
+  @include styles.displayFlex(column, center, space-around);
+
+  span {
+    width: 100%;
+    height: 40%;
+    @include styles.displayFlex(column, center, flex-end);
+    letter-spacing: 0.7px;
+    padding-bottom: 20px;
+
+    h2 {
+      color: white;
+    }
+
+    p {
+      color: styles.$fadeText;
+      font-weight: bolder;
+    }
+  }
+
+  div {
+    width: 70%;
+    height: 20%;
+    @include styles.displayFlex(row, flex-end, space-around);
+
+    .btn {
+      padding: 10px 15px;
+      color: white;
+      position: relative;
+
+      h4 {
+        letter-spacing: 0.5px;
+        transition: 0.3s transform, 0.2s opacity;
+      }
+
+      &.delete-btn {
+        background-color: #f72f4e;
+      }
+
+      .btn-icon {
+        position: absolute;
+        top: -10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: 0.3s top, 0.2s opacity;
+        pointer-events: none;
+
+        &.wave-btn-icon {
+          animation: none;
+        }
+      }
+
+      &:hover {
+        h4 {
+          transform: translateY(110%);
+          opacity: 0;
+        }
+        .btn-icon {
+          top: 50%;
+          opacity: 1;
+          pointer-events: auto;
+
+          &.wave-btn-icon {
+            animation: wave 2s infinite cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+            @keyframes wave {
+              0% {
+                transform: translate(-50%, -50%) rotate(20deg);
+              }
+              50% {
+                transform: translate(-50%, -50%) rotate(70deg);
+              }
+              100% {
+                transform: translate(-50%, -50%) rotate(20deg);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .bye-bottom-msg {
+    width: 100%;
+    height: 30%;
+    @include styles.displayFlex(column, center, center);
+    color: styles.$fadeText;
+    font-weight: bolder;
+    letter-spacing: 0.8px;
+  }
 }

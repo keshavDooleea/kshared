@@ -26,47 +26,6 @@
   }
 }
 
-.why-modal {
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
-  top: 0%;
-  left: 0%;
-  transition: 0.4s opacity, 0.5s clip-path;
-  @include styles.displayFlex(row, center, center);
-  user-select: none;
-
-  .why-body {
-    width: 50vw;
-    height: 70vh;
-    border-radius: styles.$borderRadius;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-    background-color: styles.$containers;
-    transition: 0.3s transform;
-  }
-
-  &.show-modal {
-    pointer-events: all;
-    opacity: 1;
-    clip-path: circle(100% at 50% 50%);
-
-    .why-body {
-      transform: scale(1);
-    }
-  }
-
-  &.hide-modal {
-    pointer-events: none;
-    opacity: 0;
-    clip-path: circle(30% at 50% 50%);
-
-    .why-body {
-      transform: scale(0);
-    }
-  }
-}
-
 .entry-containers {
   width: 100%;
   height: 90vh;

@@ -13,6 +13,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 export class HomeComponent implements OnInit, OnDestroy {
   showNavbar: boolean;
   user: CurrentUser;
+  shouldShowModal: boolean;
   private userSubscription: Subscription;
 
   constructor(
@@ -39,6 +40,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   hideNav(): void {
     this.showNavbar = false;
+  }
+
+  toggleModal(): void {
+    this.shouldShowModal = !this.shouldShowModal;
   }
 
   onDeleteAccount(): void {
