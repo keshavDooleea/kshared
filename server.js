@@ -27,8 +27,6 @@ mongo.connect(
   }
 );
 
-let currentTypingText = "";
-
 io.on("connection", (socket) => {
   console.log("NEW USER");
   let token = socket.handshake.query.token;
@@ -44,7 +42,6 @@ io.on("connection", (socket) => {
   });
 
   socket.on("onLogOut", (oldToken) => {
-    saveText(oldToken);
     io.emit("appLogOut");
   });
 
@@ -66,9 +63,7 @@ io.on("connection", (socket) => {
     await saveNoteList(data, io);
   });
 
-  socket.on("disconnect", async () => {
-    await saveText(token);
-  });
+  socket.on("disconnect", async () => {});
 });
 
 const deleteAccount = async (token) => {
@@ -99,9 +94,12 @@ const pageRefresh = async (data, socket) => {
 
 const updateText = async (data, io) => {
   try {
-    currentTypingText = data.text;
-
-    io.emit("updatedText", currentTypingText);
+    // send back text straight away
+    io.emit("updatedText", data.text);
+    const user = findUser(data.token);
+    const dbUser = await User.findById(user.id);
+    dbUser.currentText = data.text;
+    dbUser.save();
   } catch (error) {
     console.log("Updating current text error: ", error);
   }
@@ -131,19 +129,6 @@ const findUser = (data) => {
   user.dateAccCreated = decodedUser.dateAccCreated;
 
   return user;
-};
-
-const saveText = async (token) => {
-  if (!token) return;
-  const user = findUser(token);
-
-  try {
-    let currentUser = await User.findById(user.id);
-    currentUser.currentText = currentTypingText;
-    await currentUser.save();
-  } catch (err) {
-    console.log("Disconnect error: ", err);
-  }
 };
 
 server.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`));
