@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserService } from '../user/user.service';
 
 const STORAGE_KEY = 'kshared-user';
@@ -7,7 +8,7 @@ const STORAGE_KEY = 'kshared-user';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   saveToken(): void {
     const token: string = this.userService.getToken();
@@ -20,5 +21,6 @@ export class LocalStorageService {
 
   clearToken(): void {
     localStorage.removeItem(STORAGE_KEY);
+    this.router.navigateByUrl('/login');
   }
 }

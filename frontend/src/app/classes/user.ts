@@ -4,7 +4,7 @@ export interface CurrentUser {
   username: string;
   token: string;
   id: string;
-  dateCreated: string;
+  dateAccCreated: string;
   currentText?: string;
   noteList?: Note[];
 }

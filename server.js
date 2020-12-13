@@ -47,6 +47,16 @@ io.on("connection", (socket) => {
     saveText(oldToken);
   });
 
+  socket.on("deleteAccount", async (token) => {
+    const user = findUser(token);
+
+    try {
+      await User.findByIdAndDelete(user.id);
+    } catch (err) {
+      console.log("Delete account error: ", err);
+    }
+  });
+
   // when browser refreshes, get user details
   socket.on("pageRefresh", async (data) => {
     const user = findUser(data);

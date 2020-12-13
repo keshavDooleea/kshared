@@ -163,7 +163,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         id: data.id,
         username: data.username,
         token: data.token,
-        dateCreated: data.dateAccCreated,
+        dateAccCreated: data.dateAccCreated,
         currentText: data.currentText,
         noteList: data.noteList,
       };

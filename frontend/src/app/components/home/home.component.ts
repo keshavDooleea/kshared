@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/classes/user';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +15,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   user: CurrentUser;
   private userSubscription: Subscription;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private localStorage: LocalStorageService,
+    private socketService: SocketService
+  ) {}
 
   ngOnInit(): void {
     this.subscribeToUser();
@@ -35,12 +41,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showNavbar = false;
   }
 
+  onDeleteAccount(): void {
+    const token = this.localStorage.getToken();
+    this.localStorage.clearToken();
+    this.socketService.emit('deleteAccount', token);
+  }
+
   private subscribeToUser(): void {
     this.userSubscription = this.userService
       .getUserObservable()
       .subscribe((user) => {
         if (user) {
           this.user = user.user;
+          console.log(this.user.dateAccCreated);
         }
       });
   }
