@@ -2,7 +2,20 @@
   class="home-container"
   [ngClass]="showNavbar ? 'show-navbar' : 'hide-navbar'"
 >
-  <div class="sidebar" (mouseover)="showNav()" (mouseleave)="hideNav()"></div>
+  <div class="sidebar" (mouseover)="showNav()" (mouseleave)="hideNav()">
+    <div class="sidebar-main"></div>
+    <div class="sidebar-account">
+      <span class="acc-date">
+        <small class="side-delay">Account Created on</small>
+        <h3 class="side-delay">
+          {{ user?.dateAccCreated | date: "mediumDate" }}
+        </h3>
+      </span>
+      <div class="acc-btn">
+        <button class="btn side-delay-lr"><h4>Delete Account</h4></button>
+      </div>
+    </div>
+  </div>
   <div class="main-app">
     <app-navbar (showNavbarEmitter)="onNavbarChanged($event)"></app-navbar>
     <app-notes-container></app-notes-container>

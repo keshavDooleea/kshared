@@ -33,6 +33,59 @@ app-notes-container {
   border-radius: 0 styles.$borderRadius styles.$borderRadius 0;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   z-index: 3;
+  @include styles.displayFlex(column, center, space-between);
+  padding: 15px 0;
+  overflow: hidden;
+  width: 15%;
+}
+
+.sidebar-main {
+  width: 90%;
+  height: 60%;
+}
+
+.sidebar-account {
+  width: 90%;
+  height: 30%;
+  background-color: styles.$containers;
+  border-radius: styles.$borderRadius;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  @include styles.displayFlex(column, center, center);
+  padding: 5px;
+
+  .acc-date {
+    width: 100%;
+    height: 60%;
+
+    small {
+      color: #72767d;
+      font-weight: bolder;
+      letter-spacing: 0.4px;
+    }
+
+    h3 {
+      color: white;
+      margin-top: 5px;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .acc-btn {
+    width: 100%;
+    height: 40%;
+    @include styles.displayFlex(column, center, center);
+
+    .btn {
+      padding: 10px 15px;
+      background-color: #f72f4e;
+      color: white;
+
+      h4 {
+        letter-spacing: 0.5px;
+      }
+    }
+  }
 }
 
 .show-navbar {
@@ -41,6 +94,13 @@ app-notes-container {
   }
   .sidebar {
     width: 15%;
+
+    .side-delay,
+    .side-delay-lr {
+      transition: 0.8s clip-path;
+      transition-delay: 0.2s;
+      clip-path: inset(0 0 0 0);
+    }
   }
 }
 
@@ -50,6 +110,18 @@ app-notes-container {
   }
   .sidebar {
     width: 0;
+
+    .side-delay {
+      transition: 0.15s clip-path;
+      transition-delay: 0s;
+      clip-path: inset(0 0 0 100%);
+    }
+
+    .side-delay-lr {
+      transition: 0.15s clip-path;
+      transition-delay: 0s;
+      clip-path: inset(0 100% 0 0);
+    }
   }
 }
 
