@@ -23,6 +23,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.checkUser();
+    this.onLogOut();
   }
 
   ngOnDestroy(): void {
@@ -42,5 +43,13 @@ export class AppComponent implements OnInit, OnDestroy {
           this.userService.setUser(user);
         });
     }
+  }
+
+  private onLogOut(): void {
+    this.socketSubscription = this.socketService
+      .listen('appLogOut')
+      .subscribe(() => {
+        this.router.navigateByUrl('/login');
+      });
   }
 }

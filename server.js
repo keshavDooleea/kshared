@@ -45,6 +45,7 @@ io.on("connection", (socket) => {
 
   socket.on("onLogOut", (oldToken) => {
     saveText(oldToken);
+    io.emit("appLogOut");
   });
 
   socket.on("deleteAccount", async (token) => {
