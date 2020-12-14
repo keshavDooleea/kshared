@@ -13,7 +13,8 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 export class HomeComponent implements OnInit, OnDestroy {
   showNavbar: boolean;
   user: CurrentUser;
-  shouldShowModal: boolean;
+  showDeleteModal: boolean;
+  showFeedbackModal: boolean;
   private userSubscription: Subscription;
 
   constructor(
@@ -42,8 +43,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.showNavbar = false;
   }
 
-  toggleModal(): void {
-    this.shouldShowModal = !this.shouldShowModal;
+  toggleDeleteModal(): void {
+    this.showDeleteModal = !this.showDeleteModal;
+  }
+
+  toggleFeedbackModal(): void {
+    this.showFeedbackModal = !this.showFeedbackModal;
   }
 
   onModalClicked(event: Event): void {
@@ -52,7 +57,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.shouldShowModal = false;
+    this.showDeleteModal = false;
+    this.showFeedbackModal = false;
   }
 
   onDeleteAccount(): void {

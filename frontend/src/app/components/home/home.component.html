@@ -10,7 +10,7 @@
         <div class="stars"></div>
       </span>
       <div class="feedback-action">
-        <button class="btn side-delay-lr">
+        <button class="btn side-delay-lr" (click)="toggleFeedbackModal()">
           <h4>Leave a feedback</h4>
         </button>
       </div>
@@ -23,7 +23,7 @@
         </h3>
       </span>
       <div class="acc-btn">
-        <button class="btn side-delay-lr" (click)="toggleModal()">
+        <button class="btn side-delay-lr" (click)="toggleDeleteModal()">
           <h4>Delete Account</h4>
         </button>
       </div>
@@ -41,7 +41,7 @@
     class="modal"
     (mouseover)="hideNav()"
     (click)="onModalClicked($event)"
-    [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'"
+    [ngClass]="showDeleteModal ? 'show-modal' : 'hide-modal'"
   >
     <div class="modal-body modal-delete-body">
       <span>
@@ -53,7 +53,7 @@
           <h4>Yes, delete!</h4>
           <p class="btn-icon wave-btn-icon">👋🏼</p>
         </button>
-        <button class="btn" (click)="toggleModal()">
+        <button class="btn" (click)="toggleDeleteModal()">
           <h4>Nope, changed my mind!</h4>
           <p class="btn-icon">😃</p>
         </button>
@@ -62,5 +62,14 @@
         If yes, you will be directed to the Login page
       </p>
     </div>
+  </div>
+
+  <div
+    class="modal"
+    (mouseover)="hideNav()"
+    (click)="onModalClicked($event)"
+    [ngClass]="showFeedbackModal ? 'show-modal' : 'hide-modal'"
+  >
+    <div class="modal-body">email container</div>
   </div>
 </div>
