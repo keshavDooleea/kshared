@@ -26,7 +26,11 @@
 
   <div class="sidebar-line" (mouseover)="showNav()"></div>
 
-  <div class="modal" [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'">
+  <div
+    class="modal"
+    (mouseover)="hideNav()"
+    [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'"
+  >
     <div class="modal-body modal-delete-body">
       <span>
         <h2>Are you sure you want to delete your account?</h2>
