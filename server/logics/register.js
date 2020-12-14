@@ -4,20 +4,6 @@ const wrapResponse = require("./wrap-response");
 const eventName = "registrationResponse";
 const errorMessage = "Sorry, an error has occured!";
 
-const initialNote = {
-  date: new Date(),
-  canShow: true,
-  welcomeNote: true,
-  text: `Click Me 😉
-
-
-
-Save your note or leave it here! Either way, it's always saved!
-Transfer and download your files quickly via the bottom pannel.
-
-Don't forget to rate the app! 💖`,
-};
-
 const registerUser = async (registerForm, socket) => {
   await User.findOne({ username: registerForm.username }, async (err, user) => {
     if (err) {
@@ -31,7 +17,7 @@ const registerUser = async (registerForm, socket) => {
         const newUser = new User({
           username: registerForm.username,
           password: registerForm.password,
-          notes: initialNote,
+          notes: getWelcomeNote(registerForm.username),
         });
 
         await newUser.save();
@@ -49,6 +35,24 @@ const registerUser = async (registerForm, socket) => {
       socket.emit(eventName, wrapResponse(204, message));
     }
   });
+};
+
+const getWelcomeNote = (name) => {
+  return {
+    date: new Date(),
+    canShow: true,
+    welcomeNote: true,
+    text: `Helloo ${name}! Click Me 😉
+
+Write things, copy & paste link and stuff here.. Up to you!
+
+Save your note or leave it here! Either way, it's always saved!
+Try refreshing the page 😌
+
+Transfer and download your files quickly via the bottom pannel.
+
+Don't forget to rate the app on the sidebar to the left! 💖`,
+  };
 };
 
 module.exports = registerUser;
