@@ -11,6 +11,7 @@ $btnColor: #677bc4;
 $invalidColor: #ed5269;
 $validColor: #abe8ab;
 $fadeText: #72767d;
+$selectionColor: #8167a9;
 
 @mixin displayFlex($dir, $align, $justify) {
   display: flex;
@@ -30,6 +31,11 @@ $fadeText: #72767d;
 
   ::-webkit-scrollbar {
     width: 0;
+  }
+
+  &::selection {
+    color: $selectionColor;
+    background: $containers;
   }
 }
 
