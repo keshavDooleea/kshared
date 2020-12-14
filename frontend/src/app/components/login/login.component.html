@@ -19,6 +19,9 @@
               formControlName="username"
               (keydown)="onInputKeydown()"
             />
+            <small *ngIf="registerForm.get('username').hasError('symbolError')"
+              >No symbol or space allowed</small
+            >
             <small *ngIf="registerForm.get('username').hasError('shortError')"
               >Min 5 characters required</small
             >
@@ -26,6 +29,7 @@
               class="fas fa-check-circle"
               [ngClass]="
                 registerForm.get('username').hasError('shortError') ||
+                registerForm.get('username').hasError('symbolError') ||
                 serverResponse.status === 204
                   ? 'invalid-check'
                   : 'valid-check'
@@ -49,12 +53,16 @@
               formControlName="password"
               (keydown)="onInputKeydown()"
             />
+            <small *ngIf="registerForm.get('password').hasError('spaceError')"
+              >No space allowed</small
+            >
             <small *ngIf="registerForm.get('password').hasError('shortError')"
               >Min 5 characters required</small
             >
             <i
               class="fas fa-check-circle"
               [ngClass]="
+                registerForm.get('password').hasError('spaceError') ||
                 registerForm.get('password').hasError('shortError')
                   ? 'invalid-check'
                   : 'valid-check'
@@ -146,6 +154,10 @@
               formControlName="loginUsername"
               (keydown)="onInputKeydown()"
             />
+            <small
+              *ngIf="loginForm.get('loginUsername').hasError('symbolError')"
+              >No symbol or space allowed</small
+            >
             <small *ngIf="loginForm.get('loginUsername').hasError('shortError')"
               >Min 5 characters required</small
             >
@@ -153,6 +165,7 @@
               class="fas fa-check-circle"
               [ngClass]="
                 loginForm.get('loginUsername').hasError('shortError') ||
+                loginForm.get('loginUsername').hasError('symbolError') ||
                 serverResponse.status === 205
                   ? 'invalid-check'
                   : 'valid-check'
@@ -175,12 +188,16 @@
               formControlName="loginPassword"
               (keydown)="onInputKeydown()"
             />
+            <small *ngIf="loginForm.get('loginPassword').hasError('spaceError')"
+              >No space allowed</small
+            >
             <small *ngIf="loginForm.get('loginPassword').hasError('shortError')"
               >Min 5 characters required</small
             >
             <i
               class="fas fa-check-circle"
               [ngClass]="
+                loginForm.get('loginPassword').hasError('spaceError') ||
                 loginForm.get('loginPassword').hasError('shortError') ||
                 serverResponse.status === 206
                   ? 'invalid-check'
@@ -201,7 +218,6 @@
           >
             <h4>Login</h4>
           </button>
-          <!-- <button routerLink="/home">Login</button> -->
           <button class="btn" (click)="onSignUpClicked()">
             <h4>Sign Up</h4>
           </button>

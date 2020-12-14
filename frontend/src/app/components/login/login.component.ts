@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CurrentUser, User } from 'src/app/classes/user';
-import { validateLength } from 'src/app/classes/validator';
+import { validatePassword, validateUsername } from 'src/app/classes/validator';
 import { ServerResponse } from 'src/app/declarations/server-params';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -48,11 +48,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.registerForm = new FormGroup({
       username: new FormControl(
         '',
-        Validators.compose([Validators.required, validateLength])
+        Validators.compose([Validators.required, validateUsername])
       ),
       password: new FormControl(
         '',
-        Validators.compose([Validators.required, validateLength])
+        Validators.compose([Validators.required, validatePassword])
       ),
       confirmPassword: new FormControl(
         '',
@@ -68,11 +68,11 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = new FormGroup({
       loginUsername: new FormControl(
         '',
-        Validators.compose([Validators.required, validateLength])
+        Validators.compose([Validators.required, validateUsername])
       ),
       loginPassword: new FormControl(
         '',
-        Validators.compose([Validators.required, validateLength])
+        Validators.compose([Validators.required, validatePassword])
       ),
     });
   }
