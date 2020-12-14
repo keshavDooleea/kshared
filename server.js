@@ -111,6 +111,12 @@ const saveNoteList = async (data, io) => {
   try {
     let currentUser = await User.findById(user.id);
     currentUser.notes = data.notes;
+
+    // sort notes by latest date
+    currentUser.notes.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+
     await currentUser.save();
 
     io.emit("getNotes", currentUser.notes);
