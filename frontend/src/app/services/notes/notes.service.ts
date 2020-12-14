@@ -28,6 +28,11 @@ export class NotesService {
       welcomeNote: false,
     });
 
+    // sort by most recent first
+    this.noteArray.sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+
     // save to server
     this.saveNote();
   }
