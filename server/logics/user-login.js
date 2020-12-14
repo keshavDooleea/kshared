@@ -37,7 +37,10 @@ const userLogin = async (loginForm, socket) => {
           // generate jwt token
           let token = jwt.sign(loggedUser, process.env.JWT_TOKEN, {});
 
-          console.log(userFound);
+          // sort notes by latest date
+          userFound.notes.sort((a, b) => {
+            return new Date(b.date) - new Date(a.date);
+          });
 
           const response = {
             status: 200,
