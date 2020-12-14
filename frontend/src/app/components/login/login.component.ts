@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {
     this.checkUser();
     this.initialiseRegisterForm();
+    this.inialiseLoginForm();
   }
 
   private checkUser(): void {
@@ -58,6 +59,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.compose([Validators.required])
       ),
     });
+  }
+
+  private inialiseLoginForm(): void {
+    this.isRegister = false;
+    this.serverResponse = {} as ServerResponse;
 
     this.loginForm = new FormGroup({
       loginUsername: new FormControl(
