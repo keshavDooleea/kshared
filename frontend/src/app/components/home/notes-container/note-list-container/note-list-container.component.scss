@@ -51,6 +51,7 @@
       text-overflow: ellipsis;
       position: relative;
       margin: 0 auto;
+      white-space: pre-wrap;
 
       &:not(:last-child) {
         margin-bottom: 10px;
