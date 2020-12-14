@@ -46,6 +46,15 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.shouldShowModal = !this.shouldShowModal;
   }
 
+  onModalClicked(event: Event): void {
+    // click only parent, not children
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    this.shouldShowModal = false;
+  }
+
   onDeleteAccount(): void {
     const token = this.localStorage.getToken();
     this.localStorage.clearToken();

@@ -136,6 +136,15 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.shouldShowModal = !this.shouldShowModal;
   }
 
+  onModalClicked(event: Event): void {
+    // click only parent, not children
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    this.shouldShowModal = false;
+  }
+
   private handleRegistrationResponse(data: ServerResponse): void {
     this.serverResponse = data;
 

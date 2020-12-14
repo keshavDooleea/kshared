@@ -29,6 +29,7 @@
   <div
     class="modal"
     (mouseover)="hideNav()"
+    (click)="onModalClicked($event)"
     [ngClass]="shouldShowModal ? 'show-modal' : 'hide-modal'"
   >
     <div class="modal-body modal-delete-body">
