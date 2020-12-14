@@ -26,6 +26,7 @@ const UserSchema = new mongo.Schema({
       text: { type: String },
       date: { type: Date },
       canShow: { type: Boolean },
+      welcomeNote: { type: Boolean },
     },
   ],
 });

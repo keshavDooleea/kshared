@@ -20,7 +20,11 @@
       *ngFor="let note of noteList"
       [style.display]="note.canShow ? 'flex' : 'none'"
     >
-      <div class="list-item-p" (click)="onNoteClicked(note)">
+      <div
+        class="list-item-p"
+        (click)="onNoteClicked(note)"
+        [style.maxHeight]="note.welcomeNote ? '6vh' : '10vh'"
+      >
         <small class="date">{{ note.date | date: "shortDate" }}</small>
         <p>{{ note.text }}</p>
       </div>

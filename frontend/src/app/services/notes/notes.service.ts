@@ -25,6 +25,7 @@ export class NotesService {
       text: newText,
       date: Date.now(),
       canShow: true,
+      welcomeNote: false,
     });
 
     // save to server

@@ -1,5 +1,6 @@
 export interface Note {
-    text: string;
-    date: number;
-    canShow: boolean;
+  text: string;
+  date: number;
+  canShow: boolean;
+  welcomeNote: boolean;
 }

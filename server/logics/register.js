@@ -7,6 +7,7 @@ const errorMessage = "Sorry, an error has occured!";
 const initialNote = {
   date: new Date(),
   canShow: true,
+  welcomeNote: true,
   text: `Click Me 😉
 
 
