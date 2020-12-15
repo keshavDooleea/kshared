@@ -32,7 +32,10 @@ export class StarsComponent implements OnInit {
       }
     }
 
-    this.throwConfetti();
+    // above average
+    if (index >= 3 - 1) {
+      this.throwConfetti();
+    }
   }
 
   onUnHover(): void {
