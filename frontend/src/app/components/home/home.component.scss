@@ -198,6 +198,7 @@ app-notes-container {
     p {
       color: styles.$fadeText;
       font-weight: bolder;
+      transform: translateY(5px);
     }
   }
 
