@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
+import * as confetti from 'canvas-confetti';
 
 @Component({
   selector: 'app-stars',
@@ -30,10 +31,27 @@ export class StarsComponent implements OnInit {
         this.svgStars[i].classList.add('selected-stars');
       }
     }
+
+    this.throwConfetti();
   }
 
-  onMouseOut(): void {
+  onUnHover(): void {
     this.svgStars.forEach((star) => star.classList.remove('hover-star'));
+  }
+
+  private throwConfetti(): void {
+    confetti.create(undefined, { resize: true })({
+      shapes: ['circle', 'circle', 'square'],
+      particleCount: 200,
+      startVelocity: 90,
+      angle: 55,
+      spread: 55,
+      ticks: 400,
+      origin: {
+        x: 0.08,
+        y: 0.5,
+      },
+    });
   }
 
   get svgStars(): HTMLImageElement[] {
