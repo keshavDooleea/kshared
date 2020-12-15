@@ -1,0 +1,10 @@
+<div class="main-star" (mouseleave)="onMouseOut()">
+  <span class="star-span" *ngFor="let star of stars; index as index">
+    <img
+      src="assets/star.svg"
+      alt=""
+      (mouseover)="onHover(index)"
+      (click)="onStarsClicked(index)"
+    />
+  </span>
+</div>

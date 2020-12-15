@@ -56,11 +56,22 @@ app-notes-container {
   .stars-feedback {
     width: 100%;
     height: 60%;
+    @include styles.displayFlex(column, flex-start, space-around);
 
     small {
       color: styles.$fadeText;
       font-weight: bolder;
       letter-spacing: 0.4px;
+    }
+
+    .stars {
+      width: 100%;
+      height: 60%;
+
+      app-stars {
+        width: 100%;
+        height: 100%;
+      }
     }
   }
 

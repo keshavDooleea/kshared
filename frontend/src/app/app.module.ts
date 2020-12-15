@@ -11,6 +11,7 @@ import { NoteListContainerComponent } from './components/home/notes-container/no
 import { NotesContainerComponent } from './components/home/notes-container/notes-container.component';
 import { LoginComponent } from './components/login/login.component';
 import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
+import { StarsComponent } from './components/stars/stars.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
     LoginComponent,
     HomeComponent,
     SafeUrlPipe,
+    StarsComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, ReactiveFormsModule],
   providers: [{ provide: LoginService, useClass: LoginService }],
