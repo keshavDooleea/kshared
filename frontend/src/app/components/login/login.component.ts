@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as confetti from 'canvas-confetti';
 import { Subscription } from 'rxjs';
 import { CurrentUser, User } from 'src/app/classes/user';
 import { validatePassword, validateUsername } from 'src/app/classes/validator';
@@ -155,6 +156,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.serverResponse = data;
 
     if (data.status === 200) {
+      this.throwConfetti();
       this.showRegisteredMessage = true;
 
       // hide register - show login
@@ -188,6 +190,28 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.localStorage.saveToken();
       this.router.navigateByUrl('/home');
     }
+  }
+
+  private throwConfetti(): void {
+    const colors = ['#bb0000', '#ffffff', '#ffff00'];
+
+    confetti.create(undefined, { resize: true })({
+      particleCount: 100,
+      startVelocity: 55,
+      angle: 60,
+      spread: 55,
+      origin: { x: 0 },
+      colors,
+    });
+
+    confetti.create(undefined, { resize: true })({
+      particleCount: 100,
+      angle: 120,
+      startVelocity: 55,
+      spread: 55,
+      origin: { x: 1 },
+      colors,
+    });
   }
 
   get loginUsername(): string {

@@ -35,6 +35,7 @@ export class StarsComponent implements OnInit {
     // above average
     if (index >= 3 - 1) {
       this.throwConfetti();
+      setTimeout(() => this.throwConfetti(), 90);
     }
   }
 
