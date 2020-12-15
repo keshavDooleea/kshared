@@ -56,7 +56,6 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     this.socketSubscription = this.socketService
       .listen('updatedText')
       .subscribe((data) => {
-        console.log(data);
         this.textareaValue = data;
       });
   }

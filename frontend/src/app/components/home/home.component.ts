@@ -73,7 +73,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe((user) => {
         if (user) {
           this.user = user.user;
-          console.log(this.user.dateAccCreated);
         }
       });
   }
