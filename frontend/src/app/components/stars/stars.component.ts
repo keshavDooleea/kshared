@@ -1,6 +1,8 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import * as confetti from 'canvas-confetti';
+import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
@@ -8,16 +10,45 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   templateUrl: './stars.component.html',
   styleUrls: ['./stars.component.scss'],
 })
-export class StarsComponent implements OnInit {
+export class StarsComponent implements OnInit, OnDestroy {
   stars = [1, 2, 3, 4, 5];
+  private userSubscription: Subscription;
+  private socketSubscription: Subscription;
 
   constructor(
     private elementRef: ElementRef,
     private socketService: SocketService,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private userService: UserService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscribeToUser();
+    this.subscribeToSocket();
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.socketSubscription.unsubscribe();
+  }
+
+  private subscribeToUser(): void {
+    this.userSubscription = this.userService
+      .getUserObservable()
+      .subscribe((newUser) => {
+        if (newUser) {
+          this.fillStarRating(newUser.user.stars);
+        }
+      });
+  }
+
+  private subscribeToSocket(): void {
+    this.socketSubscription = this.socketService
+      .listen('updatedStars')
+      .subscribe((newStars) => {
+        this.fillStarRating(newStars);
+      });
+  }
 
   onHover(index: number): void {
     this.svgStars.forEach((star, i) => {
@@ -48,6 +79,16 @@ export class StarsComponent implements OnInit {
 
   onUnHover(): void {
     this.svgStars.forEach((star) => star.classList.remove('hover-star'));
+  }
+
+  private fillStarRating(starRating: number): void {
+    this.svgStars.forEach((star, i) => {
+      this.svgStars[i].classList.remove('selected-stars');
+
+      if (i < starRating) {
+        this.svgStars[i].classList.add('selected-stars');
+      }
+    });
   }
 
   private emitStars(index: number): void {

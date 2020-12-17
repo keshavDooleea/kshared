@@ -7,6 +7,7 @@ export interface CurrentUser {
   dateAccCreated: string;
   currentText?: string;
   noteList?: Note[];
+  stars?: number;
 }
 
 export class User {

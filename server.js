@@ -50,7 +50,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("updateStars", async (data) => {
-    await updateStars(data);
+    await updateStars(data, io);
   });
 
   socket.on("getGlobalStars", async () => {
@@ -94,6 +94,7 @@ const pageRefresh = async (data, socket) => {
     // update user details
     user.currentText = currentUser.currentText;
     user.noteList = currentUser.notes;
+    user.stars = currentUser.stars;
 
     socket.emit("initialLanding", user);
   } catch (error) {
@@ -148,8 +149,9 @@ const getGlobalStars = async (socket) => {
   }
 };
 
-const updateStars = async (data) => {
+const updateStars = async (data, io) => {
   try {
+    io.emit("updatedStars", data.stars);
     const user = findUser(data.token);
     await User.findByIdAndUpdate({ _id: user.id }, { stars: data.stars });
   } catch (err) {
