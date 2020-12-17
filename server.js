@@ -18,8 +18,7 @@ const io = require("socket.io")(server, {
 
 app.use(express.static("/dist/frontend"));
 app.get("/*", (req, res) => {
-  console.log(__dirname + "/frontend/dist/frontend/index.html");
-  res.sendFile(path.join("/frontend/dist/frontend/index.html"));
+  res.sendFile(path.join("/dist/frontend/index.html"));
 });
 
 mongo.connect(
