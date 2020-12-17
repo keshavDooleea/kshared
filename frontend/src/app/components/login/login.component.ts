@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router
   ) {
     this.checkUser();
+    this.updateGlobalStars();
     this.initialiseRegisterForm();
     this.inialiseLoginForm();
   }
@@ -76,6 +77,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         Validators.compose([Validators.required, validatePassword])
       ),
     });
+  }
+
+  private updateGlobalStars(): void {
+    this.socket.emit('getGlobalStars', {});
+
+    this.socketSubscription = this.socket
+      .listen('avgStars')
+      .subscribe((stars) => {
+        console.log(stars);
+      });
   }
 
   ngOnInit(): void {}

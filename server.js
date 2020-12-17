@@ -27,7 +27,7 @@ mongo.connect(
   }
 );
 
-io.on("connection", (socket) => {
+io.on("connection", async (socket) => {
   console.log("NEW USER");
   let token = socket.handshake.query.token;
 
@@ -51,6 +51,11 @@ io.on("connection", (socket) => {
 
   socket.on("updateStars", async (data) => {
     await updateStars(data);
+  });
+
+  socket.on("getGlobalStars", async () => {
+    // for login page
+    await getGlobalStars(socket);
   });
 
   // when browser refreshes, get user details
@@ -126,6 +131,23 @@ const saveNoteList = async (data, io) => {
     io.emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log("Updating current note error: ", error);
+  }
+};
+
+const getGlobalStars = async (socket) => {
+  try {
+    // all stars of all users
+    let starsCollection = await User.find({}, { _id: 0, stars: 1 });
+
+    // update array to remove all 0 numbers
+    starsCollection = starsCollection.filter((star) => star.stars !== 0);
+
+    let globalStar = starsCollection.map((star) => star.stars).reduce((a, b) => a + b);
+    globalStar = Math.floor(globalStar / starsCollection.length);
+
+    socket.emit("avgStars", globalStar);
+  } catch (err) {
+    console.log("Global stars err:", err);
   }
 };
 
