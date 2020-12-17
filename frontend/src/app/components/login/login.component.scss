@@ -44,6 +44,11 @@
 
         img {
           max-width: 60%;
+          filter: grayscale(100%);
+
+          &.light-star {
+            filter: grayscale(0%);
+          }
         }
       }
     }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as confetti from 'canvas-confetti';
@@ -29,7 +29,8 @@ export class LoginComponent implements OnInit, OnDestroy {
     private socket: SocketService,
     private userService: UserService,
     private localStorage: LocalStorageService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) {
     this.checkUser();
     this.updateGlobalStars();
@@ -85,9 +86,17 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.socketSubscription = this.socket
       .listen('avgStars')
-      .subscribe((stars) => {
-        console.log(stars);
+      .subscribe((starsAmount: number) => {
+        this.fillStars(starsAmount);
       });
+  }
+
+  private fillStars(index: number): void {
+    this.svgStars.forEach((star, i) => {
+      if (i <= index - 1) {
+        star.classList.add('light-star');
+      }
+    });
   }
 
   ngOnInit(): void {}
@@ -244,5 +253,9 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   get registerConfirmPassword(): string {
     return this.registerForm.get('confirmPassword').value;
+  }
+
+  get svgStars(): HTMLImageElement[] {
+    return this.elementRef.nativeElement.querySelectorAll('.stars-span img');
   }
 }
