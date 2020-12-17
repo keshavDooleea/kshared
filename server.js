@@ -1,12 +1,14 @@
 require("dotenv/config");
-const SERVER_PORT = 5000;
+const SERVER_PORT = process.env.PORT || 5000;
 const registerUser = require("./server/logics/register");
 const userLogin = require("./server/logics/user-login");
 const User = require("./server/modals/user").User;
 
+const path = require("path");
 const jwt = require("jsonwebtoken");
 const mongo = require("mongoose");
-const app = require("express")();
+const express = require("express");
+const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server, {
   cors: {
@@ -14,8 +16,13 @@ const io = require("socket.io")(server, {
   },
 });
 
+app.use(express.static(__dirname + "/dist/frontend"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/frontend/index.html"));
+});
+
 mongo.connect(
-  process.env.MONGO_CONNECTION,
+  process.env.MONGO_URI || process.env.MONGO_CONNECTION,
   {
     useUnifiedTopology: true,
     useNewUrlParser: true,
