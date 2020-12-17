@@ -1,6 +1,14 @@
 <div class="login-body" [ngClass]="isRegister ? 'show-register' : 'show-login'">
   <div class="login-header">
-    <span class="why-button btn" (click)="toggleModal()">
+    <div class="stars-header">
+      <div class="stars-text"><h4>Application Rating</h4></div>
+      <div class="stars-container">
+        <span class="stars-span" *ngFor="let star of stars">
+          <img src="assets/star.svg" alt="" />
+        </span>
+      </div>
+    </div>
+    <span class="modal-button btn" (click)="toggleModal()">
       <h4>Why <i class="fas fa-question-circle"></i></h4>
     </span>
   </div>

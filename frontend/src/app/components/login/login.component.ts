@@ -16,6 +16,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  readonly stars = [1, 2, 3, 4, 5];
   isRegister: boolean;
   shouldShowModal: boolean;
   registerForm: FormGroup;

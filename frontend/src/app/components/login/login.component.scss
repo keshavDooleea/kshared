@@ -9,14 +9,48 @@
 .login-header {
   width: 100%;
   height: 10vh;
-  position: relative;
+  padding-right: 20px;
+  @include styles.displayFlex(row, center, space-between);
 
-  .why-button {
-    position: absolute;
+  .stars-header {
+    width: 20%;
+    height: 100%;
+    @include styles.displayFlex(column, center, center);
+
+    .stars-text {
+      width: 100%;
+      height: 35%;
+
+      h4 {
+        text-align: center;
+        color: styles.$fadeText;
+        letter-spacing: 1px;
+      }
+    }
+
+    .stars-container {
+      width: 80%;
+      height: 50%;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: 100%;
+      align-items: center;
+      justify-items: center;
+      align-self: center;
+      position: relative;
+
+      .stars-span {
+        @include styles.displayFlex(row, center, center);
+
+        img {
+          max-width: 60%;
+        }
+      }
+    }
+  }
+
+  .modal-button {
     width: 60px;
-    top: 50%;
-    right: 20px;
-    transform: translateY(-50%);
 
     &:hover {
       i {
