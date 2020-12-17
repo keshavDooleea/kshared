@@ -49,6 +49,10 @@ io.on("connection", (socket) => {
     await deleteAccount(token);
   });
 
+  socket.on("updateStars", async (data) => {
+    await updateStars(data);
+  });
+
   // when browser refreshes, get user details
   socket.on("pageRefresh", async (data) => {
     await pageRefresh(data, socket);
@@ -122,6 +126,15 @@ const saveNoteList = async (data, io) => {
     io.emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log("Updating current note error: ", error);
+  }
+};
+
+const updateStars = async (data) => {
+  try {
+    const user = findUser(data.token);
+    await User.findByIdAndUpdate({ _id: user.id }, { stars: data.stars });
+  } catch (err) {
+    console.log("Updating stars error: ", err);
   }
 };
 

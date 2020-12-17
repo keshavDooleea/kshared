@@ -18,6 +18,11 @@ const UserSchema = new mongo.Schema({
     type: Date,
     default: Date.now,
   },
+  stars: {
+    type: Number,
+    default: 0,
+    max: 5,
+  },
   currentText: {
     type: String,
   },

@@ -1,5 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import * as confetti from 'canvas-confetti';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-stars',
@@ -9,7 +11,11 @@ import * as confetti from 'canvas-confetti';
 export class StarsComponent implements OnInit {
   stars = [1, 2, 3, 4, 5];
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(
+    private elementRef: ElementRef,
+    private socketService: SocketService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {}
 
@@ -32,6 +38,8 @@ export class StarsComponent implements OnInit {
       }
     }
 
+    this.emitStars(index);
+
     // above average
     if (index >= 3 - 1) {
       this.throwConfetti();
@@ -40,6 +48,14 @@ export class StarsComponent implements OnInit {
 
   onUnHover(): void {
     this.svgStars.forEach((star) => star.classList.remove('hover-star'));
+  }
+
+  private emitStars(index: number): void {
+    const data = {
+      stars: index + 1,
+      token: this.localStorageService.getToken(),
+    };
+    this.socketService.emit('updateStars', data);
   }
 
   private throwConfetti(): void {
