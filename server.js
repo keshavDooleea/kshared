@@ -136,11 +136,8 @@ const saveNoteList = async (data, io) => {
 
 const getGlobalStars = async (socket) => {
   try {
-    // all stars of all users
-    let starsCollection = await User.find({}, { _id: 0, stars: 1 });
-
-    // update array to remove all 0 numbers
-    starsCollection = starsCollection.filter((star) => star.stars !== 0);
+    // all stars of all users above 0
+    let starsCollection = await User.find({ stars: { $gt: 0 } }, { _id: 0, stars: 1 });
 
     let globalStar = starsCollection.map((star) => star.stars).reduce((a, b) => a + b);
     globalStar = Math.floor(globalStar / starsCollection.length);
