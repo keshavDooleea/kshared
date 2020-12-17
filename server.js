@@ -16,11 +16,6 @@ const io = require("socket.io")(server, {
   },
 });
 
-app.use(express.static(__dirname + "frontend/dist/frontend"));
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname + "frontend/dist/frontend/index.html"));
-});
-
 mongo.connect(
   process.env.MONGO_URI || process.env.MONGO_CONNECTION,
   {
@@ -177,5 +172,10 @@ const findUser = (data) => {
 
   return user;
 };
+
+app.use(express.static(__dirname + "/frontend/dist/frontend"));
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname + "/frontend/dist/frontend/index.html"));
+});
 
 server.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`));
