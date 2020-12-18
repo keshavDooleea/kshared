@@ -47,7 +47,7 @@ io.on("connection", async (socket) => {
 
   // to remove
   socket.on("onLogOut", (oldToken) => {
-    socket.emit("appLogOut");
+    onLogOut(oldToken, socket);
   });
 
   socket.on("deleteAccount", async (token) => {
@@ -79,6 +79,12 @@ io.on("connection", async (socket) => {
 
   socket.on("disconnect", async () => {});
 });
+
+const onLogOut = (oldToken, socket) => {
+  const user = findUser(oldToken);
+  socket.leave(user.id);
+  socket.emit("appLogOut");
+};
 
 const deleteAccount = async (token, io) => {
   const user = findUser(token);
@@ -113,7 +119,7 @@ const updateText = async (data, socket) => {
   try {
     // send back text straight away
     const user = findUser(data.token);
-    console.log(user.id);
+    console.log(user.username, user.id);
     socket.to(user.id).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
