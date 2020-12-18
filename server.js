@@ -68,6 +68,8 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("updateText", async (data) => {
+    const user = findUser(user);
+    io.in(user.id).emit("updatedText", data.text); // sending to every username except sender
     await updateText(data, socket);
   });
 
@@ -120,8 +122,6 @@ const updateText = async (data, socket) => {
   try {
     // send back text straight away
     const user = findUser(data.token);
-    console.log(`${user.username} is writing`);
-    socket.to(user.id).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
     console.log("Updating current text error: ", error);
