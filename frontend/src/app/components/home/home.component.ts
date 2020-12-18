@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/classes/user';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
@@ -17,13 +16,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   showDeleteModal: boolean;
   showFeedbackModal: boolean;
   private userSubscription: Subscription;
-  private socketSubscription: Subscription;
 
   constructor(
     private userService: UserService,
     private localStorage: LocalStorageService,
-    private socketService: SocketService,
-    private router: Router
+    private socketService: SocketService
   ) {}
 
   ngOnInit(): void {
@@ -32,7 +29,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.userSubscription.unsubscribe();
-    this.socketSubscription.unsubscribe();
   }
 
   onNavbarChanged(showNav: boolean): void {
@@ -68,14 +64,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   onDeleteAccount(): void {
     const token = this.localStorage.getToken();
     this.socketService.emit('deleteAccount', token);
-
-    this.socketSubscription = this.socketService
-      .listen('deletedAccount')
-      .subscribe(() => {
-        this.localStorage.clearToken();
-        console.log('CLEAARED');
-        this.router.navigateByUrl('/login');
-      });
   }
 
   private subscribeToUser(): void {

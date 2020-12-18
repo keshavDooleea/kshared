@@ -34,6 +34,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const token = this.localStorage.getToken();
 
     if (token) {
+      // this.router.navigateByUrl('/home');
       this.socketService.emit('pageRefresh', token);
       this.socketSubscription = this.socketService
         .listen('initialLanding')
@@ -42,6 +43,14 @@ export class AppComponent implements OnInit, OnDestroy {
           this.userService.setUser(user);
         });
     }
+
+    this.socketSubscription = this.socketService
+      .listen('deletedAccount')
+      .subscribe(() => {
+        this.localStorage.clearToken();
+        console.log('CLEAARED');
+        this.router.navigateByUrl('/login');
+      });
   }
 
   private onLogOut(): void {
