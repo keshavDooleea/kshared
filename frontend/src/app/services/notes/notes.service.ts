@@ -54,6 +54,14 @@ export class NotesService {
     this.socket.emit('updateText', socketData);
   }
 
+  updateCurrentNote(text: string): void {
+    const socketData = {
+      text,
+      token: this.currentUser.getToken(),
+    };
+    this.socket.emit('openNote', socketData);
+  }
+
   private saveNote(): void {
     if (this.currentUser) {
       const socketData = {

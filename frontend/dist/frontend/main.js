@@ -522,7 +522,6 @@ class NotesContainerComponent {
         this.socketSubscription = this.socketService
             .listen('updatedText')
             .subscribe((data) => {
-            console.log('In updatedText: ', data);
             this.textareaValue = data;
         });
     }
@@ -1749,6 +1748,13 @@ class NotesService {
         };
         this.socket.emit('updateText', socketData);
     }
+    updateCurrentNote(text) {
+        const socketData = {
+            text,
+            token: this.currentUser.getToken(),
+        };
+        this.socket.emit('openNote', socketData);
+    }
     saveNote() {
         if (this.currentUser) {
             const socketData = {
@@ -2084,7 +2090,7 @@ class NoteListContainerComponent {
         this.updateFilteredList();
     }
     onNoteClicked(note) {
-        this.noteService.saveCurrentText(note.text);
+        this.noteService.updateCurrentNote(note.text);
     }
     deleteNote(note) {
         this.noteService.deleteNote(note);

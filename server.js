@@ -76,6 +76,10 @@ io.on("connection", async (socket) => {
     await updateText(data, socket);
   });
 
+  socket.on("openNote", async (data) => {
+    await updateNote(data, socket);
+  });
+
   // new note being saved
   socket.on("saveNoteList", async (data) => {
     await saveNoteList(data, io);
@@ -103,6 +107,7 @@ const deleteAccount = async (token, io) => {
   }
 };
 
+// when browser has been refreshed
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
   socket.join(user.id);
@@ -122,6 +127,7 @@ const pageRefresh = async (data, socket) => {
   }
 };
 
+// when writing on textarea
 const updateText = async (data, socket) => {
   try {
     // send back text straight away
@@ -135,6 +141,19 @@ const updateText = async (data, socket) => {
   }
 };
 
+// when clicked on individual note
+const updateNote = async (data, socket) => {
+  try {
+    const user = findUser(data.token);
+    socket.join(user.id);
+    io.in(user.id).emit("updatedText", data.text); // sending to every username except sender
+    await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
+  } catch (error) {
+    console.log("Updating current note error: ", error);
+  }
+};
+
+// saving textarea into a note
 const saveNoteList = async (data, io) => {
   const user = findUser(data.token);
 
