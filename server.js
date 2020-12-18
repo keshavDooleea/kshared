@@ -100,7 +100,7 @@ const deleteAccount = async (token, io) => {
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
   socket.join(user.id);
-  console.log(user.username, " rejoined the server (page refresh)");
+  console.log(`${user.username} rejoined the server (page refresh)`);
 
   try {
     let currentUser = await User.findById(user.id);
@@ -120,7 +120,7 @@ const updateText = async (data, socket) => {
   try {
     // send back text straight away
     const user = findUser(data.token);
-    console.log(user.username, user.id, " is writing");
+    console.log(`${user.username} is writing`);
     socket.to(user.id).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
@@ -184,8 +184,8 @@ const findUser = (data) => {
   return user;
 };
 
+// deployement - production static html files
 app.use(express.static(__dirname + "/frontend/dist/frontend"));
-
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/frontend/dist/frontend/index.html"));
 });
