@@ -69,8 +69,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("updateText", async (data) => {
-    socket.to(data.username).emit("updatedText", data.text);
-    await updateText(data, io);
+    await updateText(data, socket);
   });
 
   // new note being saved
@@ -110,10 +109,11 @@ const pageRefresh = async (data, socket) => {
   }
 };
 
-const updateText = async (data, io) => {
+const updateText = async (data, socket) => {
   try {
     // send back text straight away
     const user = findUser(data.token);
+    socket.to(user.username).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
     console.log("Updating current text error: ", error);

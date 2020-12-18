@@ -1741,9 +1741,8 @@ class NotesService {
     }
     saveCurrentText(text) {
         const socketData = {
-            username: this.currentUser.getUser().user.username,
-            token: this.currentUser.getToken(),
             text,
+            token: this.currentUser.getToken(),
         };
         this.socket.emit('updateText', socketData);
     }

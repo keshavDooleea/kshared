@@ -48,9 +48,8 @@ export class NotesService {
 
   saveCurrentText(text: string): void {
     const socketData = {
-      username: this.currentUser.getUser().user.username,
-      token: this.currentUser.getToken(),
       text,
+      token: this.currentUser.getToken(),
     };
     this.socket.emit('updateText', socketData);
   }
