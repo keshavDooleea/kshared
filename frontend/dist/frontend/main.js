@@ -77,6 +77,8 @@ class HomeComponent {
     }
     ngOnInit() {
         this.subscribeToUser();
+        const token = this.localStorage.getToken();
+        this.socketService.emit('enteredHome', token);
     }
     ngOnDestroy() {
         this.userSubscription.unsubscribe();

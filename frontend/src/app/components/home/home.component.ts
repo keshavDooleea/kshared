@@ -25,6 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToUser();
+    const token = this.localStorage.getToken();
+    this.socketService.emit('enteredHome', token);
   }
 
   ngOnDestroy(): void {

@@ -44,6 +44,11 @@ io.on("connection", async (socket) => {
     token = await userLogin(data, socket);
   });
 
+  socket.on("enteredHome", (token) => {
+    const user = findUser(token);
+    socket.join(user.id);
+  });
+
   // to remove
   socket.on("onLogOut", (oldToken) => {
     onLogOut(oldToken, socket);
