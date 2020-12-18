@@ -49,7 +49,7 @@ const userLogin = async (loginForm, socket) => {
             stars: userFound.stars,
           };
 
-          socket.join(loggedUser.username);
+          socket.join(loggedUser.id);
           socket.emit(eventName, response);
           return token;
         }

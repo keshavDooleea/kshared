@@ -93,7 +93,7 @@ const deleteAccount = async (token, io) => {
 
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
-  socket.join(user.username);
+  socket.join(user.id);
 
   try {
     let currentUser = await User.findById(user.id);
@@ -113,7 +113,8 @@ const updateText = async (data, socket) => {
   try {
     // send back text straight away
     const user = findUser(data.token);
-    socket.to(user.username).emit("updatedText", data.text); // sending to every username except sender
+    console.log(user.id);
+    socket.to(user.id).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
     console.log("Updating current text error: ", error);
@@ -134,7 +135,7 @@ const saveNoteList = async (data, io) => {
 
     await currentUser.save();
 
-    io.in(user.username).emit("getNotes", currentUser.notes);
+    io.in(user.id).emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log("Updating current note error: ", error);
   }
@@ -157,7 +158,7 @@ const getGlobalStars = async (socket) => {
 const updateStars = async (data, io) => {
   try {
     const user = findUser(data.token);
-    io.in(user.username).emit("updatedStars", data.stars);
+    io.in(user.id).emit("updatedStars", data.stars);
     await User.findByIdAndUpdate({ _id: user.id }, { stars: data.stars });
   } catch (err) {
     console.log("Updating stars error: ", err);
