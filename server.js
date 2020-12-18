@@ -110,8 +110,8 @@ const pageRefresh = async (data, socket) => {
 const updateText = async (data, io) => {
   try {
     // send back text straight away
+    io.in(data.username).emit("updatedText", data.text);
     const user = findUser(data.token);
-    io.in(user.username).emit("updatedText", data.text);
     const dbUser = await User.findById(user.id);
     dbUser.currentText = data.text;
     dbUser.save();
