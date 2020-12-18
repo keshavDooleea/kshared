@@ -5,7 +5,7 @@
 /.env
 
 # compiled output
-frontend/dist
+# frontend/dist
 frontend/tmp
 frontend/out-tsc
 # Only exists if Bazel was run
