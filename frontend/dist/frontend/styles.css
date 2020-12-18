@@ -1,0 +1,121 @@
+@import url(https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300&display=swap);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+*:not(i) {
+  font-family: "Barlow Condensed", sans-serif;
+}
+* ::-webkit-scrollbar {
+  width: 0;
+}
+*::selection {
+  color: #8167a9;
+  background: #36393f;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #2f3136;
+}
+.icon {
+  color: #b9bbbe;
+  cursor: pointer;
+  outline: none;
+}
+.icon:hover {
+  color: #dcddde;
+}
+.disable-icon {
+  color: #b9bbbe;
+  opacity: 0.3 !important;
+  cursor: initial;
+}
+input {
+  border: none;
+  outline: none;
+  color: white;
+  padding: 0 5px;
+  background-color: #40444b;
+}
+.btn {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  -webkit-user-select: none;
+          user-select: none;
+  border-radius: 5px;
+  padding: 6px 0;
+  background-color: #68727f;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  transition: 0.15s opacity;
+}
+.btn h4 {
+  text-align: center;
+  -webkit-user-select: none;
+          user-select: none;
+  letter-spacing: 0.3px;
+}
+.btn h4 i {
+  margin: 0 3px;
+  transition: 1s transform cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.btn:active {
+  filter: brightness(1.2);
+}
+.disable-btn {
+  pointer-events: none;
+  opacity: 0.3;
+}
+.enable-btn {
+  pointer-events: all;
+  opacity: 1;
+}
+.modal {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  transition: 0.4s opacity, 0.5s -webkit-clip-path;
+  transition: 0.4s opacity, 0.5s clip-path;
+  transition: 0.4s opacity, 0.5s clip-path, 0.5s -webkit-clip-path;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  -webkit-user-select: none;
+          user-select: none;
+  z-index: 100;
+}
+.modal .modal-body {
+  width: 50vw;
+  height: 70vh;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: #36393f;
+  transition: 0.3s transform;
+}
+.modal.show-modal {
+  pointer-events: all;
+  opacity: 1;
+  -webkit-clip-path: circle(100% at 50% 50%);
+          clip-path: circle(100% at 50% 50%);
+}
+.modal.show-modal .modal-body {
+  transform: scale(1);
+}
+.modal.hide-modal {
+  pointer-events: none;
+  opacity: 0;
+  -webkit-clip-path: circle(30% at 50% 50%);
+          clip-path: circle(30% at 50% 50%);
+}
+.modal.hide-modal .modal-body {
+  transform: scale(0);
+}
+
+/*# sourceMappingURL=styles.css.map*/
