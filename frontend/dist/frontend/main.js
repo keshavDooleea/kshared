@@ -520,6 +520,7 @@ class NotesContainerComponent {
         this.socketSubscription = this.socketService
             .listen('updatedText')
             .subscribe((data) => {
+            console.log('In updatedText: ', data);
             this.textareaValue = data;
         });
     }
