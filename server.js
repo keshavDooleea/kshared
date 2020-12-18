@@ -82,7 +82,7 @@ io.on("connection", async (socket) => {
 
   // new note being saved
   socket.on("saveNoteList", async (data) => {
-    await saveNoteList(data, io);
+    await saveNoteList(data, socket);
   });
 
   socket.on("disconnect", async () => {});
@@ -154,11 +154,12 @@ const updateNote = async (data, socket) => {
 };
 
 // saving textarea into a note
-const saveNoteList = async (data, io) => {
+const saveNoteList = async (data, socket) => {
   const user = findUser(data.token);
 
   try {
     let currentUser = await User.findById(user.id);
+    data.notes.forEach((note) => (note.canShow = true));
     currentUser.notes = data.notes;
 
     // sort notes by latest date
@@ -168,7 +169,7 @@ const saveNoteList = async (data, io) => {
 
     await currentUser.save();
 
-    io.in(user.id).emit("getNotes", currentUser.notes);
+    socket.to(user.id).emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log("Updating current note error: ", error);
   }
