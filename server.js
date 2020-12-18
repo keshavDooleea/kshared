@@ -78,7 +78,7 @@ io.on("connection", async (socket) => {
   socket.on("disconnect", async () => {});
 });
 
-const deleteAccount = async (token) => {
+const deleteAccount = async (token, io) => {
   const user = findUser(token);
 
   try {
@@ -91,7 +91,6 @@ const deleteAccount = async (token) => {
 
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
-  console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUL : ", user);
   socket.join(user.username);
 
   try {
