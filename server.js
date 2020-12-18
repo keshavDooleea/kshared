@@ -35,8 +35,6 @@ io.on("connection", async (socket) => {
   console.log("NEW USER");
   let token = socket.handshake.query.token;
 
-  console.log(io.sockets.clients());
-
   // new user has registered an acc
   socket.on("newRegistration", async (data) => {
     await registerUser(data, socket);
