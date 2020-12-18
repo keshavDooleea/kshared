@@ -68,7 +68,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("updateText", async (data) => {
-    const user = findUser(user);
+    const user = findUser(data.token);
     io.in(user.id).emit("updatedText", data.text); // sending to every username except sender
     await updateText(data, socket);
   });
