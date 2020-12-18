@@ -101,6 +101,7 @@ const deleteAccount = async (token, io) => {
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
   socket.join(user.id);
+  console.log(user.username, " rejoined the server (page refresh)");
 
   try {
     let currentUser = await User.findById(user.id);

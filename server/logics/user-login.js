@@ -50,7 +50,7 @@ const userLogin = async (loginForm, socket) => {
           };
 
           socket.join(userFound._id);
-          console.log(userFound._id + " joined the server");
+          console.log(userFound.username + " joined the server");
           socket.emit(eventName, response);
           return token;
         }
