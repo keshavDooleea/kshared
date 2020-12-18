@@ -95,7 +95,8 @@ const deleteAccount = async (token, io) => {
   const user = findUser(token);
 
   try {
-    io.in(user.username).emit("deletedAccount");
+    io.in(user.id).emit("deletedAccount");
+    console.log(`${user.username} deleted his/her account`);
     await User.findByIdAndDelete(user.id);
   } catch (err) {
     console.log("Delete account error: ", err);
