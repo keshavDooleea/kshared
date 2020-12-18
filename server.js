@@ -33,11 +33,6 @@ mongo.connect(
 
 io.on("connection", async (socket) => {
   let token = socket.handshake.query.token;
-  if (token) {
-    const connectionUser = findUser(token);
-    socket.join(connectionUser.id);
-    console.log("NEW USER CONNECTED ", connectionUser.username);
-  }
 
   // new user has registered an acc
   socket.on("newRegistration", async (data) => {
