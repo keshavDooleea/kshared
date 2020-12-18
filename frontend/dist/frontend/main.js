@@ -1775,7 +1775,7 @@ NotesService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInje
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SERVER_URL", function() { return SERVER_URL; });
-const SERVER_URL = 'http://localhost:5000/';
+const SERVER_URL = 'https://kshared.herokuapp.com/';
 
 
 /***/ }),
