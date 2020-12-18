@@ -89,6 +89,7 @@ const deleteAccount = async (token) => {
 
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
+  socket.join(user.username);
 
   try {
     let currentUser = await User.findById(user.id);
@@ -107,8 +108,9 @@ const pageRefresh = async (data, socket) => {
 const updateText = async (data, io) => {
   try {
     // send back text straight away
-    io.emit("updatedText", data.text);
     const user = findUser(data.token);
+    io.in(user.username).emit("updatedText", data.text);
+    console.log(user.username);
     const dbUser = await User.findById(user.id);
     dbUser.currentText = data.text;
     dbUser.save();

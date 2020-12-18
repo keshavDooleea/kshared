@@ -48,6 +48,8 @@ const userLogin = async (loginForm, socket) => {
             noteList: userFound.notes,
           };
 
+          socket.join(loggedUser.username);
+          console.log(loggedUser.username);
           socket.emit(eventName, response);
           return token;
         }
