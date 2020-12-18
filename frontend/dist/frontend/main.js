@@ -77,6 +77,10 @@ class HomeComponent {
     }
     ngOnInit() {
         this.subscribeToUser();
+        this.socketService.listen('deletedAccount').subscribe(() => {
+            this.localStorage.clearToken();
+            console.log('CLEAARED');
+        });
     }
     ngOnDestroy() {
         this.userSubscription.unsubscribe();
@@ -107,10 +111,6 @@ class HomeComponent {
     onDeleteAccount() {
         const token = this.localStorage.getToken();
         this.socketService.emit('deleteAccount', token);
-        this.socketService.listen('deletedAccount').subscribe(() => {
-            this.localStorage.clearToken();
-            console.log('CLEAARED');
-        });
     }
     subscribeToUser() {
         this.userSubscription = this.userService

@@ -25,6 +25,10 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToUser();
+    this.socketService.listen('deletedAccount').subscribe(() => {
+      this.localStorage.clearToken();
+      console.log('CLEAARED');
+    });
   }
 
   ngOnDestroy(): void {
@@ -64,11 +68,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   onDeleteAccount(): void {
     const token = this.localStorage.getToken();
     this.socketService.emit('deleteAccount', token);
-
-    this.socketService.listen('deletedAccount').subscribe(() => {
-      this.localStorage.clearToken();
-      console.log('CLEAARED');
-    });
   }
 
   private subscribeToUser(): void {
