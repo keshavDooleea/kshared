@@ -67,6 +67,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("updateText", async (data) => {
+    io.in(data.username).emit("updatedText", data.text);
     await updateText(data, io);
   });
 
@@ -110,7 +111,6 @@ const pageRefresh = async (data, socket) => {
 const updateText = async (data, io) => {
   try {
     // send back text straight away
-    io.in(data.username).emit("updatedText", data.text);
     const user = findUser(data.token);
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
