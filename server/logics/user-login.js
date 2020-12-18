@@ -49,8 +49,8 @@ const userLogin = async (loginForm, socket) => {
             stars: userFound.stars,
           };
 
-          socket.join(loggedUser.id);
-          console.log(loggedUser.id + " joined the server");
+          socket.join(userFound._id);
+          console.log(userFound._id + " joined the server");
           socket.emit(eventName, response);
           return token;
         }

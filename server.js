@@ -84,6 +84,7 @@ const onLogOut = (oldToken, socket) => {
   const user = findUser(oldToken);
   socket.leave(user.id);
   socket.emit("appLogOut");
+  console.log(user.username, " left the server");
 };
 
 const deleteAccount = async (token, io) => {
