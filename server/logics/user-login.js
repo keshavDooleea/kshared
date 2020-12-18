@@ -49,7 +49,6 @@ const userLogin = async (loginForm, socket) => {
           };
 
           socket.join(loggedUser.username);
-          console.log(loggedUser.username);
           socket.emit(eventName, response);
           return token;
         }

@@ -110,7 +110,6 @@ const updateText = async (data, io) => {
     // send back text straight away
     const user = findUser(data.token);
     io.in(user.username).emit("updatedText", data.text);
-    console.log(user.username);
     const dbUser = await User.findById(user.id);
     dbUser.currentText = data.text;
     dbUser.save();
@@ -133,7 +132,7 @@ const saveNoteList = async (data, io) => {
 
     await currentUser.save();
 
-    io.emit("getNotes", currentUser.notes);
+    io.in(user.username).emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log("Updating current note error: ", error);
   }
@@ -155,8 +154,8 @@ const getGlobalStars = async (socket) => {
 
 const updateStars = async (data, io) => {
   try {
-    io.emit("updatedStars", data.stars);
     const user = findUser(data.token);
+    io.in(user.username).emit("updatedStars", data.stars);
     await User.findByIdAndUpdate({ _id: user.id }, { stars: data.stars });
   } catch (err) {
     console.log("Updating stars error: ", err);
