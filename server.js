@@ -81,8 +81,6 @@ io.on("connection", async (socket) => {
 const deleteAccount = async (token, io) => {
   const user = findUser(token);
 
-  console.log("NAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: ", user.username);
-
   try {
     io.in(user.username).emit("deletedAccount");
     await User.findByIdAndDelete(user.id);

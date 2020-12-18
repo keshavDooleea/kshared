@@ -48,7 +48,6 @@ export class AppComponent implements OnInit, OnDestroy {
       .listen('deletedAccount')
       .subscribe(() => {
         this.localStorage.clearToken();
-        console.log('CLEAARED');
         this.router.navigateByUrl('/login');
       });
   }
