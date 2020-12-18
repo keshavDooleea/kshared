@@ -63,8 +63,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   onDeleteAccount(): void {
     const token = this.localStorage.getToken();
-    this.localStorage.clearToken();
     this.socketService.emit('deleteAccount', token);
+
+    this.socketService.listen('deletedAccount').subscribe(() => {
+      this.localStorage.clearToken();
+    });
   }
 
   private subscribeToUser(): void {

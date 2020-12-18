@@ -43,12 +43,13 @@ io.on("connection", async (socket) => {
     token = await userLogin(data, socket);
   });
 
+  // to remove
   socket.on("onLogOut", (oldToken) => {
     socket.emit("appLogOut");
   });
 
   socket.on("deleteAccount", async (token) => {
-    await deleteAccount(token);
+    await deleteAccount(token, io);
   });
 
   socket.on("updateStars", async (data) => {
@@ -82,6 +83,7 @@ const deleteAccount = async (token) => {
 
   try {
     await User.findByIdAndDelete(user.id);
+    io.in(user.username).emit("deletedAccount");
   } catch (err) {
     console.log("Delete account error: ", err);
   }
