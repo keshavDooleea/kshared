@@ -119,8 +119,8 @@ const pageRefresh = async (data, socket) => {
 const updateText = async (data, socket) => {
   try {
     // send back text straight away
-    socket.join(user.id);
     const user = findUser(data.token);
+    socket.join(user.id);
     console.log(`${user.username} is writing`);
     socket.to(user.id).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
