@@ -112,9 +112,7 @@ const updateText = async (data, io) => {
     // send back text straight away
     io.in(data.username).emit("updatedText", data.text);
     const user = findUser(data.token);
-    const dbUser = await User.findById(user.id);
-    dbUser.currentText = data.text;
-    dbUser.save();
+    await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
     console.log("Updating current text error: ", error);
   }
