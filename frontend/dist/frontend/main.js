@@ -949,6 +949,7 @@ class LoginComponent {
                 dateAccCreated: data.dateAccCreated,
                 currentText: data.currentText,
                 noteList: data.noteList,
+                stars: data.stars,
             };
             const user = new src_app_classes_user__WEBPACK_IMPORTED_MODULE_3__["User"](currentUser);
             console.log(user);
@@ -1775,7 +1776,8 @@ NotesService.ɵprov = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInje
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SERVER_URL", function() { return SERVER_URL; });
-const SERVER_URL = 'https://kshared.herokuapp.com/' || false;
+// export const SERVER_URL = 'https://kshared.herokuapp.com/';
+const SERVER_URL = 'http://localhost:5000/';
 
 
 /***/ }),
@@ -1832,7 +1834,9 @@ class StarsComponent {
             .getUserObservable()
             .subscribe((newUser) => {
             if (newUser) {
-                this.fillStarRating(newUser.user.stars);
+                setTimeout(() => {
+                    this.fillStarRating(newUser.user.stars);
+                }, 100);
             }
         });
     }

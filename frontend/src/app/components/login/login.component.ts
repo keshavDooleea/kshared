@@ -204,6 +204,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         dateAccCreated: data.dateAccCreated,
         currentText: data.currentText,
         noteList: data.noteList,
+        stars: data.stars,
       };
       const user = new User(currentUser);
       console.log(user);

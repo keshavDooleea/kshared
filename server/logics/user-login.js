@@ -46,6 +46,7 @@ const userLogin = async (loginForm, socket) => {
             dateAccCreated: userFound.dateAccCreated,
             currentText: userFound.currentText,
             noteList: userFound.notes,
+            stars: userFound.stars,
           };
 
           socket.join(loggedUser.username);

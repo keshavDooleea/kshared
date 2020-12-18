@@ -37,7 +37,9 @@ export class StarsComponent implements OnInit, OnDestroy {
       .getUserObservable()
       .subscribe((newUser) => {
         if (newUser) {
-          this.fillStarRating(newUser.user.stars);
+          setTimeout(() => {
+            this.fillStarRating(newUser.user.stars);
+          }, 100);
         }
       });
   }
