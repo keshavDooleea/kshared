@@ -42,6 +42,13 @@ export class AppComponent implements OnInit, OnDestroy {
           const user = new User(data);
           this.userService.setUser(user);
         });
+
+      this.socketSubscription = this.socketService
+        .listen('deletedAccount')
+        .subscribe(() => {
+          this.localStorage.clearToken();
+          console.log('CLEAARED');
+        });
     }
   }
 

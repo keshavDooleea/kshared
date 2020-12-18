@@ -25,10 +25,6 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToUser();
-    this.socketService.listen('deletedAccount').subscribe(() => {
-      this.localStorage.clearToken();
-      console.log('CLEAARED');
-    });
   }
 
   ngOnDestroy(): void {
