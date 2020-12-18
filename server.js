@@ -32,8 +32,12 @@ mongo.connect(
 // https://socket.io/docs/v3/emit-cheatsheet/
 
 io.on("connection", async (socket) => {
-  console.log("NEW USER");
   let token = socket.handshake.query.token;
+  if (token) {
+    const connectionUser = findUser(token);
+    socket.join(connectionUser.id);
+    console.log("NEW USER CONNECTED ", connectionUser.username);
+  }
 
   // new user has registered an acc
   socket.on("newRegistration", async (data) => {
