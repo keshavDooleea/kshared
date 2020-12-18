@@ -67,7 +67,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("updateText", async (data) => {
-    io.in(data.username).emit("updatedText", data.text);
+    socket.to(data.username).emit("updatedText", data.text);
     await updateText(data, io);
   });
 
