@@ -91,6 +91,7 @@ const deleteAccount = async (token) => {
 
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
+  console.log("UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUL : ", user);
   socket.join(user.username);
 
   try {

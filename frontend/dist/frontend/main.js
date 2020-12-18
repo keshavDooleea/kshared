@@ -109,6 +109,7 @@ class HomeComponent {
         this.socketService.emit('deleteAccount', token);
         this.socketService.listen('deletedAccount').subscribe(() => {
             this.localStorage.clearToken();
+            console.log('CLEAARED');
         });
     }
     subscribeToUser() {
