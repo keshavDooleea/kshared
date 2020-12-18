@@ -119,7 +119,7 @@ const updateText = async (data, socket) => {
   try {
     // send back text straight away
     const user = findUser(data.token);
-    console.log(user.username, user.id);
+    console.log(user.username, user.id, " is writing");
     socket.to(user.id).emit("updatedText", data.text); // sending to every username except sender
     await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
   } catch (error) {
