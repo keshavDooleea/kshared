@@ -618,13 +618,14 @@ class AppComponent {
                 const user = new _classes_user__WEBPACK_IMPORTED_MODULE_1__["User"](data);
                 this.userService.setUser(user);
             });
-            this.socketSubscription = this.socketService
-                .listen('deletedAccount')
-                .subscribe(() => {
-                this.localStorage.clearToken();
-                console.log('CLEAARED');
-            });
         }
+        this.socketSubscription = this.socketService
+            .listen('deletedAccount')
+            .subscribe(() => {
+            this.localStorage.clearToken();
+            console.log('CLEAARED');
+            this.router.navigateByUrl('/login');
+        });
     }
     onLogOut() {
         this.socketSubscription = this.socketService
