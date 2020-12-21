@@ -109,7 +109,7 @@ export class StarsComponent implements OnInit, OnDestroy {
       ticks: 400,
       origin: {
         x: 0.08,
-        y: 0.5,
+        y: 0.4,
       },
     });
   }

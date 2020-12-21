@@ -81,12 +81,18 @@
       letter-spacing: 2px;
       color: white;
       text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+      user-select: none;
+
+      &::first-letter {
+        color: rosybrown;
+      }
     }
 
     p {
       font-size: 1.3rem;
       color: styles.$fadeText;
       text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      font-weight: bold;
     }
   }
 }
