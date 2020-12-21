@@ -48,6 +48,9 @@ app.post("/", async (req, res, next) => {
 
 io.on("connection", async (socket) => {
   let token = socket.handshake.query.token;
+  if (token) {
+    await pageRefresh(token, socket);
+  }
 
   // new user has registered an acc
   socket.on("newRegistration", async (data) => {
@@ -70,7 +73,7 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("deleteAccount", async (token) => {
-    await deleteAccount(token, io);
+    await deleteAccount(token, socket, io);
   });
 
   socket.on("updateStars", async (data) => {
@@ -165,10 +168,11 @@ const uploadFile = async (req, res) => {
   }
 };
 
-const deleteAccount = async (token, io) => {
+const deleteAccount = async (token, socket, io) => {
   const user = findUser(token);
 
   try {
+    socket.join(user.id);
     io.in(user.id).emit("deletedAccount");
     console.log(`${user.username} deleted his/her account`);
     const dbUser = await User.findByIdAndDelete(user.id);
