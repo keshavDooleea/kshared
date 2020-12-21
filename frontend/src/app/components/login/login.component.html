@@ -52,7 +52,7 @@
         <div class="user-input">
           <div class="input-parent">
             <input
-              [type]="hidePassword ? 'password' : 'text'"
+              [type]="hidePassword[0] ? 'password' : 'text'"
               placeholder="Password"
               autocomplete="off"
               maxlength="10"
@@ -77,14 +77,14 @@
             ></i>
             <i
               class="fas fa-eye eye"
-              [style.display]="hidePassword ? 'none' : 'flex'"
-              (click)="toggleEyePassword()"
+              [style.display]="hidePassword[0] ? 'none' : 'flex'"
+              (click)="toggleEyePassword(0)"
             ></i>
 
             <i
               class="fas fa-eye-slash eye"
-              [style.display]="hidePassword ? 'flex' : 'none'"
-              (click)="toggleEyePassword()"
+              [style.display]="hidePassword[0] ? 'flex' : 'none'"
+              (click)="toggleEyePassword(0)"
             ></i>
           </div>
         </div>
@@ -92,7 +92,7 @@
         <div class="user-input">
           <div class="input-parent">
             <input
-              [type]="hidePassword ? 'password' : 'text'"
+              [type]="hidePassword[1] ? 'password' : 'text'"
               placeholder="Confirm Password"
               autocomplete="off"
               maxlength="10"
@@ -119,14 +119,14 @@
             ></i>
             <i
               class="fas fa-eye eye"
-              [style.display]="hidePassword ? 'none' : 'flex'"
-              (click)="toggleEyePassword()"
+              [style.display]="hidePassword[1] ? 'none' : 'flex'"
+              (click)="toggleEyePassword(1)"
             ></i>
 
             <i
               class="fas fa-eye-slash eye"
-              [style.display]="hidePassword ? 'flex' : 'none'"
-              (click)="toggleEyePassword()"
+              [style.display]="hidePassword[1] ? 'flex' : 'none'"
+              (click)="toggleEyePassword(1)"
             ></i>
           </div>
         </div>
@@ -208,7 +208,7 @@
         <div class="user-input">
           <div class="input-parent">
             <input
-              [type]="hidePassword ? 'password' : 'text'"
+              [type]="hidePassword[2] ? 'password' : 'text'"
               placeholder="Password"
               autocomplete="off"
               spellcheck="false"
@@ -237,14 +237,14 @@
             }}</small>
             <i
               class="fas fa-eye eye"
-              [style.display]="hidePassword ? 'none' : 'flex'"
-              (click)="toggleEyePassword()"
+              [style.display]="hidePassword[2] ? 'none' : 'flex'"
+              (click)="toggleEyePassword(2)"
             ></i>
 
             <i
               class="fas fa-eye-slash eye"
-              [style.display]="hidePassword ? 'flex' : 'none'"
-              (click)="toggleEyePassword()"
+              [style.display]="hidePassword[2] ? 'flex' : 'none'"
+              (click)="toggleEyePassword(2)"
             ></i>
           </div>
         </div>
