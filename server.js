@@ -163,7 +163,6 @@ const uploadFile = async (req, res) => {
     const newFile = {
       size: file.size,
       name: file.name,
-      amazonUrl: url,
       amazonName: amazonName,
       innerHTML: innerHtml,
     };
@@ -172,6 +171,7 @@ const uploadFile = async (req, res) => {
     await dbUser.save();
     const savedFile = await User.findOne({ _id: user.id }, { files: { $elemMatch: newFile } });
     newFile.id = savedFile.files[0]._id;
+    newFile.amazonUrl = url;
 
     res.json("Success");
     io.in(user.id).emit("uploadedFile", newFile);
@@ -205,13 +205,18 @@ const pageRefresh = async (data, socket) => {
 
   try {
     let currentUser = await User.findById(user.id);
+    const newFiles = currentUser.files;
+
+    for (const file of newFiles) {
+      const url = await awsGetFileUrl(file.amazonName, file.name);
+      file.amazonUrl = url;
+    }
 
     // update user details
     user.currentText = currentUser.currentText;
     user.noteList = currentUser.notes;
     user.stars = currentUser.stars;
-    user.files = currentUser.files;
-
+    user.files = newFiles;
     socket.emit("initialLanding", user);
   } catch (error) {
     console.log("Updating current text error: ", error);

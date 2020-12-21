@@ -1,6 +1,7 @@
 const User = require("../modals/user").User;
 const jwt = require("jsonwebtoken");
 const wrapResponse = require("./wrap-response");
+const { awsGetFileUrl } = require("./aws");
 
 const eventName = "newLoginResponse";
 const errorMessage = "Sorry, an error has occured!";
@@ -19,7 +20,7 @@ const userLogin = async (loginForm, socket) => {
     // user found
     else {
       // verify password
-      User.findOne({ username: loginForm.username, password: loginForm.password }, (err, userFound) => {
+      User.findOne({ username: loginForm.username, password: loginForm.password }, async (err, userFound) => {
         // incorrect password
         if (userFound == null) {
           const message = "Password is incorrect";
@@ -40,6 +41,13 @@ const userLogin = async (loginForm, socket) => {
           // generate jwt token
           let token = jwt.sign(loggedUser, process.env.JWT_TOKEN, {});
 
+          // get latest files
+          const newFiles = userFound.files;
+          for (const file of newFiles) {
+            const url = await awsGetFileUrl(file.amazonName, file.name);
+            file.amazonUrl = url;
+          }
+
           const response = {
             status: 200,
             token: token,
@@ -50,7 +58,7 @@ const userLogin = async (loginForm, socket) => {
             currentText: userFound.currentText,
             noteList: userFound.notes,
             stars: userFound.stars,
-            files: userFound.files,
+            files: newFiles,
           };
 
           socket.emit(eventName, response);
