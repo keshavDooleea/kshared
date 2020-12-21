@@ -11,8 +11,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class NotesContainerComponent implements OnInit, OnDestroy {
   textareaValue: string;
-  private socketSubscription: Subscription;
-  private userSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private noteService: NotesService,
@@ -26,8 +25,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.socketSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   saveTextarea(): void {
@@ -53,20 +51,20 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToSocket(): void {
-    this.socketSubscription = this.socketService
-      .listen('updatedText')
-      .subscribe((data) => {
+    this.subscriptions.push(
+      this.socketService.listen('updatedText').subscribe((data) => {
         this.textareaValue = data;
-      });
+      })
+    );
   }
 
   private subscribeToUser(): void {
-    this.userSubscription = this.userService
-      .getUserObservable()
-      .subscribe((user) => {
+    this.subscriptions.push(
+      this.userService.getUserObservable().subscribe((user) => {
         if (user) {
           this.textareaValue = user.user.currentText;
         }
-      });
+      })
+    );
   }
 }

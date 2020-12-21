@@ -12,7 +12,7 @@ import { UserService } from './services/user/user.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private socketSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private socketService: SocketService,
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.socketSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   private checkUser(): void {
@@ -36,27 +36,27 @@ export class AppComponent implements OnInit, OnDestroy {
     if (token) {
       // this.router.navigateByUrl('/home');
       this.socketService.emit('pageRefresh', token);
-      this.socketSubscription = this.socketService
-        .listen('initialLanding')
-        .subscribe((data) => {
+      this.subscriptions.push(
+        this.socketService.listen('initialLanding').subscribe((data) => {
           const user = new User(data);
           this.userService.setUser(user);
-        });
+        })
+      );
     }
 
-    this.socketSubscription = this.socketService
-      .listen('deletedAccount')
-      .subscribe(() => {
+    this.subscriptions.push(
+      this.socketService.listen('deletedAccount').subscribe(() => {
         this.localStorage.clearToken();
         this.router.navigateByUrl('/login');
-      });
+      })
+    );
   }
 
   private onLogOut(): void {
-    this.socketSubscription = this.socketService
-      .listen('appLogOut')
-      .subscribe(() => {
+    this.subscriptions.push(
+      this.socketService.listen('appLogOut').subscribe(() => {
         this.router.navigateByUrl('/login');
-      });
+      })
+    );
   }
 }

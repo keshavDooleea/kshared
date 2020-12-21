@@ -13,8 +13,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
-  private fileSubscription: Subscription;
-  private userSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private fileService: FilesService,
@@ -29,8 +28,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.fileSubscription.unsubscribe();
-    this.userSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   onFileInput(newFiles: FileList): void {
@@ -58,30 +56,34 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   }
 
   private subscribeToFile(): void {
-    this.fileSubscription = this.fileService
-      .getFilesObservable()
-      .subscribe((newFiles) => {
+    this.subscriptions.push(
+      this.fileService.getFilesObservable().subscribe((newFiles) => {
         this.files = newFiles;
-      });
+      })
+    );
   }
 
   private subscribeToSocket(): void {
-    this.socketService.listen('uploadedFile').subscribe((file) => {
-      this.fileService.addCustomFiles(file);
-    });
+    this.subscriptions.push(
+      this.socketService.listen('uploadedFile').subscribe((file) => {
+        this.fileService.addCustomFiles(file);
+      })
+    );
 
-    this.socketService.listen('toggledLock').subscribe((file) => {
-      this.fileService.updateLockFile(file);
-    });
+    this.subscriptions.push(
+      this.socketService.listen('toggledLock').subscribe((file) => {
+        this.fileService.updateLockFile(file);
+      })
+    );
   }
 
   private subscribeToUser(): void {
-    this.userSubscription = this.userService
-      .getUserObservable()
-      .subscribe((newUser) => {
+    this.subscriptions.push(
+      this.userService.getUserObservable().subscribe((newUser) => {
         if (newUser) {
           this.fileService.setFiles(newUser.user.files);
         }
-      });
+      })
+    );
   }
 }

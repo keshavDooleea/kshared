@@ -12,8 +12,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class StarsComponent implements OnInit, OnDestroy {
   stars = [1, 2, 3, 4, 5];
-  private userSubscription: Subscription;
-  private socketSubscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private elementRef: ElementRef,
@@ -28,28 +27,27 @@ export class StarsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.socketSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   private subscribeToUser(): void {
-    this.userSubscription = this.userService
-      .getUserObservable()
-      .subscribe((newUser) => {
+    this.subscriptions.push(
+      this.userService.getUserObservable().subscribe((newUser) => {
         if (newUser) {
           setTimeout(() => {
             this.fillStarRating(newUser.user.stars);
           }, 100);
         }
-      });
+      })
+    );
   }
 
   private subscribeToSocket(): void {
-    this.socketSubscription = this.socketService
-      .listen('updatedStars')
-      .subscribe((newStars) => {
+    this.subscriptions.push(
+      this.socketService.listen('updatedStars').subscribe((newStars) => {
         this.fillStarRating(newStars);
-      });
+      })
+    );
   }
 
   onHover(index: number): void {
