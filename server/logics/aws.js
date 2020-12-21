@@ -38,7 +38,7 @@ const awsFileUpload = (file, name) => {
   });
 };
 
-const awsGetFileUrl = (name) => {
+const awsGetFileUrl = (amazonName, fileName) => {
   const s3 = new aws.S3({
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY,
@@ -48,7 +48,8 @@ const awsGetFileUrl = (name) => {
   return new Promise((resolve, reject) => {
     const url = s3.getSignedUrl("getObject", {
       Bucket: process.env.BUCKET,
-      Key: name,
+      Key: amazonName,
+      ResponseContentDisposition: `attachment; filename="${fileName}"`,
     });
 
     resolve(url);

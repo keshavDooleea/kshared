@@ -10,7 +10,7 @@ const getInnerHTML = (fileName) => {
   }
 
   // videos
-  if (fileName.endsWith("mp4")) {
+  if (fileName.endsWith("mp4") || fileName.endsWith("wmv")) {
     return '<i class="fas fa-file-video icon"></i>';
   }
 

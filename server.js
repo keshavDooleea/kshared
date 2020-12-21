@@ -130,7 +130,7 @@ const uploadFile = async (req, res) => {
     // can upload and get url
     const amazonName = user.id + "," + file.name;
     await awsFileUpload(file, amazonName);
-    const url = await awsGetFileUrl(amazonName);
+    const url = await awsGetFileUrl(amazonName, file.name);
     const innerHtml = getInnerHTML(file.name);
 
     const newFile = {

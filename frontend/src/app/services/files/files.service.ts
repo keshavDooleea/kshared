@@ -47,7 +47,10 @@ export class FilesService {
   }
 
   addCustomFiles(file: CustomFiles): void {
-    console.log(file);
+    if (this.files.includes(file)) {
+      return;
+    }
+
     this.files.push(file);
     this.fileSubscription.next(this.files);
   }

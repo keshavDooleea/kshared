@@ -48,14 +48,13 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   toggleLock(index: number): void {
     this.fileService.toggleLock(index);
   }
-
   downloadFile(file: CustomFiles, anchorTag: HTMLAnchorElement): void {
     // [href]="file.base64 | safeUrl"
-    // anchorTag.href = file.base64 as string;
+    anchorTag.href = file.amazonUrl;
 
     setTimeout(() => {
       anchorTag.href = '';
-    }, 200);
+    }, 1);
   }
 
   private subscribeToFile(): void {
@@ -77,7 +76,6 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
       .getUserObservable()
       .subscribe((newUser) => {
         if (newUser) {
-          console.log(newUser.user.files);
           this.fileService.setFiles(newUser.user.files);
         }
       });
