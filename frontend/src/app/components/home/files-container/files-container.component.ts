@@ -84,6 +84,13 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
         this.fileService.deleteSingleFile(file);
       })
     );
+
+    // when cleared all files
+    this.subscriptions.push(
+      this.socketService.listen('clearedFiles').subscribe(() => {
+        this.fileService.clearUnlockedFiles();
+      })
+    );
   }
 
   private subscribeToUser(): void {

@@ -34,10 +34,10 @@ mongo.connect(
   }
 );
 
-app.use(formidableMiddleware({ multiples: true }));
+app.use(formidableMiddleware({ multiples: true, maxFileSize: "400mb" }));
 app.use(cors());
-app.use(bodyParser.json({ limit: "300mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "300mb" }));
+app.use(bodyParser.json({ limit: "400mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "400mb" }));
 app.use(express.json());
 
 app.post("/", async (req, res, next) => {
@@ -106,6 +106,10 @@ io.on("connection", async (socket) => {
 
   socket.on("deleteSingleFile", async (data) => {
     await onSingleFileDelete(data, io);
+  });
+
+  socket.on("clearFiles", async (data) => {
+    await clearFiles(data, io);
   });
 
   socket.on("disconnect", async () => {});
@@ -296,11 +300,31 @@ const onSingleFileDelete = async (data, io) => {
     io.in(user.id).emit("deleteSingleFile", lockFileData);
 
     // delete from mongo and s3
-    const fileID = data.file._id ? data.file._id : data.file.id;
-    await User.updateOne({ _id: user.id }, { $pull: { files: { _id: fileID } } });
-    await awsDeleteSingleFile(data.file.amazonName);
+    await deleteOneFile(data.file, data.token);
   } catch (error) {
     console.log(`Delete single file error: ${error}`);
+  }
+};
+
+const deleteOneFile = async (file, token) => {
+  const user = findUser(token);
+  const fileID = file._id ? file._id : file.id;
+  await User.updateOne({ _id: user.id }, { $pull: { files: { _id: fileID } } });
+  await awsDeleteSingleFile(file.amazonName);
+};
+
+const clearFiles = async (data, io) => {
+  try {
+    for (let i = 0; i < data.files.length; i++) {
+      if (!data.files[i].isLocked) {
+        await deleteOneFile(data.files[i], data.token);
+      }
+    }
+
+    const user = findUser(data.token);
+    io.in(user.id).emit("clearedFiles");
+  } catch (error) {
+    console.log(`Clearing files error: ${error}`);
   }
 };
 

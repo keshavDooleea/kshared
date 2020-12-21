@@ -71,10 +71,11 @@ export class FilesService {
   }
 
   clearFiles(): void {
-    this.files = this.files.filter((value) => {
-      return value.isLocked;
-    });
-    this.fileSubscription.next(this.files);
+    const data = {
+      token: this.localStorageService.getToken(),
+      files: this.files,
+    };
+    this.socketService.emit('clearFiles', data);
   }
 
   toggleLock(index: number): void {
@@ -97,6 +98,13 @@ export class FilesService {
 
   deleteSingleFile(file: ActionFile): void {
     this.files.splice(file.index, 1);
+    this.fileSubscription.next(this.files);
+  }
+
+  clearUnlockedFiles(): void {
+    this.files = this.files.filter((value) => {
+      return value.isLocked;
+    });
     this.fileSubscription.next(this.files);
   }
 
