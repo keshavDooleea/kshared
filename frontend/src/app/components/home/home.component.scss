@@ -278,6 +278,8 @@ app-notes-container {
 
 .modal-email-body {
   @include styles.displayFlex(column, center, space-around);
+  transform-style: preserve-3d;
+  perspective: 500px;
 
   .email-header {
     width: 100%;
@@ -306,21 +308,25 @@ app-notes-container {
     width: 100%;
     height: 65%;
     @include styles.displayFlex(column, center, space-around);
-    padding: 8px;
+    padding: 0 15px;
+    transform-style: preserve-3d;
 
     .email-options {
-      width: 100%;
+      width: 50%;
       height: 25%;
       @include styles.displayFlex(column, center, space-between);
+      background-color: rgba($color: styles.$containers, $alpha: 0.07);
+      align-self: flex-start;
 
       input {
-        width: 50%;
+        width: 100%;
         height: 65%;
         font-size: 17px;
         border-radius: styles.$smallBorderRadius;
         align-self: flex-start;
-        background-color: #2f3136;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        background-color: rgba($color: styles.$containers, $alpha: 0.07);
       }
     }
 
@@ -331,7 +337,6 @@ app-notes-container {
       textarea {
         width: 100%;
         height: 90%;
-        background-color: #2f3136;
         border-radius: styles.$smallBorderRadius;
         outline: none;
         border: none;
@@ -340,7 +345,9 @@ app-notes-container {
         color: white;
         font-size: 17px;
         white-space: pre-wrap;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(10px);
+        background-color: rgba($color: styles.$containers, $alpha: 0.07);
 
         &::-webkit-scrollbar {
           width: 15px;
@@ -403,6 +410,7 @@ app-notes-container {
       @include styles.displayFlex(row, center, center);
       color: white;
       letter-spacing: 0.4px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 
       .email-msg {
         width: 90%;
