@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/classes/user';
+import { validateEmail, validateTextarea } from 'src/app/classes/validator';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
@@ -15,7 +17,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   user: CurrentUser;
   showDeleteModal: boolean;
   showFeedbackModal: boolean;
-  private userSubscription: Subscription;
+  emailForm: FormGroup;
+  emailClass: string;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private userService: UserService,
@@ -25,12 +29,26 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToUser();
+    this.initialiseEmailForm();
     const token = this.localStorage.getToken();
     this.socketService.emit('enteredHome', token);
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  private initialiseEmailForm(): void {
+    this.emailForm = new FormGroup({
+      emailAddress: new FormControl(
+        '',
+        Validators.compose([Validators.required, validateEmail])
+      ),
+      emailMessage: new FormControl(
+        '',
+        Validators.compose([Validators.required, validateTextarea])
+      ),
+    });
   }
 
   onNavbarChanged(showNav: boolean): void {
@@ -50,6 +68,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   toggleFeedbackModal(): void {
+    this.initialiseEmailForm();
+    this.emailClass = 'show-email-btn';
     this.showFeedbackModal = !this.showFeedbackModal;
   }
 
@@ -68,13 +88,52 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.socketService.emit('deleteAccount', token);
   }
 
+  sendEmail(): void {
+    if (this.emailForm.invalid) {
+      return;
+    }
+
+    this.emailClass = 'show-spinner';
+    const data = {
+      email: this.emailAdd,
+      message: this.emailMessage,
+      username: this.userService.getUser().user.username,
+    };
+
+    this.socketService.emit('sendEmail', data);
+  }
+
+  closeResponse(): void {
+    this.emailClass = 'show-email-btn';
+  }
+
   private subscribeToUser(): void {
-    this.userSubscription = this.userService
-      .getUserObservable()
-      .subscribe((user) => {
+    this.subscriptions.push(
+      this.userService.getUserObservable().subscribe((user) => {
         if (user) {
           this.user = user.user;
         }
-      });
+      })
+    );
+
+    this.subscriptions.push(
+      this.socketService
+        .listen('emailResponse')
+        .subscribe((response: string) => {
+          if (response === '200') {
+            this.emailClass = 'show-success-response';
+          } else {
+            this.emailClass = 'show-error-response';
+          }
+        })
+    );
+  }
+
+  get emailAdd(): string {
+    return this.emailForm.get('emailAddress').value;
+  }
+
+  get emailMessage(): string {
+    return this.emailForm.get('emailMessage').value;
   }
 }

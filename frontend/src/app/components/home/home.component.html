@@ -72,11 +72,82 @@
     (click)="onModalClicked($event)"
     [ngClass]="showFeedbackModal ? 'show-modal' : 'hide-modal'"
   >
-    <div class="modal-body modal-email-body">
+    <Form class="modal-body modal-email-body" [formGroup]="emailForm">
       <!-- saw a bug? love the app? have an idea for a feature? write to me! :D -->
-      <div class="email-header"></div>
-      <div class="email-body"></div>
-      <div class="email-action"></div>
-    </div>
+      <div class="email-header">
+        <span
+          ><p>Saw a bug?</p>
+          <p>Love the app?</p>
+          <p>Have an idea?</p></span
+        >
+        <h2>Write to me!</h2>
+      </div>
+      <div class="email-body">
+        <div class="email-options">
+          <input
+            type="text"
+            autocomplete="off"
+            placeholder="Your Email address"
+            spellcheck="false"
+            formControlName="emailAddress"
+          />
+          <small
+            *ngIf="
+              emailForm.get('emailAddress').hasError('emailError') &&
+              emailForm.get('emailAddress').touched
+            "
+          >
+            Invalid email address
+          </small>
+        </div>
+        <div class="email-textarea">
+          <textarea
+            spellcheck="false"
+            placeholder="Write your message"
+            formControlName="emailMessage"
+          ></textarea>
+          <small
+            *ngIf="
+              emailForm.get('emailMessage').hasError('textareaError') &&
+              emailForm.get('emailMessage').touched
+            "
+          >
+            Your message cannot be empty
+          </small>
+        </div>
+      </div>
+      <div class="email-action" [ngClass]="emailClass">
+        <button
+          class="btn send-email-btn"
+          type="submit"
+          (click)="sendEmail()"
+          [ngClass]="emailForm.invalid ? 'disable-btn' : 'enable-btn pop-btn'"
+        >
+          <h4>Send Email</h4>
+        </button>
+        <button class="btn" (click)="toggleFeedbackModal()">
+          <h4>Cancel</h4>
+        </button>
+
+        <img src="assets/loading_gif.gif" alt="loading_gif" class="spinner" />
+
+        <div class="email-response error-response">
+          <div class="email-msg">
+            <h4>Sorry, an error occurred 😟</h4>
+          </div>
+          <div class="email-close">
+            <i class="fas fa-window-close icon" (click)="closeResponse()"></i>
+          </div>
+        </div>
+        <div class="email-response success-response">
+          <div class="email-msg">
+            <h4>A copy of the mail has been sent to you 🙂</h4>
+          </div>
+          <div class="email-close">
+            <i class="fas fa-window-close icon" (click)="closeResponse()"></i>
+          </div>
+        </div>
+      </div>
+    </Form>
   </div>
 </div>

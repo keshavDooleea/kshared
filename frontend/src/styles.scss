@@ -128,6 +128,10 @@ input {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
     background-color: $containers;
     transition: 0.3s transform;
+    background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 220%;
   }
 
   &.show-modal {

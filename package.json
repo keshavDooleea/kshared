@@ -12,6 +12,7 @@
     "express-formidable": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.7",
+    "nodemailer": "^6.4.17",
     "nodemon": "^2.0.6",
     "path": "^0.12.7",
     "socket.io": "^3.0.4"

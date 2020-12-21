@@ -31,6 +31,15 @@ i {
   width: 30px;
   @include styles.displayFlex(column, flex-start, space-between);
 
+  &::before {
+    content: "";
+    position: absolute;
+    top: -100%;
+    left: -100%;
+    width: 100%;
+    height: 200%;
+  }
+
   span {
     height: 20%;
     background-color: styles.$itemNormal;
