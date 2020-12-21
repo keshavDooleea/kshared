@@ -36,8 +36,8 @@ mongo.connect(
 
 app.use(formidableMiddleware({ multiples: true }));
 app.use(cors());
-app.use(bodyParser.json({ limit: "200mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "200mb" }));
+app.use(bodyParser.json({ limit: "300mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "300mb" }));
 app.use(express.json());
 
 app.post("/", async (req, res, next) => {
@@ -296,7 +296,8 @@ const onSingleFileDelete = async (data, io) => {
     io.in(user.id).emit("deleteSingleFile", lockFileData);
 
     // delete from mongo and s3
-    await User.updateOne({ _id: user.id }, { $pull: { files: { _id: data.file.id } } });
+    const fileID = data.file._id ? data.file._id : data.file.id;
+    await User.updateOne({ _id: user.id }, { $pull: { files: { _id: fileID } } });
     await awsDeleteSingleFile(data.file.amazonName);
   } catch (error) {
     console.log(`Delete single file error: ${error}`);

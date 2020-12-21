@@ -25,7 +25,7 @@ const getInnerHTML = (fileName) => {
   }
 
   // txt files
-  if (fileName.endsWith("txt") || fileName.endsWith("md")) {
+  if (fileName.endsWith("txt") || fileName.endsWith("md") || fileName.endsWith("odt")) {
     return `<i class="fas fa-file-alt icon"></i>`;
   }
 

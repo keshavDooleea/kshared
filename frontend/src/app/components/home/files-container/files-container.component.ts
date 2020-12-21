@@ -66,6 +66,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   private subscribeToSocket(): void {
     this.subscriptions.push(
       this.socketService.listen('uploadedFile').subscribe((file) => {
+        console.log(file);
         this.fileService.addCustomFiles(file);
       })
     );
