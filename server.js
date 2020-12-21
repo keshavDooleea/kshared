@@ -171,7 +171,11 @@ const deleteAccount = async (token, io) => {
   try {
     io.in(user.id).emit("deletedAccount");
     console.log(`${user.username} deleted his/her account`);
-    await User.findByIdAndDelete(user.id);
+    const dbUser = await User.findByIdAndDelete(user.id);
+
+    for (let i = 0; i < dbUser.files.length; i++) {
+      await deleteOneFile(dbUser.files[i], token);
+    }
   } catch (err) {
     console.log("Delete account error: ", err);
   }
