@@ -4,6 +4,10 @@
   width: 100%;
   height: 100%;
   @include styles.displayFlex(column, center, center);
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 275%;
 }
 
 .login-header {
@@ -68,6 +72,8 @@
 .entry-containers {
   width: 100%;
   height: 90vh;
+  transform-style: preserve-3d;
+  perspective: 500px;
   @include styles.displayFlex(row, center, space-between);
 }
 
@@ -75,19 +81,25 @@
 .login-container {
   width: 35%;
   height: 60vh;
-  background-color: styles.$containers;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  // background-color: styles.$containers;
+  // box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: rgba($color: styles.$containers, $alpha: 0.07);
   transition: 0.7s transform;
   user-select: none;
+  backdrop-filter: blur(10px);
+  position: relative;
+  transform-style: preserve-3d;
+  z-index: 10;
   @include styles.displayFlex(row, center, center);
 
   .sidebar {
     width: 14%;
     height: 100%;
     @include styles.displayFlex(column, center, space-evenly);
-    color: #72767d;
+    color: white;
     font-size: 2rem;
     font-weight: bolder;
+    text-shadow: 0 0 30px rgba(0, 0, 0, 1);
   }
 
   .main {
@@ -99,7 +111,7 @@
       width: 70%;
       height: 50%;
       position: relative;
-      background-color: #40444b;
+      // background-color: #40444b;
       border-radius: styles.$smallBorderRadius styles.$smallBorderRadius
         styles.$smallBorderRadius styles.$smallBorderRadius;
 
@@ -109,7 +121,8 @@
         font-size: 20px;
         border-radius: styles.$smallBorderRadius styles.$smallBorderRadius
           styles.$smallBorderRadius styles.$smallBorderRadius;
-        box-shadow: 0 0 7px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+        background-color: initial !important;
       }
 
       .check {
@@ -172,6 +185,8 @@
 
       h4 {
         font-size: 18px;
+        color: white;
+        letter-spacing: 0.5px;
       }
 
       &:nth-child(1) {
@@ -217,18 +232,34 @@
 .show-register {
   .register-container {
     transform: translateX(0);
+    box-shadow: 15px 0px 35px rgba(0, 0, 0, 0.5);
   }
   .login-container {
     transform: translateX(100%);
+    box-shadow: none;
+  }
+  .login-design-mobile {
+    transform: translate(175%, -50%);
+  }
+  .login-design-desktop {
+    transform: translate(-18%, -50%);
   }
 }
 
 .show-login {
   .register-container {
     transform: translateX(-100%);
+    box-shadow: none;
   }
   .login-container {
     transform: translateX(0);
+    box-shadow: -15px 0px 35px rgba(0, 0, 0, 0.5);
+  }
+  .login-design-mobile {
+    transform: translate(75%, -50%);
+  }
+  .login-design-desktop {
+    transform: translate(-100%, -50%);
   }
 }
 
@@ -265,4 +296,25 @@
   100% {
     transform: scale(0.98);
   }
+}
+
+.login-design {
+  position: absolute;
+  top: 50%;
+  z-index: -1;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  transition: 0.6s transform cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  font-size: 15rem;
+  color: #68727f;
+  color: #68727f;
+}
+
+.login-design-mobile {
+  left: 50%;
+  transform: translate(75%, -50%);
+}
+
+.login-design-desktop {
+  right: 50%;
+  transform: translate(-60%, -50%);
 }
