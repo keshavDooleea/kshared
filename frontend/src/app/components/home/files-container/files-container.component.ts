@@ -69,6 +69,10 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.socketService.listen('uploadedFile').subscribe((file) => {
       this.fileService.addCustomFiles(file);
     });
+
+    this.socketService.listen('toggledLock').subscribe((file) => {
+      this.fileService.updateLockFile(file);
+    });
   }
 
   private subscribeToUser(): void {

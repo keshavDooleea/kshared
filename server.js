@@ -100,6 +100,10 @@ io.on("connection", async (socket) => {
     await saveNoteList(data, socket);
   });
 
+  socket.on("lockFile", async (data) => {
+    await toggleLock(data, io);
+  });
+
   socket.on("disconnect", async () => {});
 });
 
@@ -143,6 +147,8 @@ const uploadFile = async (req, res) => {
 
     dbUser.files.push(newFile);
     await dbUser.save();
+    const savedFile = await User.findOne({ _id: user.id }, { files: { $elemMatch: newFile } });
+    newFile.id = savedFile.files[0]._id;
 
     res.json("Success");
     io.in(user.id).emit("uploadedFile", newFile);
@@ -253,6 +259,24 @@ const updateStars = async (data, io) => {
     await User.findByIdAndUpdate({ _id: user.id }, { stars: data.stars });
   } catch (err) {
     console.log("Updating stars error: ", err);
+  }
+};
+
+const toggleLock = async (data, io) => {
+  try {
+    const user = findUser(data.token);
+
+    // send the updated file with index to client
+    const lockFileData = {
+      file: data.file,
+      index: data.index,
+    };
+    io.in(user.id).emit("toggledLock", lockFileData);
+
+    // update in mongo
+    await User.updateOne({ _id: user.id }, { $set: { "files.$[currentFile].isLocked": data.file.isLocked } }, { arrayFilters: [{ "currentFile._id": data.file._id }] });
+  } catch (error) {
+    console.log(`Toggle file lock error: ${error}`);
   }
 };
 

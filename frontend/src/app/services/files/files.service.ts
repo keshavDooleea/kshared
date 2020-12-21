@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CustomFiles } from 'src/app/classes/files';
+import { CustomFiles, LockFile } from 'src/app/classes/files';
 import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
+import { SocketService } from '../web-socket/socket.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +15,7 @@ export class FilesService {
 
   constructor(
     private localStorageService: LocalStorageService,
+    private socketService: SocketService,
     private http: HttpClient
   ) {
     this.files = [];
@@ -71,6 +73,19 @@ export class FilesService {
 
   toggleLock(index: number): void {
     this.files[index].isLocked = !this.files[index].isLocked;
+
+    const data = {
+      token: this.localStorageService.getToken(),
+      file: this.files[index],
+      index,
+    };
+
+    this.socketService.emit('lockFile', data);
+    this.fileSubscription.next(this.files);
+  }
+
+  updateLockFile(file: LockFile): void {
+    this.files[file.index].isLocked = file.file.isLocked;
     this.fileSubscription.next(this.files);
   }
 
