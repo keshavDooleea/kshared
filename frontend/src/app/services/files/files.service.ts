@@ -1,7 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { CustomFiles } from 'src/app/classes/files';
-import { InnerHtmlService } from 'src/app/services/files/inner-html/inner-html.service';
+import { SERVER_URL } from 'src/app/declarations/server-params';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root',
@@ -10,7 +12,10 @@ export class FilesService {
   private files: CustomFiles[];
   private fileSubscription: BehaviorSubject<CustomFiles[]>;
 
-  constructor(private innerHtmlService: InnerHtmlService) {
+  constructor(
+    private localStorageService: LocalStorageService,
+    private http: HttpClient
+  ) {
     this.files = [];
     this.fileSubscription = new BehaviorSubject<CustomFiles[]>(this.files);
   }
@@ -19,26 +24,31 @@ export class FilesService {
     return this.fileSubscription.asObservable();
   }
 
-  addFiles(newFiles: FileList): void {
+  postFiles(newFiles: FileList): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < newFiles.length; i++) {
-      this.getBase64(newFiles[i])
-        .then((imageData) => {
-          this.files.push({
-            isLocked: false,
-            base64: imageData,
-            size: newFiles[i].size,
-            name: newFiles[i].name,
-            // date: newFiles[i].lastModified,
-            innerHtml: this.innerHtmlService.getInnerHTML(
-              imageData,
-              newFiles[i].name
-            ),
-          });
-        })
-        .catch((error) => console.log(error));
+      this.postFile(newFiles.item(i));
     }
+  }
 
+  private postFile(file: File): void {
+    const formData = new FormData();
+    formData.append('token', this.localStorageService.getToken());
+    formData.append('file', file);
+
+    const headers = {
+      Accept: 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    };
+
+    this.http
+      .post<CustomFiles>(`${SERVER_URL}`, formData, { headers })
+      .subscribe((data) => console.log('server response: ', data));
+  }
+
+  addCustomFiles(file: CustomFiles): void {
+    console.log(file);
+    this.files.push(file);
     this.fileSubscription.next(this.files);
   }
 
@@ -58,6 +68,11 @@ export class FilesService {
 
   toggleLock(index: number): void {
     this.files[index].isLocked = !this.files[index].isLocked;
+    this.fileSubscription.next(this.files);
+  }
+
+  setFiles(files: CustomFiles[]): void {
+    this.files = files;
     this.fileSubscription.next(this.files);
   }
 

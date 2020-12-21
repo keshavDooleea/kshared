@@ -205,6 +205,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         currentText: data.currentText,
         noteList: data.noteList,
         stars: data.stars,
+        files: data.files,
       };
       const user = new User(currentUser);
       console.log(user);

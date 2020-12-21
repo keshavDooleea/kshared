@@ -2,6 +2,8 @@ import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomFiles } from 'src/app/classes/files';
 import { FilesService } from 'src/app/services/files/files.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { SocketService } from 'src/app/services/web-socket/socket.service';
 
 @Component({
   selector: 'app-files-container',
@@ -12,19 +14,27 @@ import { FilesService } from 'src/app/services/files/files.service';
 export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
   private fileSubscription: Subscription;
+  private userSubscription: Subscription;
 
-  constructor(private fileService: FilesService) {}
+  constructor(
+    private fileService: FilesService,
+    private userService: UserService,
+    private socketService: SocketService
+  ) {}
 
   ngOnInit(): void {
     this.subscribeToFile();
+    this.subscribeToSocket();
+    this.subscribeToUser();
   }
 
   ngOnDestroy(): void {
     this.fileSubscription.unsubscribe();
+    this.userSubscription.unsubscribe();
   }
 
   onFileInput(newFiles: FileList): void {
-    this.fileService.addFiles(newFiles);
+    this.fileService.postFiles(newFiles);
   }
 
   deleteFile(index: number): void {
@@ -41,7 +51,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
 
   downloadFile(file: CustomFiles, anchorTag: HTMLAnchorElement): void {
     // [href]="file.base64 | safeUrl"
-    anchorTag.href = file.base64 as string;
+    // anchorTag.href = file.base64 as string;
 
     setTimeout(() => {
       anchorTag.href = '';
@@ -53,6 +63,23 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
       .getFilesObservable()
       .subscribe((newFiles) => {
         this.files = newFiles;
+      });
+  }
+
+  private subscribeToSocket(): void {
+    this.socketService.listen('uploadedFile').subscribe((file) => {
+      this.fileService.addCustomFiles(file);
+    });
+  }
+
+  private subscribeToUser(): void {
+    this.userSubscription = this.userService
+      .getUserObservable()
+      .subscribe((newUser) => {
+        if (newUser) {
+          console.log(newUser.user.files);
+          this.fileService.setFiles(newUser.user.files);
+        }
       });
   }
 }

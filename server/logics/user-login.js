@@ -50,6 +50,7 @@ const userLogin = async (loginForm, socket) => {
             currentText: userFound.currentText,
             noteList: userFound.notes,
             stars: userFound.stars,
+            files: userFound.files,
           };
 
           socket.emit(eventName, response);

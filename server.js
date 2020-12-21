@@ -2,8 +2,13 @@ require("dotenv/config");
 const SERVER_PORT = process.env.PORT || 5000;
 const registerUser = require("./server/logics/register");
 const userLogin = require("./server/logics/user-login");
+const { awsFileUpload, awsGetFileUrl } = require("./server/logics/aws");
+const getInnerHTML = require("./server/logics/innerHtml");
 const User = require("./server/modals/user").User;
 
+const formidableMiddleware = require("express-formidable");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const mongo = require("mongoose");
@@ -28,6 +33,16 @@ mongo.connect(
     console.log("connected to DB!");
   }
 );
+
+app.use(formidableMiddleware({ multiples: true }));
+app.use(cors());
+app.use(bodyParser.json({ limit: "200mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "200mb" }));
+app.use(express.json());
+
+app.post("/", async (req, res, next) => {
+  await uploadFile(req, res);
+});
 
 // https://socket.io/docs/v3/emit-cheatsheet/
 
@@ -95,6 +110,47 @@ const onLogOut = (oldToken, socket) => {
   console.log(`${user.username} left the server`);
 };
 
+const uploadFile = async (req, res) => {
+  const token = req.fields.token;
+  const file = req.files.file;
+
+  try {
+    // get db user
+    const user = findUser(token);
+    const dbUser = await User.findById(user.id);
+
+    // check if exists
+    for (let i = 0; i < dbUser.files.length; i++) {
+      if (dbUser.files[i].name === file.name) {
+        res.json("File exists");
+        return;
+      }
+    }
+
+    // can upload and get url
+    const amazonName = user.id + "," + file.name;
+    await awsFileUpload(file, amazonName);
+    const url = await awsGetFileUrl(amazonName);
+    const innerHtml = getInnerHTML(file.name);
+
+    const newFile = {
+      size: file.size,
+      name: file.name,
+      amazonUrl: url,
+      amazonName: amazonName,
+      innerHTML: innerHtml,
+    };
+
+    dbUser.files.push(newFile);
+    await dbUser.save();
+
+    res.json("Success");
+    io.in(user.id).emit("uploadedFile", newFile);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const deleteAccount = async (token, io) => {
   const user = findUser(token);
 
@@ -120,6 +176,7 @@ const pageRefresh = async (data, socket) => {
     user.currentText = currentUser.currentText;
     user.noteList = currentUser.notes;
     user.stars = currentUser.stars;
+    user.files = currentUser.files;
 
     socket.emit("initialLanding", user);
   } catch (error) {
@@ -211,7 +268,7 @@ const findUser = (data) => {
   return user;
 };
 
-// deployement - production static html files
+// deployment - production static html files
 app.use(express.static(__dirname + "/frontend/dist/frontend"));
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname + "/frontend/dist/frontend/index.html"));

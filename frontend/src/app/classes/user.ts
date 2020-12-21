@@ -1,3 +1,4 @@
+import { CustomFiles } from './files';
 import { Note } from './Note';
 
 export interface CurrentUser {
@@ -8,6 +9,7 @@ export interface CurrentUser {
   currentText?: string;
   noteList?: Note[];
   stars?: number;
+  files?: CustomFiles[];
 }
 
 export class User {

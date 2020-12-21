@@ -34,6 +34,19 @@ const UserSchema = new mongo.Schema({
       welcomeNote: { type: Boolean },
     },
   ],
+  files: [
+    {
+      size: { type: Number },
+      name: { type: String },
+      amazonUrl: { type: String },
+      amazonName: { type: String }, // userId + name
+      innerHTML: { type: String },
+      isLocked: {
+        type: Boolean,
+        default: false,
+      },
+    },
+  ],
 });
 
 var User = mongo.model("User", UserSchema);
