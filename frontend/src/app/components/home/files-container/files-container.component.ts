@@ -70,9 +70,17 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
       })
     );
 
+    // toggling file lock
     this.subscriptions.push(
       this.socketService.listen('toggledLock').subscribe((file) => {
         this.fileService.updateLockFile(file);
+      })
+    );
+
+    // delete single file
+    this.subscriptions.push(
+      this.socketService.listen('deleteSingleFile').subscribe((file) => {
+        this.fileService.deleteSingleFile(file);
       })
     );
   }

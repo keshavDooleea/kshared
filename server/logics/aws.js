@@ -56,4 +56,29 @@ const awsGetFileUrl = (amazonName, fileName) => {
   });
 };
 
-module.exports = { awsFileUpload, awsGetFileUrl };
+const awsDeleteSingleFile = (fileName) => {
+  const s3 = new aws.S3({
+    accessKeyId: process.env.ACCESS_KEY_ID,
+    secretAccessKey: process.env.SECRET_ACCESS_KEY,
+    region: process.env.REGION,
+  });
+
+  const params = {
+    Bucket: process.env.BUCKET,
+    Key: fileName,
+  };
+
+  return new Promise((resolve, reject) => {
+    s3.deleteObject(params, (err, data) => {
+      if (err) {
+        reject(`Error deleting in S3: ${err}`);
+      }
+
+      if (data) {
+        resolve();
+      }
+    });
+  });
+};
+
+module.exports = { awsFileUpload, awsGetFileUrl, awsDeleteSingleFile };

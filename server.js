@@ -2,7 +2,7 @@ require("dotenv/config");
 const SERVER_PORT = process.env.PORT || 5000;
 const registerUser = require("./server/logics/register");
 const userLogin = require("./server/logics/user-login");
-const { awsFileUpload, awsGetFileUrl } = require("./server/logics/aws");
+const { awsFileUpload, awsGetFileUrl, awsDeleteSingleFile } = require("./server/logics/aws");
 const getInnerHTML = require("./server/logics/innerHtml");
 const User = require("./server/modals/user").User;
 
@@ -102,6 +102,10 @@ io.on("connection", async (socket) => {
 
   socket.on("lockFile", async (data) => {
     await toggleLock(data, io);
+  });
+
+  socket.on("deleteSingleFile", async (data) => {
+    await onSingleFileDelete(data, io);
   });
 
   socket.on("disconnect", async () => {});
@@ -277,6 +281,25 @@ const toggleLock = async (data, io) => {
     await User.updateOne({ _id: user.id }, { $set: { "files.$[currentFile].isLocked": data.file.isLocked } }, { arrayFilters: [{ "currentFile._id": data.file._id }] });
   } catch (error) {
     console.log(`Toggle file lock error: ${error}`);
+  }
+};
+
+const onSingleFileDelete = async (data, io) => {
+  try {
+    const user = findUser(data.token);
+
+    // send the updated file with index to client
+    const lockFileData = {
+      file: data.file,
+      index: data.index,
+    };
+    io.in(user.id).emit("deleteSingleFile", lockFileData);
+
+    // delete from mongo and s3
+    await User.updateOne({ _id: user.id }, { $pull: { files: { _id: data.file.id } } });
+    await awsDeleteSingleFile(data.file.amazonName);
+  } catch (error) {
+    console.log(`Delete single file error: ${error}`);
   }
 };
 

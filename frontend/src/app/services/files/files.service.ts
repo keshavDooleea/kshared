@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CustomFiles, LockFile } from 'src/app/classes/files';
+import { ActionFile, CustomFiles } from 'src/app/classes/files';
 import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { SocketService } from '../web-socket/socket.service';
@@ -59,7 +59,13 @@ export class FilesService {
 
   deleteFile(index: number): void {
     if (!this.files[index].isLocked) {
-      this.files.splice(index, 1);
+      const data = {
+        token: this.localStorageService.getToken(),
+        file: this.files[index],
+        index,
+      };
+
+      this.socketService.emit('deleteSingleFile', data);
       this.fileSubscription.next(this.files);
     }
   }
@@ -84,8 +90,13 @@ export class FilesService {
     this.fileSubscription.next(this.files);
   }
 
-  updateLockFile(file: LockFile): void {
+  updateLockFile(file: ActionFile): void {
     this.files[file.index].isLocked = file.file.isLocked;
+    this.fileSubscription.next(this.files);
+  }
+
+  deleteSingleFile(file: ActionFile): void {
+    this.files.splice(file.index, 1);
     this.fileSubscription.next(this.files);
   }
 

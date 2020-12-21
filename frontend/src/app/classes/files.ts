@@ -7,7 +7,7 @@ export interface CustomFiles {
   innerHtml: string;
 }
 
-export interface LockFile {
+export interface ActionFile {
   file: CustomFiles;
   index: number;
 }
