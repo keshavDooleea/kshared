@@ -72,11 +72,11 @@
     (click)="onModalClicked($event)"
     [ngClass]="showFeedbackModal ? 'show-modal' : 'hide-modal'"
   >
-    <div class="modal-body">
-      email container
-      <p>
-        saw a bug? love the app? have an idea for a feature? write to me! :D
-      </p>
+    <div class="modal-body modal-email-body">
+      <!-- saw a bug? love the app? have an idea for a feature? write to me! :D -->
+      <div class="email-header"></div>
+      <div class="email-body"></div>
+      <div class="email-action"></div>
     </div>
   </div>
 </div>

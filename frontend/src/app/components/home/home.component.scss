@@ -274,3 +274,23 @@ app-notes-container {
     letter-spacing: 0.8px;
   }
 }
+
+.modal-email-body {
+  @include styles.displayFlex(column, center, space-around);
+
+  .email-header {
+    width: 100%;
+    height: 25%;
+    background-color: red;
+  }
+  .email-body {
+    width: 100%;
+    height: 65%;
+    background-color: yellow;
+  }
+  .email-action {
+    width: 100%;
+    height: 10%;
+    background-color: blue;
+  }
+}

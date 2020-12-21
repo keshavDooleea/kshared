@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   serverResponse: ServerResponse;
   showRegisteredMessage: boolean;
+  hidePassword: boolean;
   private socketSubscription: Subscription;
 
   constructor(
@@ -32,6 +33,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private elementRef: ElementRef
   ) {
+    this.hidePassword = true;
     this.checkUser();
     this.updateGlobalStars();
     this.initialiseRegisterForm();
@@ -105,6 +107,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (this.socketSubscription) {
       this.socketSubscription.unsubscribe();
     }
+  }
+
+  toggleEyePassword(): void {
+    this.hidePassword = !this.hidePassword;
   }
 
   onCancelClicked(): void {
