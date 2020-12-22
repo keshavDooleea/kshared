@@ -295,7 +295,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  background-color: styles.$validColor;
+  background-color: #43b581;
   padding: 10px 20px;
   border-radius: styles.$smallBorderRadius;
   letter-spacing: 0.3s;
@@ -347,6 +347,57 @@
 .login-design-desktop {
   right: 50%;
   transform: translate(-60%, -50%);
+}
+
+.about-modal-body {
+  width: 65vw !important;
+  overflow-y: auto !important;
+  padding: 8px;
+
+  .modal-item {
+    width: 100%;
+
+    h2,
+    h3 {
+      color: styles.$fadeText;
+      letter-spacing: 0.6px;
+      text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-top: 5px;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-subtitle {
+      margin-top: 18px;
+    }
+
+    .modal-item-video {
+      width: 100%;
+      @include styles.displayFlex(row, center, space-evenly);
+    }
+
+    &:first-child {
+      display: flex;
+
+      .modal-title {
+        width: 95%;
+      }
+
+      .modal-close {
+        width: 5%;
+        height: 100%;
+        padding: 8px 5px 0 0;
+        @include styles.displayFlex(row, center, flex-end);
+      }
+    }
+  }
 }
 
 @media all and (max-width: 1055px) {
