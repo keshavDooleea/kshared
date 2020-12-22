@@ -1,4 +1,11 @@
-import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CustomFiles } from 'src/app/classes/files';
 import { FilesService } from 'src/app/services/files/files.service';
@@ -15,6 +22,8 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
   spinners: number[] = [];
   private subscriptions: Subscription[] = [];
+
+  @ViewChild('fileContainer') fileContainer: ElementRef;
 
   constructor(
     private fileService: FilesService,
@@ -62,6 +71,10 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.fileService.getFilesObservable().subscribe((newFiles) => {
         this.files = newFiles;
+
+        if (this.fileContainer) {
+          this.fileContainer.nativeElement.scrollLeft = this.fileContainer.nativeElement.scrollWidth;
+        }
       })
     );
   }
