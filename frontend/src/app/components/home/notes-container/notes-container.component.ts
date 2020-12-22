@@ -56,7 +56,16 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     this.noteService.saveCurrentText(this.textareaValue);
   }
 
-  copyToClipboard(noteTextarea: HTMLTextAreaElement): void {
+  copyToClipboard(
+    noteTextarea: HTMLTextAreaElement,
+    event: KeyboardEvent
+  ): void {
+    event.stopPropagation();
+
+    if (!this.textareaValue) {
+      return;
+    }
+
     this.savedText = [];
     noteTextarea.select();
     document.execCommand('copy');

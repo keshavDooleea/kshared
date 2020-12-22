@@ -19,7 +19,7 @@
       ></i>
       <i
         class="fas fa-copy copy-icon"
-        (click)="copyToClipboard(noteTextarea)"
+        (click)="copyToClipboard(noteTextarea, $event)"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
       ></i>
       <i
