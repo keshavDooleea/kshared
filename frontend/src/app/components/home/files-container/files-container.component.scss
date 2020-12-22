@@ -293,7 +293,11 @@
   .file-item {
     max-width: 45vw !important;
     min-width: 45vw !important;
-    background-color: #2f3136;
+    background-color: #3b3d44 !important;
+
+    &.locked-ui {
+      background-color: #2f3136 !important;
+    }
   }
 }
 
