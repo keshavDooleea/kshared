@@ -595,8 +595,7 @@ class NotesContainerComponent {
         this.textareaValue = '';
         this.noteService.saveCurrentText(this.textareaValue);
     }
-    copyToClipboard(noteTextarea, event) {
-        event.stopPropagation();
+    copyToClipboard(noteTextarea) {
         if (!this.textareaValue) {
             return;
         }
@@ -605,6 +604,16 @@ class NotesContainerComponent {
         document.execCommand('copy');
         noteTextarea.setSelectionRange(0, 0);
         this.copiedText.push(noteTextarea.value);
+        this.hideKeyboard(noteTextarea);
+    }
+    hideKeyboard(noteTextarea) {
+        noteTextarea.setAttribute('readonly', 'readonly');
+        noteTextarea.setAttribute('disabled', 'true');
+        setTimeout(() => {
+            noteTextarea.blur();
+            noteTextarea.removeAttribute('readonly');
+            noteTextarea.removeAttribute('disabled');
+        }, 100);
     }
     subscribeToSocket() {
         this.subscriptions.push(this.socketService.listen('updatedText').subscribe((data) => {
@@ -640,7 +649,7 @@ NotesContainerComponent.ɵcmp = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵ
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function NotesContainerComponent_Template_i_click_6_listener() { return ctx.saveTextarea(); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](7, "i", 6);
-        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function NotesContainerComponent_Template_i_click_7_listener($event) { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](4); return ctx.copyToClipboard(_r0, $event); });
+        _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function NotesContainerComponent_Template_i_click_7_listener() { _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵrestoreView"](_r5); const _r0 = _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵreference"](4); return ctx.copyToClipboard(_r0); });
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementEnd"]();
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](8, "i", 7);
         _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function NotesContainerComponent_Template_i_click_8_listener() { return ctx.clearTextarea(); });

@@ -56,12 +56,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     this.noteService.saveCurrentText(this.textareaValue);
   }
 
-  copyToClipboard(
-    noteTextarea: HTMLTextAreaElement,
-    event: KeyboardEvent
-  ): void {
-    event.stopPropagation();
-
+  copyToClipboard(noteTextarea: HTMLTextAreaElement): void {
     if (!this.textareaValue) {
       return;
     }
@@ -71,6 +66,18 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     document.execCommand('copy');
     noteTextarea.setSelectionRange(0, 0);
     this.copiedText.push(noteTextarea.value);
+    this.hideKeyboard(noteTextarea);
+  }
+
+  private hideKeyboard(noteTextarea: HTMLTextAreaElement): void {
+    noteTextarea.setAttribute('readonly', 'readonly');
+    noteTextarea.setAttribute('disabled', 'true');
+
+    setTimeout(() => {
+      noteTextarea.blur();
+      noteTextarea.removeAttribute('readonly');
+      noteTextarea.removeAttribute('disabled');
+    }, 100);
   }
 
   private subscribeToSocket(): void {
