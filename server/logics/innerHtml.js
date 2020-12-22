@@ -1,23 +1,13 @@
 const getInnerHTML = (fileName) => {
   // images
-  if (
-    fileName.endsWith("jpeg") ||
-    fileName.endsWith("jpg") ||
-    fileName.endsWith("png")
-    // fileName.endsWith('svg')
-  ) {
+  if (fileName.endsWith("jpeg") || fileName.endsWith("jpg") || fileName.endsWith("svg") || fileName.endsWith("png") || fileName.endsWith("gif")) {
     return `<i class="fas fa-file-image icon"></i>`;
   }
 
   // videos
-  if (fileName.endsWith("mp4") || fileName.endsWith("wmv")) {
+  if (fileName.endsWith("mp4") || fileName.endsWith("wmv") || fileName.endsWith("avi") || fileName.endsWith("mkv") || fileName.endsWith("mov") || fileName.endsWith("mpg") || fileName.endsWith("mpeg")) {
     return '<i class="fas fa-file-video icon"></i>';
   }
-
-  // icon
-  // if ((imageData as string).startsWith('data:image/x-icon;base64,')) {
-  //   return '<i class="fas fa-file-image icon"></i>';
-  // }
 
   // pdf
   if (fileName.endsWith("pdf")) {
@@ -25,22 +15,22 @@ const getInnerHTML = (fileName) => {
   }
 
   // txt files
-  if (fileName.endsWith("txt") || fileName.endsWith("md") || fileName.endsWith("odt")) {
+  if (fileName.endsWith("txt") || fileName.endsWith("md") || fileName.endsWith("odt") || fileName.endsWith("rtf")) {
     return `<i class="fas fa-file-alt icon"></i>`;
   }
 
   // word doc
-  if (fileName.endsWith("doc") || fileName.endsWith("docx")) {
+  if (fileName.endsWith("doc") || fileName.endsWith("docx") || fileName.endsWith("odp")) {
     return `<i class="fas fa-file-word icon"></i>`;
   }
 
   // excel files
-  if (fileName.endsWith("xlsx")) {
+  if (fileName.endsWith("xlsx") || fileName.endsWith("xls")) {
     return `<i class="fas fa-file-excel icon"></i>`;
   }
 
   // powerpoint
-  if (fileName.endsWith("ppt")) {
+  if (fileName.endsWith("ppt") || fileName.endsWith("pptx")) {
     return `<i class="fas fa-file-powerpoint icon"></i>`;
   }
 
@@ -55,7 +45,7 @@ const getInnerHTML = (fileName) => {
   }
 
   // code files
-  if (fileName.endsWith("ts") || fileName.endsWith("js") || fileName.endsWith("css") || fileName.endsWith("scss") || fileName.endsWith("c++") || fileName.endsWith("html")) {
+  if (fileName.endsWith("ts") || fileName.endsWith("js") || fileName.endsWith("css") || fileName.endsWith("scss") || fileName.endsWith("c++") || fileName.endsWith("html") || fileName.endsWith("py") || fileName.endsWith("php") || fileName.endsWith("h") || fileName.endsWith("java") || fileName.endsWith("class")) {
     return `<i class="fas fa-file-code icon"></i>`;
   }
 
