@@ -21,6 +21,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
   spinners: number[] = [];
+  shouldStayFixed: boolean;
   private subscriptions: Subscription[] = [];
 
   @ViewChild('fileContainer') fileContainer: ElementRef;
@@ -32,6 +33,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.shouldStayFixed = false;
     this.subscribeToFile();
     this.subscribeToSpinner();
     this.subscribeToSocket();
@@ -43,18 +45,22 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   }
 
   onFileInput(newFiles: FileList): void {
+    this.shouldStayFixed = false;
     this.fileService.postFiles(newFiles);
   }
 
   deleteFile(index: number): void {
+    this.shouldStayFixed = true;
     this.fileService.deleteFile(index);
   }
 
   clearFiles(): void {
+    this.shouldStayFixed = false;
     this.fileService.clearFiles();
   }
 
   toggleLock(index: number): void {
+    this.shouldStayFixed = true;
     this.fileService.toggleLock(index);
   }
 
@@ -72,7 +78,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
       this.fileService.getFilesObservable().subscribe((newFiles) => {
         this.files = newFiles;
 
-        if (this.fileContainer) {
+        if (this.fileContainer && !this.shouldStayFixed) {
           this.fileContainer.nativeElement.scrollLeft = this.fileContainer.nativeElement.scrollWidth;
         }
       })
@@ -120,6 +126,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.userService.getUserObservable().subscribe((newUser) => {
         if (newUser) {
+          this.shouldStayFixed = false;
           this.fileService.setFiles(newUser.user.files);
         }
       })
