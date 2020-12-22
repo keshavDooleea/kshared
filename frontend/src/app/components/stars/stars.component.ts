@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import * as confetti from 'canvas-confetti';
 import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
@@ -12,6 +18,9 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class StarsComponent implements OnInit, OnDestroy {
   stars = [1, 2, 3, 4, 5];
+  confettiAngle: number;
+  confettiX: number;
+  confettiVelocity: number;
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -19,7 +28,9 @@ export class StarsComponent implements OnInit, OnDestroy {
     private socketService: SocketService,
     private localStorageService: LocalStorageService,
     private userService: UserService
-  ) {}
+  ) {
+    this.getWindowSize();
+  }
 
   ngOnInit(): void {
     this.subscribeToUser();
@@ -28,6 +39,19 @@ export class StarsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getWindowSize(event?: Event): void {
+    if (window.innerWidth >= 650) {
+      this.confettiAngle = 55;
+      this.confettiX = 0.08;
+      this.confettiVelocity = 90;
+    } else {
+      this.confettiAngle = 90;
+      this.confettiX = 0.5;
+      this.confettiVelocity = 50;
+    }
   }
 
   private subscribeToUser(): void {
@@ -103,12 +127,12 @@ export class StarsComponent implements OnInit, OnDestroy {
     confetti.create(undefined, { resize: true })({
       shapes: ['circle', 'circle', 'square'],
       particleCount: 200,
-      startVelocity: 90,
-      angle: 55,
+      startVelocity: this.confettiVelocity,
+      angle: this.confettiAngle,
       spread: 55,
       ticks: 400,
       origin: {
-        x: 0.08,
+        x: this.confettiX,
         y: 0.4,
       },
     });
