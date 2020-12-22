@@ -6,6 +6,8 @@ import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { SocketService } from '../web-socket/socket.service';
 
+const MAX_SIZE = 350;
+
 @Injectable({
   providedIn: 'root',
 })
@@ -39,7 +41,10 @@ export class FilesService {
     for (let i = 0; i < newFiles.length; i++) {
       this.spinners.push(i);
       this.spinnerSubject.next(this.spinners);
-      this.postFile(newFiles.item(i));
+      const mbSize = parseFloat((newFiles[i].size / (1024 * 1024)).toFixed(2));
+      if (mbSize <= MAX_SIZE) {
+        this.postFile(newFiles.item(i));
+      }
     }
   }
 

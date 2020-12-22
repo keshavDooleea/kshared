@@ -1823,6 +1823,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const MAX_SIZE = 350;
 class FilesService {
     constructor(localStorageService, socketService, http) {
         this.localStorageService = localStorageService;
@@ -1844,7 +1845,10 @@ class FilesService {
         for (let i = 0; i < newFiles.length; i++) {
             this.spinners.push(i);
             this.spinnerSubject.next(this.spinners);
-            this.postFile(newFiles.item(i));
+            const mbSize = parseFloat((newFiles[i].size / (1024 * 1024)).toFixed(2));
+            if (mbSize <= MAX_SIZE) {
+                this.postFile(newFiles.item(i));
+            }
         }
     }
     postFile(file) {

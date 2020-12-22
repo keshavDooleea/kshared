@@ -22,6 +22,8 @@ const io = require("socket.io")(server, {
   },
 });
 
+const MAX_SIZE = 350;
+
 mongo.connect(
   process.env.MONGO_URI || process.env.MONGO_CONNECTION,
   {
@@ -35,15 +37,18 @@ mongo.connect(
   }
 );
 
-app.use(formidableMiddleware({ multiples: true, maxFileSize: "400mb" }));
+app.use(formidableMiddleware({ multiples: true, maxFileSize: "350mb" }));
 app.use(cors());
-app.use(bodyParser.json({ limit: "400mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "400mb" }));
+app.use(bodyParser.json({ limit: "350mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "350mb" }));
 app.use(express.json());
 
 app.post("/", async (req, res, next) => {
   req.setTimeout(180000); // 180 sec -> 3 mins
-  await uploadFile(req, res);
+  const mbSize = parseFloat((req.files.file.size / (1024 * 1024)).toFixed(2));
+  if (mbSize <= MAX_SIZE) {
+    await uploadFile(req, res);
+  }
 });
 
 // https://socket.io/docs/v3/emit-cheatsheet/
