@@ -214,7 +214,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         files: data.files,
       };
       const user = new User(currentUser);
-      console.log(user);
       this.userService.setUser(user);
       this.localStorage.saveToken();
       this.router.navigateByUrl('/home');

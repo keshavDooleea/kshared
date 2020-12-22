@@ -14,6 +14,9 @@
   color: #8167a9;
   background: #36393f;
 }
+html {
+  overflow: hidden !important;
+}
 body {
   width: 100vw;
   height: 100vh;
@@ -98,6 +101,10 @@ input {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
   background-color: #36393f;
   transition: 0.3s transform;
+  background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/pat.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 220%;
 }
 .modal.show-modal {
   pointer-events: all;
@@ -116,6 +123,16 @@ input {
 }
 .modal.hide-modal .modal-body {
   transform: scale(0);
+}
+@media all and (max-width: 825px) {
+  .modal-body {
+    width: 70vw !important;
+  }
+}
+@media all and (max-width: 600px) {
+  .modal-body {
+    width: 90vw !important;
+  }
 }
 
 /*# sourceMappingURL=styles.css.map*/

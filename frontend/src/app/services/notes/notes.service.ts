@@ -38,7 +38,6 @@ export class NotesService {
   }
 
   deleteNote(note: Note): void {
-    console.log(this.noteArray);
     const index = this.noteArray.indexOf(note);
     this.noteArray.splice(index, 1);
 
