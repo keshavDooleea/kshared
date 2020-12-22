@@ -2,6 +2,7 @@
   <app-note-list-container></app-note-list-container>
   <div class="text-container">
     <textarea
+      #noteTextarea
       [(ngModel)]="textareaValue"
       (keydown.shift.enter)="onShiftEnter($event)"
       (keyup)="onKeyup()"
@@ -10,15 +11,23 @@
         'Quick note\n\nPress Shift + Enter for quick save!\nTip: Your note stays here even without saving!'
       }}"
     ></textarea>
-    <i
-      class="fas fa-times-circle"
-      (click)="clearTextarea()"
-      [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
-    ></i>
-    <i
-      class="fas fa-heart"
-      (click)="saveTextarea()"
-      [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
-    ></i>
+    <div class="textarea-action">
+      <i
+        class="fas fa-heart save-icon"
+        (click)="saveTextarea()"
+        [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
+      ></i>
+      <i
+        class="fas fa-copy copy-icon"
+        (click)="copyToClipboard(noteTextarea)"
+        [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
+      ></i>
+      <i
+        class="fas fa-times-circle clear-icon"
+        (click)="clearTextarea()"
+        [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
+      ></i>
+    </div>
+    <!-- <span class="textarea-action-note copied-text">Copied text</span> -->
   </div>
 </div>

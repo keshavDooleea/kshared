@@ -50,6 +50,12 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     this.noteService.saveCurrentText(this.textareaValue);
   }
 
+  copyToClipboard(noteTextarea: HTMLTextAreaElement): void {
+    noteTextarea.select();
+    document.execCommand('copy');
+    noteTextarea.setSelectionRange(0, 0);
+  }
+
   private subscribeToSocket(): void {
     this.subscriptions.push(
       this.socketService.listen('updatedText').subscribe((data) => {
