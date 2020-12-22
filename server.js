@@ -42,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true, limit: "400mb" }));
 app.use(express.json());
 
 app.post("/", async (req, res, next) => {
+  req.setTimeout(180000); // 180 sec -> 3 mins
   await uploadFile(req, res);
 });
 
