@@ -39,6 +39,13 @@ app-notes-container {
   width: 15%;
 }
 
+.sidebar-close {
+  width: 90%;
+  height: 3%;
+  @include styles.displayFlex(row, center, flex-end);
+  transition: 0.4s transform;
+}
+
 .sidebar-main {
   width: 90%;
   height: 20%;
@@ -51,7 +58,7 @@ app-notes-container {
 
 .sidebar-feedback {
   width: 90%;
-  height: 35%;
+  height: 32%;
   background-color: styles.$containers;
   border-radius: styles.$borderRadius;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -99,7 +106,7 @@ app-notes-container {
 
 .sidebar-account {
   width: 90%;
-  height: 35%;
+  height: 32%;
   background-color: styles.$containers;
   border-radius: styles.$borderRadius;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -148,6 +155,10 @@ app-notes-container {
   .sidebar {
     width: 15%;
 
+    .sidebar-close {
+      transform: translateX(0%);
+    }
+
     .side-delay,
     .side-delay-lr {
       transition: 0.8s clip-path;
@@ -163,6 +174,10 @@ app-notes-container {
   }
   .sidebar {
     width: 0;
+
+    .sidebar-close {
+      transform: translateX(-150%);
+    }
 
     .side-delay {
       transition: 0.15s clip-path;

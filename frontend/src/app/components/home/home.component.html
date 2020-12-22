@@ -2,7 +2,10 @@
   class="home-container"
   [ngClass]="showNavbar ? 'show-navbar' : 'hide-navbar'"
 >
-  <div class="sidebar" (mouseover)="showNav()" (mouseleave)="hideNav()">
+  <div class="sidebar" (mouseleave)="hideNav()">
+    <div class="sidebar-close">
+      <i class="fas fa-window-close icon" (click)="hideNav()"></i>
+    </div>
     <div class="sidebar-main">
       <img src="assets/RKD_logo.svg" alt="rkd-logo" />
     </div>
