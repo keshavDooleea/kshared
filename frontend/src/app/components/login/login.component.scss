@@ -449,13 +449,6 @@
 }
 
 @media all and (max-width: 500px) {
-  body,
-  html {
-    overflow: hidden !important;
-    width: 100vw !important;
-    height: 100vh !important;
-  }
-
   .login-body {
     background-size: 400%;
   }
