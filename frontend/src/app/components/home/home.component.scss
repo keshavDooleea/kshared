@@ -578,3 +578,14 @@ app-notes-container {
     }
   }
 }
+
+@media all and (max-width: 500px) {
+  .modal-delete-body span h2 {
+    font-size: 18px;
+  }
+
+  .modal-delete-body .modal-action {
+    width: 80%;
+    justify-content: space-between;
+  }
+}
