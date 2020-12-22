@@ -27,7 +27,16 @@
         (click)="clearTextarea()"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
       ></i>
+      <span
+        *ngFor="let hint of copiedText"
+        class="textarea-action-hint copied-text"
+        ><p>Copied Text</p></span
+      >
+      <span
+        *ngFor="let hint of savedText"
+        class="textarea-action-hint saved-text"
+        ><p>Saved Text</p></span
+      >
     </div>
-    <!-- <span class="textarea-action-note copied-text">Copied text</span> -->
   </div>
 </div>

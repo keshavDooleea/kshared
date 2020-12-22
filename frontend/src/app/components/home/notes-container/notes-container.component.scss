@@ -79,11 +79,48 @@
         }
         &.save-icon {
           transition-delay: 0.2s;
-
-          &:active {
-            color: rosybrown;
-          }
         }
+      }
+
+      .textarea-action-hint {
+        position: absolute;
+        width: 70%;
+        height: 80%;
+        transform: translate(-50%, -50%);
+        @include styles.displayFlex(row, center, center);
+        border-radius: styles.$smallBorderRadius;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+        animation: show-hint 1.5s ease-in forwards;
+
+        p {
+          color: white;
+        }
+
+        &.copied-text {
+          left: 50%;
+          background-color: styles.$btnColor;
+        }
+
+        &.saved-text {
+          left: 10%;
+          background-color: rosybrown;
+        }
+      }
+    }
+
+    @keyframes show-hint {
+      0% {
+        top: -10%;
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        top: -160%;
+        opacity: 0;
       }
     }
 
