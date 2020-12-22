@@ -1,4 +1,8 @@
-<div class="hamburger" (mouseover)="showNavbar()">
+<div
+  class="hamburger"
+  (mouseover)="showNavbar()"
+  [ngClass]="showNav ? 'hide-hamburger' : 'show-hamburger'"
+>
   <span></span>
   <span></span>
   <span></span>

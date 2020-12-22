@@ -1,6 +1,7 @@
 import {
   Component,
   EventEmitter,
+  Input,
   OnDestroy,
   OnInit,
   Output,
@@ -18,6 +19,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   @Output() showNavbarEmitter = new EventEmitter<boolean>();
+  @Input() showNav: boolean;
   currentUser: CurrentUser;
   private subscription: Subscription;
 
