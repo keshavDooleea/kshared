@@ -23,7 +23,7 @@
   <div
     #fileContainer
     class="files-container"
-    *ngIf="files.length > 0; else showEmptyFile"
+    *ngIf="files.length > 0 || spinners.length > 0; else showEmptyFile"
   >
     <div
       class="file-item"
