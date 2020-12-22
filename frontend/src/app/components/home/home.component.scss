@@ -503,3 +503,78 @@ app-notes-container {
     }
   }
 }
+
+@media all and (max-width: 960px) {
+  .show-navbar {
+    .main-app {
+      width: 75%;
+    }
+    .sidebar {
+      width: 25%;
+    }
+  }
+}
+
+@media all and (max-width: 780px) {
+  .main-app {
+    min-height: 100vh;
+    justify-content: initial;
+    overflow-y: auto;
+  }
+
+  app-navbar {
+    height: 6vh;
+  }
+
+  app-notes-container {
+    width: 100%;
+    height: 75vh;
+    @include styles.displayFlex(row, flex-end, center);
+    padding-bottom: 0 !important;
+  }
+
+  app-files-container {
+    width: 100%;
+    height: 47vh;
+    @include styles.displayFlex(row, flex-end, center);
+  }
+}
+
+@media all and (max-width: 650px) {
+  .show-navbar {
+    .main-app {
+      width: 0%;
+    }
+    .sidebar {
+      width: 100%;
+
+      .sidebar-close i {
+        font-size: 25px;
+      }
+
+      .sidebar-main img {
+        max-width: 35%;
+      }
+
+      .sidebar-feedback {
+        .stars-feedback small {
+          font-size: 17px;
+        }
+      }
+
+      .acc-date small {
+        font-size: 17px;
+      }
+
+      .acc-date h3 {
+        font-size: 25px;
+      }
+
+      .feedback-action .btn,
+      .acc-btn .btn {
+        padding: 13px 22px;
+        font-size: 15px;
+      }
+    }
+  }
+}

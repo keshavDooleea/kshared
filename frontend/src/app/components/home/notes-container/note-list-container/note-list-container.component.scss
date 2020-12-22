@@ -144,3 +144,19 @@
     color: #72767d;
   }
 }
+
+@media all and (max-width: 780px) {
+  .date {
+    left: -10px !important;
+    opacity: 1 !important;
+  }
+  .list-control {
+    opacity: 1 !important;
+    width: 7% !important;
+    right: 4px !important;
+  }
+  .input-container {
+    height: 95% !important;
+    margin-top: 5px;
+  }
+}

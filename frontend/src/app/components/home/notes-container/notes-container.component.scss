@@ -81,3 +81,26 @@
     }
   }
 }
+
+@media all and (max-width: 780px) {
+  .notes-body {
+    height: 100%;
+    @include styles.displayFlex(column, center, space-evenly);
+
+    & > * {
+      width: 100%;
+      height: 35vh !important;
+    }
+
+    .text-container {
+      width: 100%;
+      height: 30vh !important;
+
+      i {
+        bottom: 15px;
+        opacity: 1;
+        right: 65px;
+      }
+    }
+  }
+}
