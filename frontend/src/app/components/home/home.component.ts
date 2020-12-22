@@ -64,10 +64,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   toggleDeleteModal(): void {
+    this.hideNav();
     this.showDeleteModal = !this.showDeleteModal;
   }
 
   toggleFeedbackModal(): void {
+    this.hideNav();
     this.initialiseEmailForm();
     this.emailClass = 'show-email-btn';
     this.showFeedbackModal = !this.showFeedbackModal;

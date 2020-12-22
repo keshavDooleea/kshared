@@ -39,6 +39,10 @@ $selectionColor: #8167a9;
   }
 }
 
+html {
+  overflow: hidden !important;
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -152,5 +156,17 @@ input {
     .modal-body {
       transform: scale(0);
     }
+  }
+}
+
+@media all and (max-width: 825px) {
+  .modal-body {
+    width: 70vw !important;
+  }
+}
+
+@media all and (max-width: 600px) {
+  .modal-body {
+    width: 90vw !important;
   }
 }
