@@ -446,12 +446,12 @@ app-notes-container {
       }
 
       &.success-response {
-        width: 75%;
+        width: 85%;
         background-color: #43b581;
       }
 
       &.error-response {
-        width: 55%;
+        width: 75%;
         background-color: #f72f4e;
         padding: 0 8px;
       }
@@ -511,6 +511,14 @@ app-notes-container {
     }
     .sidebar {
       width: 25%;
+    }
+  }
+
+  .email-action {
+    width: 80% !important;
+
+    .email-response {
+      width: 100% !important;
     }
   }
 }
@@ -591,5 +599,10 @@ app-notes-container {
 
   .email-options {
     width: 100% !important;
+  }
+
+  .email-action {
+    width: 92% !important;
+    font-size: 14px;
   }
 }
