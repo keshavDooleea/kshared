@@ -80,6 +80,14 @@
         }
       }
 
+      &.loading-item {
+        background-color: #2f3136;
+
+        img {
+          max-width: 40%;
+        }
+      }
+
       &:hover {
         background-color: #2f3136;
 

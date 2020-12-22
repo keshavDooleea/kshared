@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { ActionFile, CustomFiles } from 'src/app/classes/files';
 import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
@@ -11,6 +11,8 @@ import { SocketService } from '../web-socket/socket.service';
 })
 export class FilesService {
   private files: CustomFiles[];
+  private spinners: number[];
+  private spinnerSubject: Subject<number[]>;
   private fileSubscription: BehaviorSubject<CustomFiles[]>;
 
   constructor(
@@ -19,6 +21,8 @@ export class FilesService {
     private http: HttpClient
   ) {
     this.files = [];
+    this.spinners = [];
+    this.spinnerSubject = new Subject<number[]>();
     this.fileSubscription = new BehaviorSubject<CustomFiles[]>(this.files);
   }
 
@@ -26,9 +30,15 @@ export class FilesService {
     return this.fileSubscription.asObservable();
   }
 
+  getSpinnerObservable(): Observable<number[]> {
+    return this.spinnerSubject.asObservable();
+  }
+
   postFiles(newFiles: FileList): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < newFiles.length; i++) {
+      this.spinners.push(i);
+      this.spinnerSubject.next(this.spinners);
       this.postFile(newFiles.item(i));
     }
   }
@@ -45,7 +55,10 @@ export class FilesService {
 
     this.http
       .post<CustomFiles>(`${SERVER_URL}`, formData, { headers })
-      .subscribe((data) => console.log('server response: ', data));
+      .subscribe((data) => {
+        this.spinners.pop();
+        this.spinnerSubject.next(this.spinners);
+      });
   }
 
   addCustomFiles(file: CustomFiles): void {

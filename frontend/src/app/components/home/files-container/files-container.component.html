@@ -56,6 +56,10 @@
         <p>{{ file.name }}</p>
       </div>
     </div>
+
+    <div *ngFor="let spinner of spinners" class="file-item loading-item">
+      <img src="assets/loading_gif.gif" alt="" />
+    </div>
   </div>
 
   <ng-template #showEmptyFile>

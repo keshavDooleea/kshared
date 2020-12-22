@@ -13,6 +13,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
+  spinners: number[] = [];
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -23,6 +24,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscribeToFile();
+    this.subscribeToSpinner();
     this.subscribeToSocket();
     this.subscribeToUser();
   }
@@ -64,10 +66,17 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     );
   }
 
+  private subscribeToSpinner(): void {
+    this.subscriptions.push(
+      this.fileService.getSpinnerObservable().subscribe((newSpinners) => {
+        this.spinners = newSpinners;
+      })
+    );
+  }
+
   private subscribeToSocket(): void {
     this.subscriptions.push(
       this.socketService.listen('uploadedFile').subscribe((file) => {
-        console.log(file);
         this.fileService.addCustomFiles(file);
       })
     );
