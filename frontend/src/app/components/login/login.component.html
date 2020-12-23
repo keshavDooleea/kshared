@@ -9,7 +9,7 @@
       </div>
     </div>
     <span class="modal-button btn" (click)="toggleModal()">
-      <h4>About <i class="fas fa-question-circle"></i></h4>
+      <h4>Guide <i class="fas fa-question-circle"></i></h4>
     </span>
 
     <span class="kshare-title">
@@ -413,13 +413,17 @@
         <div class="modal-item-video">
           <video
             src="assets/modal-feature-laptop.mp4"
-            autoplay="true"
+            autoplay
             muted
+            loop
+            loading="lazy"
           ></video>
           <video
             src="assets/modal-feature-mobile.mp4"
-            autoplay="true"
+            autoplay
             muted
+            loop
+            loading="lazy"
           ></video>
         </div>
       </div>
