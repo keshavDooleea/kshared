@@ -398,25 +398,6 @@
       margin-top: 30px;
     }
 
-    .modal-item-video {
-      width: 100%;
-      @include styles.displayFlex(row, center, space-evenly);
-      margin-top: 15px;
-
-      video {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-        border-radius: styles.$smallBorderRadius;
-
-        &:nth-child(1) {
-          max-width: 70%;
-        }
-        &:nth-child(2) {
-          max-width: 35%;
-          max-height: 50vh;
-        }
-      }
-    }
-
     &:first-child {
       display: flex;
 
@@ -593,23 +574,6 @@
 
     .guide-item span {
       margin-left: 8px;
-    }
-  }
-
-  .modal-item-video {
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: initial !important;
-
-    video {
-      &:nth-child(1) {
-        max-width: 98% !important;
-      }
-      &:nth-child(2) {
-        max-width: 90% !important;
-        max-height: 60vh !important;
-        margin-top: 15px;
-      }
     }
   }
 }

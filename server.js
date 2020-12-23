@@ -36,13 +36,13 @@ mongo.connect(
 );
 
 // middlewares
-app.use(formidableMiddleware({ multiples: true, maxFileSize: "350mb" }));
+app.use(formidableMiddleware({ multiples: true, maxFileSize: "200mb" }));
 app.use(cors());
-app.use(bodyParser.json({ limit: "350mb" }));
-app.use(bodyParser.urlencoded({ extended: true, limit: "350mb" }));
+app.use(bodyParser.json({ limit: "200mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "200mb" }));
 app.use(express.json());
 
-const MAX_SIZE = 350;
+const MAX_SIZE = 200;
 
 app.post("/", async (req, res, next) => {
   req.setTimeout(300000); // 300 sec -> 5 mins

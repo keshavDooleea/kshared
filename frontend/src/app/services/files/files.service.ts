@@ -6,7 +6,7 @@ import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { SocketService } from '../web-socket/socket.service';
 
-const MAX_SIZE = 350;
+const MAX_SIZE = 200;
 
 @Injectable({
   providedIn: 'root',
