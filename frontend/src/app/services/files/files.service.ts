@@ -39,10 +39,10 @@ export class FilesService {
   postFiles(newFiles: FileList): void {
     // tslint:disable-next-line: prefer-for-of
     for (let i = 0; i < newFiles.length; i++) {
-      this.spinners.push(i);
-      this.spinnerSubject.next(this.spinners);
       const mbSize = parseFloat((newFiles[i].size / (1024 * 1024)).toFixed(2));
       if (mbSize <= MAX_SIZE) {
+        this.spinners.push(i);
+        this.spinnerSubject.next(this.spinners);
         this.postFile(newFiles.item(i));
       }
     }
