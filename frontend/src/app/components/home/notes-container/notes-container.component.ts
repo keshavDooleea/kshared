@@ -11,8 +11,6 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class NotesContainerComponent implements OnInit, OnDestroy {
   textareaValue: string;
-  copiedText: string[] = [];
-  savedText: string[] = [];
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -24,7 +22,6 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeToSocket();
     this.subscribeToUser();
-    this.subscribeToNoteExistance();
   }
 
   ngOnDestroy(): void {
@@ -36,7 +33,6 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.copiedText = [];
     this.noteService.addNote(this.textareaValue);
   }
 
@@ -50,8 +46,6 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   }
 
   clearTextarea(): void {
-    this.copiedText = [];
-    this.savedText = [];
     this.textareaValue = '';
     this.noteService.saveCurrentText(this.textareaValue);
   }
@@ -61,11 +55,9 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.savedText = [];
     noteTextarea.select();
     document.execCommand('copy');
     noteTextarea.setSelectionRange(0, 0);
-    this.copiedText.push(noteTextarea.value);
     this.hideKeyboard(noteTextarea);
   }
 
@@ -84,16 +76,6 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.socketService.listen('updatedText').subscribe((data) => {
         this.textareaValue = data;
-      })
-    );
-  }
-
-  private subscribeToNoteExistance(): void {
-    this.subscriptions.push(
-      this.noteService.getNoteExistObservable().subscribe((exists) => {
-        if (!exists) {
-          this.savedText.push(this.textareaValue);
-        }
       })
     );
   }

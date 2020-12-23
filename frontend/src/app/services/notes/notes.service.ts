@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
 import { Note } from '../../classes/Note';
 import { UserService } from '../user/user.service';
 import { SocketService } from '../web-socket/socket.service';
@@ -9,15 +8,9 @@ import { SocketService } from '../web-socket/socket.service';
 })
 export class NotesService {
   private noteArray: Note[];
-  private noteExistsSubject: Subject<boolean>;
 
   constructor(private socket: SocketService, private currentUser: UserService) {
     this.noteArray = [];
-    this.noteExistsSubject = new Subject<boolean>();
-  }
-
-  getNoteExistObservable(): Observable<boolean> {
-    return this.noteExistsSubject.asObservable();
   }
 
   addNote(newText: string): void {
@@ -25,7 +18,6 @@ export class NotesService {
 
     // if exists, return to avoid duplicates
     if (this.noteArray.some(checkIfExists)) {
-      this.noteExistsSubject.next(true);
       return;
     }
 
@@ -42,7 +34,6 @@ export class NotesService {
     );
 
     // save to server
-    this.noteExistsSubject.next(false);
     this.saveNote();
   }
 

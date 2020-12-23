@@ -13,30 +13,26 @@
     ></textarea>
     <div class="textarea-action">
       <i
-        class="fas fa-heart save-icon"
+        class="fas fa-save save-icon"
         (click)="saveTextarea()"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
-      ></i>
+      >
+        <p class="tooltip">Save text</p></i
+      >
       <i
         class="fas fa-copy copy-icon"
         (click)="copyToClipboard(noteTextarea)"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
-      ></i>
+      >
+        <p class="tooltip">Copy text</p>
+      </i>
       <i
         class="fas fa-times-circle clear-icon"
         (click)="clearTextarea()"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
-      ></i>
-      <span
-        *ngFor="let hint of copiedText"
-        class="textarea-action-hint copied-text"
-        ><p>Copied Text</p></span
       >
-      <span
-        *ngFor="let hint of savedText"
-        class="textarea-action-hint saved-text"
-        ><p>Saved Text</p></span
-      >
+        <p class="tooltip move-left">Clear text</p>
+      </i>
     </div>
   </div>
 </div>
