@@ -24,9 +24,41 @@ body {
   color: #b9bbbe;
   cursor: pointer;
   outline: none;
+  position: relative;
 }
 .icon:hover {
   color: #dcddde;
+}
+.icon:hover .tooltip {
+  transform: translate(-50%, -50%) scale(1);
+}
+.icon:hover .tooltip.show-bottom {
+  transform: translate(-50%, 60%) scale(1);
+}
+.tooltip {
+  position: absolute;
+  top: -4vh;
+  left: 50%;
+  transform: translate(-50%, 50%) scale(0);
+  white-space: nowrap;
+  padding: 5px 8px;
+  -webkit-user-select: none;
+          user-select: none;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: #b9bbbe;
+  color: #2f3136;
+  transition: 0.3s transform;
+  pointer-events: none;
+  z-index: 20;
+  font-size: 17px;
+}
+.tooltip.move-left {
+  left: -10%;
+}
+.tooltip.show-bottom {
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
 }
 .disable-icon {
   color: #b9bbbe;

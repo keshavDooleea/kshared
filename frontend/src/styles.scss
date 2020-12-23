@@ -51,9 +51,45 @@ body {
   color: $itemNormal;
   cursor: pointer;
   outline: none;
+  position: relative;
 
   &:hover {
     color: $itemHover;
+
+    .tooltip {
+      transform: translate(-50%, -50%) scale(1);
+
+      &.show-bottom {
+        transform: translate(-50%, 60%) scale(1);
+      }
+    }
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: -4vh;
+  left: 50%;
+  transform: translate(-50%, 50%) scale(0);
+  white-space: nowrap;
+  padding: 5px 8px;
+  user-select: none;
+  border-radius: $smallBorderRadius;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: $itemNormal;
+  color: $mainBkg;
+  transition: 0.3s transform;
+  pointer-events: none;
+  z-index: 20;
+  font-size: 17px;
+
+  &.move-left {
+    left: -10%;
+  }
+
+  &.show-bottom {
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0);
   }
 }
 

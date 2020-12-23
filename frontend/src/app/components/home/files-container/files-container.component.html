@@ -1,6 +1,7 @@
 <div class="files-body">
   <div class="controls">
     <i class="fas fa-plus-square icon" (click)="fileInput.click()">
+      <p class="tooltip">Upload files</p>
       <input
         #fileInput
         type="file"
@@ -13,7 +14,9 @@
       class="fas fa-trash"
       (click)="clearFiles()"
       [ngClass]="files.length > 0 ? 'icon' : 'disable-icon'"
-    ></i>
+    >
+      <p class="tooltip move-left">Delete unlocked files</p>
+    </i>
     <i
       class="fas fa-arrow-circle-up icon arrow-up"
       *ngIf="files.length === 0"

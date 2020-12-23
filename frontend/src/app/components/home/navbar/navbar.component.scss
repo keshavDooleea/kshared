@@ -20,6 +20,10 @@ h3 {
 
 i {
   font-size: 1.3rem;
+
+  &:not(:last-child) {
+    margin-right: 20px;
+  }
 }
 
 .hamburger {
