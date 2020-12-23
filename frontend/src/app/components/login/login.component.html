@@ -291,12 +291,16 @@
             KShare allows you to share or transfer files and texts straight away
             across devices!
           </p>
-          <p>And you can see the changes live!!</p>
+          <p>And you can see the changes live on your devices!!</p>
+          <p>Scroll to the bottom to see a live demo.</p>
         </div>
-
         <div class="modal-close">
           <i class="fas fa-window-close icon" (click)="toggleModal()"></i>
         </div>
+      </div>
+
+      <div class="modal-media">
+        <img src="assets/modal-home.png" alt="" />
       </div>
 
       <div class="modal-item">
@@ -317,6 +321,35 @@
         </div>
       </div>
 
+      <div class="modal-media">
+        <img src="assets/modal-textarea.png" alt="" />
+      </div>
+
+      <div class="modal-guide">
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-heart"></i>
+          </span>
+          <span class="guide-text">
+            This saves your text as a note on the container to the left!
+          </span>
+        </div>
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-copy"></i>
+          </span>
+          <span class="guide-text">
+            This copies your text to the clipboard!
+          </span>
+        </div>
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-times-circle"></i>
+          </span>
+          <span class="guide-text"> This clears the textarea zone!</span>
+        </div>
+      </div>
+
       <div class="modal-item">
         <div class="modal-subtitle">
           <h3>Files</h3>
@@ -326,11 +359,50 @@
           </p>
           <p>
             Just upload them on KShare and they are instantly ready to be
-            downloaded on another devices!
+            downloaded on another devices by clicking upon the file itself!
           </p>
           <p>
             You can lock your files so that you don't delete them by mistake!
           </p>
+        </div>
+      </div>
+
+      <div class="modal-media">
+        <img src="assets/modal-files.png" alt="" />
+      </div>
+
+      <div class="modal-guide">
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-plus-square"></i>
+          </span>
+          <span class="guide-text">Use this icon to upload a new file!</span>
+        </div>
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-trash"></i>
+          </span>
+          <span class="guide-text"
+            >This icon clears all the files which are not locked!</span
+          >
+        </div>
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-lock"></i>
+          </span>
+          <span class="guide-text"
+            >Use this to lock/unlock your files. If locked, you cannot delete
+            the file!</span
+          >
+        </div>
+        <div class="guide-item">
+          <span class="guide-icon">
+            <i class="fas fa-times-circle"></i>
+          </span>
+          <span class="guide-text"
+            >This icon deletes the current clicked file if the latter is not
+            locked!</span
+          >
         </div>
       </div>
 

@@ -398,6 +398,41 @@
       }
     }
   }
+
+  .modal-media {
+    @include styles.displayFlex(row, center, center);
+    margin-top: 15px;
+
+    img {
+      max-width: 85%;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+      border-radius: styles.$smallBorderRadius;
+    }
+  }
+
+  .modal-guide {
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+
+    .guide-item {
+      display: flex;
+      padding: 0 10%;
+
+      &:not(:first-child) {
+        margin-top: 10px;
+      }
+
+      .guide-icon {
+        width: 5%;
+        color: styles.$itemNormal;
+      }
+      .guide-text {
+        width: 95%;
+        color: white;
+      }
+    }
+  }
 }
 
 @media all and (max-width: 1055px) {
@@ -437,6 +472,21 @@
 
     p {
       font-size: 1.3rem;
+    }
+  }
+
+  .about-modal-body {
+    width: 90vw !important;
+
+    .modal-media {
+      img {
+        max-width: 95% !important;
+      }
+    }
+
+    .guide-item {
+      padding: 0 2% !important;
+      font-size: 15px;
     }
   }
 }
@@ -496,6 +546,20 @@
 
   .stars-header {
     width: 30% !important;
+  }
+
+  .about-modal-body {
+    width: 95vw !important;
+
+    .modal-media {
+      img {
+        max-width: 98% !important;
+      }
+    }
+
+    .guide-item span {
+      margin-left: 8px;
+    }
   }
 }
 
