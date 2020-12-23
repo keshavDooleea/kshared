@@ -412,19 +412,26 @@
         </div>
         <div class="modal-item-video">
           <video
-            src="assets/modal-feature-laptop.mp4"
-            autoplay
-            muted
             loop
+            muted
+            autoplay
             loading="lazy"
-          ></video>
+            oncanplay="this.play()"
+            onloadedmetadata="this.muted = true"
+          >
+            <source src="assets/modal-feature-laptop.mp4" type="video/mp4" />
+          </video>
+
           <video
-            src="assets/modal-feature-mobile.mp4"
-            autoplay
-            muted
             loop
+            muted
+            autoplay
             loading="lazy"
-          ></video>
+            oncanplay="this.play()"
+            onloadedmetadata="this.muted = true"
+          >
+            <source src="assets/modal-feature-mobile.mp4" type="video/mp4" />
+          </video>
         </div>
       </div>
     </div>
