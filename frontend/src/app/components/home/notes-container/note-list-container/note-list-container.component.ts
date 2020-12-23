@@ -41,6 +41,10 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.updateFilteredList();
   }
 
+  addNewNote(): void {
+    this.noteService.addNewNote();
+  }
+
   onNoteClicked(note: Note): void {
     this.noteService.updateCurrentNote(note.text);
   }

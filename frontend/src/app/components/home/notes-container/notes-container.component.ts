@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NotesService } from 'src/app/services/notes/notes.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -13,6 +19,8 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   textareaValue: string;
   private subscriptions: Subscription[] = [];
 
+  @ViewChild('noteTextarea') noteTextarea: ElementRef;
+
   constructor(
     private noteService: NotesService,
     private socketService: SocketService,
@@ -22,6 +30,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeToSocket();
     this.subscribeToUser();
+    this.subscribeToNote();
   }
 
   ngOnDestroy(): void {
@@ -48,6 +57,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   clearTextarea(): void {
     this.textareaValue = '';
     this.noteService.saveCurrentText(this.textareaValue);
+    this.noteTextarea.nativeElement.placeholder = `Quick note\n\nPress Shift + Enter for quick save!\nTip: Your note stays here even without saving!`;
   }
 
   copyToClipboard(noteTextarea: HTMLTextAreaElement): void {
@@ -85,7 +95,18 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
       this.userService.getUserObservable().subscribe((user) => {
         if (user) {
           this.textareaValue = user.user.currentText;
+          this.noteService.setCurrentText(this.textareaValue);
         }
+      })
+    );
+  }
+
+  private subscribeToNote(): void {
+    this.subscriptions.push(
+      this.noteService.getTextareaSubject().subscribe((text) => {
+        this.noteTextarea.nativeElement.focus();
+        this.noteTextarea.nativeElement.placeholder = `Write your new note!\nYour text will still be saved here when you leave!`;
+        this.textareaValue = text;
       })
     );
   }

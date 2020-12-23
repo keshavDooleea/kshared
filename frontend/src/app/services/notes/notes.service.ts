@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Note } from '../../classes/Note';
 import { UserService } from '../user/user.service';
 import { SocketService } from '../web-socket/socket.service';
@@ -7,17 +8,24 @@ import { SocketService } from '../web-socket/socket.service';
   providedIn: 'root',
 })
 export class NotesService {
+  private currentText: string;
   private noteArray: Note[];
+  private textareaSubject: Subject<string>;
 
   constructor(private socket: SocketService, private currentUser: UserService) {
     this.noteArray = [];
+    this.textareaSubject = new Subject<string>();
+  }
+
+  getTextareaSubject(): Observable<string> {
+    return this.textareaSubject.asObservable();
   }
 
   addNote(newText: string): void {
     const checkIfExists = (note: Note) => note.text === newText;
 
     // if exists, return to avoid duplicates
-    if (this.noteArray.some(checkIfExists)) {
+    if (this.noteArray.some(checkIfExists) || !newText) {
       return;
     }
 
@@ -46,11 +54,18 @@ export class NotesService {
   }
 
   saveCurrentText(text: string): void {
+    this.currentText = text;
     const socketData = {
       text,
       token: this.currentUser.getToken(),
     };
     this.socket.emit('updateText', socketData);
+  }
+
+  addNewNote(): void {
+    this.addNote(this.currentText);
+    this.saveCurrentText('');
+    this.textareaSubject.next('');
   }
 
   updateCurrentNote(text: string): void {
@@ -73,5 +88,9 @@ export class NotesService {
 
   setNotes(newNote: Note[]): void {
     this.noteArray = newNote;
+  }
+
+  setCurrentText(newText: string): void {
+    this.currentText = newText;
   }
 }

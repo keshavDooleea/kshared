@@ -14,6 +14,9 @@
       </div>
     </div>
   </div>
+  <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
+    <p class="tooltip">New note</p>
+  </i>
   <div class="lists">
     <div
       class="list-item"
@@ -37,6 +40,9 @@
 
 <ng-template #emptyList>
   <div class="empty-list">
+    <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
+      <p class="tooltip">New note</p>
+    </i>
     <h4>No notes added yet 🤨</h4>
   </div>
 </ng-template>
