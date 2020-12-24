@@ -153,6 +153,10 @@
     letter-spacing: 0.7px;
     color: #72767d;
   }
+
+  p {
+    color: styles.$fadeText;
+  }
 }
 
 @media all and (max-width: 780px) {
