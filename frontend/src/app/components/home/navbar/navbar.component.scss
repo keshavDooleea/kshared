@@ -18,6 +18,24 @@ h3 {
   }
 }
 
+.confetti-icon {
+  width: 1.4rem;
+  height: 1.4rem;
+
+  &:hover {
+    .tooltip {
+      &.show-bottom {
+        transform: translate(-50%, 60%) scaleY(0.9);
+      }
+    }
+  }
+
+  .tooltip {
+    font-style: normal;
+    font-weight: bolder;
+  }
+}
+
 i {
   font-size: 1.3rem;
 

@@ -13,6 +13,7 @@ import { NotesContainerComponent } from './components/home/notes-container/notes
 import { LoginComponent } from './components/login/login.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
+import { ConfettiIconComponent } from './components/home/confetti-icon/confetti-icon.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
     HomeComponent,
     SafeUrlPipe,
     StarsComponent,
+    ConfettiIconComponent,
   ],
   imports: [
     BrowserModule,
