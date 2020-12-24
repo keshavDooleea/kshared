@@ -1,5 +1,7 @@
 <div class="notes-body">
-  <app-note-list-container></app-note-list-container>
+  <app-note-list-container
+    [shouldClearFilter]="shouldClearFilter"
+  ></app-note-list-container>
   <div class="text-container">
     <textarea
       #noteTextarea
@@ -17,7 +19,7 @@
         (click)="saveTextarea()"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
       >
-        <p class="tooltip">Save text</p></i
+        <p class="tooltip">Save as note</p></i
       >
       <i
         class="fas fa-copy copy-icon"

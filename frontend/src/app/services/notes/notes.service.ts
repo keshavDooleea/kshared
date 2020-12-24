@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { Note } from '../../classes/Note';
+import { TextareaType } from '../../classes/textarea';
 import { UserService } from '../user/user.service';
 import { SocketService } from '../web-socket/socket.service';
 
@@ -10,19 +11,31 @@ import { SocketService } from '../web-socket/socket.service';
 export class NotesService {
   private currentText: string;
   private noteArray: Note[];
-  private textareaSubject: Subject<string>;
+  private textareaSubject: Subject<TextareaType>;
 
   constructor(private socket: SocketService, private currentUser: UserService) {
     this.noteArray = [];
-    this.textareaSubject = new Subject<string>();
+    this.textareaSubject = new Subject<TextareaType>();
   }
 
-  getTextareaSubject(): Observable<string> {
+  getTextareaSubject(): Observable<TextareaType> {
     return this.textareaSubject.asObservable();
   }
 
   addNote(newText: string): void {
     const checkIfExists = (note: Note) => note.text === newText;
+
+    if (!newText.trim()) {
+      this.currentText = '';
+
+      const subject: TextareaType = {
+        showNewPlaceholder: false,
+        text: this.currentText,
+      };
+
+      this.textareaSubject.next(subject);
+      return;
+    }
 
     // if exists, return to avoid duplicates
     if (this.noteArray.some(checkIfExists) || !newText) {
@@ -54,9 +67,10 @@ export class NotesService {
   }
 
   saveCurrentText(text: string): void {
-    this.currentText = text;
+    this.currentText = !text.trim() ? '' : text;
+
     const socketData = {
-      text,
+      text: this.currentText,
       token: this.currentUser.getToken(),
     };
     this.socket.emit('updateText', socketData);
@@ -64,8 +78,15 @@ export class NotesService {
 
   addNewNote(): void {
     this.addNote(this.currentText);
-    this.saveCurrentText('');
-    this.textareaSubject.next('');
+    this.currentText = '';
+    this.saveCurrentText(this.currentText);
+
+    const subject: TextareaType = {
+      showNewPlaceholder: true,
+      text: this.currentText,
+    };
+
+    this.textareaSubject.next(subject);
   }
 
   updateCurrentNote(text: string): void {

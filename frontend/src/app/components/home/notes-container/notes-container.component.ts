@@ -5,7 +5,8 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
+import { TextareaType } from 'src/app/classes/textarea';
 import { NotesService } from 'src/app/services/notes/notes.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
@@ -17,6 +18,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
 })
 export class NotesContainerComponent implements OnInit, OnDestroy {
   textareaValue: string;
+  shouldClearFilter: Subject<boolean>;
   private subscriptions: Subscription[] = [];
 
   @ViewChild('noteTextarea') noteTextarea: ElementRef;
@@ -25,7 +27,9 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     private noteService: NotesService,
     private socketService: SocketService,
     private userService: UserService
-  ) {}
+  ) {
+    this.shouldClearFilter = new Subject<boolean>();
+  }
 
   ngOnInit(): void {
     this.subscribeToSocket();
@@ -43,6 +47,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
     }
 
     this.noteService.addNote(this.textareaValue);
+    this.shouldClearFilter.next(true);
   }
 
   onShiftEnter(event: Event): void {
@@ -103,10 +108,13 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
 
   private subscribeToNote(): void {
     this.subscriptions.push(
-      this.noteService.getTextareaSubject().subscribe((text) => {
-        this.noteTextarea.nativeElement.focus();
-        this.noteTextarea.nativeElement.placeholder = `Write your new note!\nYour text will still be saved here when you leave!`;
-        this.textareaValue = text;
+      this.noteService.getTextareaSubject().subscribe((type: TextareaType) => {
+        if (type.showNewPlaceholder) {
+          this.noteTextarea.nativeElement.focus();
+          this.noteTextarea.nativeElement.placeholder = `Write your new note!\nYour text will still be saved here when you leave!`;
+        }
+
+        this.textareaValue = type.text;
       })
     );
   }
