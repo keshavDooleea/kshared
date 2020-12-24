@@ -197,6 +197,12 @@ input {
   }
 }
 
+@media all and (max-width: 780px) {
+  .tooltip {
+    display: none;
+  }
+}
+
 @media all and (max-width: 600px) {
   .modal-body {
     width: 90vw !important;
