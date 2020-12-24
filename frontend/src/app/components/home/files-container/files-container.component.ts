@@ -44,9 +44,10 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  onFileInput(newFiles: FileList): void {
+  onFileInput(newFiles: FileList, input: HTMLInputElement): void {
     this.shouldStayFixed = false;
     this.fileService.postFiles(newFiles);
+    input.value = '';
   }
 
   deleteFile(index: number): void {
