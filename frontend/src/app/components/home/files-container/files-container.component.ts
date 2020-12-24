@@ -29,7 +29,8 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   constructor(
     private fileService: FilesService,
     private userService: UserService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
@@ -65,13 +66,21 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.fileService.toggleLock(index);
   }
 
-  downloadFile(file: CustomFiles, anchorTag: HTMLAnchorElement): void {
+  downloadFile(file: CustomFiles, index: number): void {
     // [href]="file.base64 | safeUrl"
-    anchorTag.href = file.amazonUrl;
 
-    setTimeout(() => {
-      anchorTag.href = '';
-    }, 1);
+    // means that the anchor tag contains the link
+    if (file.amazonURL) {
+      return;
+    }
+
+    const data = {
+      index,
+      name: file.name,
+      amazonName: file.amazonName,
+    };
+
+    this.socketService.emit('getSignedUrl', data);
   }
 
   private subscribeToFile(): void {
@@ -121,6 +130,18 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
         this.fileService.clearUnlockedFiles();
       })
     );
+
+    this.subscriptions.push(
+      this.socketService.listen('signedUrl').subscribe((data) => {
+        this.files[data.index].amazonURL = data.url;
+        this.anchorTags[data.index].href = data.url;
+        this.anchorTags[data.index].click();
+
+        setTimeout(() => {
+          this.anchorTags[data.index].href = '';
+        }, 10);
+      })
+    );
   }
 
   private subscribeToUser(): void {
@@ -132,5 +153,9 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  get anchorTags(): HTMLAnchorElement[] {
+    return this.elementRef.nativeElement.querySelectorAll('.img-container');
   }
 }

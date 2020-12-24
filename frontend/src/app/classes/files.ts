@@ -2,7 +2,8 @@ export interface CustomFiles {
   id: string;
   size: number;
   name: string;
-  amazonUrl: string;
+  amazonName: string;
+  amazonURL: string;
   isLocked: boolean;
   innerHtml: string;
 }

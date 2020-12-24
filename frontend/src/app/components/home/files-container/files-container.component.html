@@ -52,14 +52,13 @@
       <!-- <small class="date">{{ file.date | date: "mediumDate" }}</small> -->
       <a
         #downloadTag
-        (click)="downloadFile(file, downloadTag)"
+        (click)="downloadFile(file, i)"
         class="img-container"
         download="{{ file.name }}"
         [innerHtml]="file.innerHTML"
       >
       </a>
       <div class="details-container">
-        <!-- <small>{{ fileService.formatBytes(file.size) }}</small> -->
         <p>{{ file.name }}</p>
       </div>
     </div>

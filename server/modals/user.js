@@ -38,7 +38,6 @@ const UserSchema = new mongo.Schema({
     {
       size: { type: Number },
       name: { type: String },
-      amazonUrl: { type: String },
       amazonName: { type: String }, // userId + name
       innerHTML: { type: String },
       isLocked: {

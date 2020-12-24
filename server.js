@@ -123,13 +123,15 @@ io.on("connection", async (socket) => {
     await clearFiles(data, io);
   });
 
+  socket.on("getSignedUrl", async (data) => {
+    await getSignedLink(data, socket);
+  });
+
   socket.on("sendEmail", async (data) => {
     try {
-      const response = await sendEmail(data);
-      console.log(response);
+      await sendEmail(data);
       socket.emit("emailResponse", "200");
     } catch (error) {
-      console.log(error);
       socket.emit("emailResponse", "500");
     }
   });
@@ -161,10 +163,8 @@ const uploadFile = async (req, res) => {
       }
     }
 
-    // can upload and get url
     const amazonName = user.id + "," + file.name;
     await awsFileUpload(file, amazonName);
-    const url = await awsGetFileUrl(amazonName, file.name);
     const innerHtml = getInnerHTML(file.name);
 
     const newFile = {
@@ -178,7 +178,6 @@ const uploadFile = async (req, res) => {
     await dbUser.save();
     const savedFile = await User.findOne({ _id: user.id }, { files: { $elemMatch: newFile } });
     newFile.id = savedFile.files[0]._id;
-    newFile.amazonUrl = url;
 
     res.json("Success");
     io.in(user.id).emit("uploadedFile", newFile);
@@ -212,21 +211,30 @@ const pageRefresh = async (data, socket) => {
 
   try {
     let currentUser = await User.findById(user.id);
-    const newFiles = currentUser.files;
-
-    for (const file of newFiles) {
-      const url = await awsGetFileUrl(file.amazonName, file.name);
-      file.amazonUrl = url;
-    }
 
     // update user details
     user.currentText = currentUser.currentText;
     user.noteList = currentUser.notes;
     user.stars = currentUser.stars;
-    user.files = newFiles;
+    user.files = currentUser.files;
     socket.emit("initialLanding", user);
   } catch (error) {
     console.log("Updating current text error: ", error);
+  }
+};
+
+const getSignedLink = async (data, socket) => {
+  try {
+    const url = await awsGetFileUrl(data.amazonName, data.name);
+    // const url = "HELLO";
+    const returnData = {
+      url,
+      index: data.index,
+    };
+    console.log("got the signed url");
+    socket.emit("signedUrl", returnData);
+  } catch (error) {
+    console.log(`Getting signed URL error: ${error}`);
   }
 };
 

@@ -1,7 +1,6 @@
 const User = require("../modals/user").User;
 const jwt = require("jsonwebtoken");
 const wrapResponse = require("./wrap-response");
-const { awsGetFileUrl } = require("./aws");
 
 const eventName = "newLoginResponse";
 const errorMessage = "Sorry, an error has occured!";
@@ -41,13 +40,6 @@ const userLogin = async (loginForm, socket) => {
           // generate jwt token
           let token = jwt.sign(loggedUser, process.env.JWT_TOKEN, {});
 
-          // get latest files
-          const newFiles = userFound.files;
-          for (const file of newFiles) {
-            const url = await awsGetFileUrl(file.amazonName, file.name);
-            file.amazonUrl = url;
-          }
-
           const response = {
             status: 200,
             token: token,
@@ -58,7 +50,7 @@ const userLogin = async (loginForm, socket) => {
             currentText: userFound.currentText,
             noteList: userFound.notes,
             stars: userFound.stars,
-            files: newFiles,
+            files: userFound.files,
           };
 
           socket.emit(eventName, response);
