@@ -154,7 +154,7 @@
     color: #72767d;
   }
 
-  p {
+  & > p {
     color: styles.$fadeText;
   }
 }
