@@ -373,9 +373,13 @@ const findUser = (data) => {
 };
 
 // deployment - production static html files
-app.use(express.static(__dirname + "/frontend/dist/frontend"));
+app.use(express.static(__dirname + "/dist/frontend"));
 app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/frontend/dist/frontend/index.html"));
+  res.sendFile(path.join(__dirname + "/dist/frontend/index.html"));
 });
+// app.use(express.static(__dirname + "/frontend/dist/frontend"));
+// app.get("/*", (req, res) => {
+//   res.sendFile(path.join(__dirname + "/frontend/dist/frontend/index.html"));
+// });
 
 server.listen(SERVER_PORT, () => console.log(`listening on port ${SERVER_PORT}`));
