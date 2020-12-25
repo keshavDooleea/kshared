@@ -119,7 +119,6 @@ io.on("connection", async (socket) => {
   });
 
   socket.on("deleteFile", async (data) => {
-    console.log("NAME: ", data.file.name);
     await onSingleFileDelete(data, io);
   });
 
@@ -373,7 +372,8 @@ const toggleLock = async (data, io) => {
     io.in(user.id).emit("toggledLock", lockFileData);
 
     // update in mongo
-    await User.updateOne({ _id: user.id }, { $set: { "files.$[currentFile].isLocked": data.file.isLocked } }, { arrayFilters: [{ "currentFile._id": data.file._id }] });
+    const fileID = data.file._id ? data.file._id : data.file.id;
+    await User.updateOne({ _id: user.id }, { $set: { "files.$[currentFile].isLocked": data.file.isLocked } }, { arrayFilters: [{ "currentFile._id": fileID }] });
   } catch (error) {
     console.log(`Toggle file lock error: ${error}`);
   }
