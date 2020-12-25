@@ -101,8 +101,14 @@
       @include styles.displayFlex(row, flex-end, center);
 
       h4 {
-        font-size: 15px;
+        font-size: 16px;
       }
+    }
+  }
+
+  :host {
+    .rkd-logo {
+      max-width: 50%;
     }
   }
 }
