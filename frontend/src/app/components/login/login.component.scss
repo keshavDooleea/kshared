@@ -265,7 +265,7 @@
   }
   .login-container {
     transform: translateX(100%);
-    box-shadow: none;
+    box-shadow: 15px 0px 35px rgba(0, 0, 0, 0.5);
   }
   .login-design-mobile {
     transform: translate(175%, -50%);
@@ -278,7 +278,7 @@
 .show-login {
   .register-container {
     transform: translateX(-100%);
-    box-shadow: none;
+    box-shadow: -15px 0px 35px rgba(0, 0, 0, 0.5);
   }
   .login-container {
     transform: translateX(0);
