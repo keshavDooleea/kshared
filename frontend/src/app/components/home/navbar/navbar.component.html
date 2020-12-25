@@ -13,7 +13,7 @@
     <p class="tooltip show-bottom">Confettis</p>
     <app-confetti-icon></app-confetti-icon>
   </i>
-  <i class="fas fa-info-circle icon">
+  <i class="fas fa-info-circle icon" (click)="toggleGuideModal()">
     <p class="tooltip show-bottom">View guide</p>
   </i>
   <i
@@ -23,4 +23,12 @@
   >
     <p class="tooltip show-bottom move-left">Log out</p>
   </i>
+</div>
+
+<div
+  class="modal"
+  (click)="onModalClicked($event)"
+  [ngClass]="shouldShowGuide ? 'show-modal' : 'hide-modal'"
+>
+  <app-guide (closeModalEmitter)="toggleGuideModal()"></app-guide>
 </div>

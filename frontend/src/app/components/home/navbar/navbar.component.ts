@@ -21,6 +21,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   @Output() showNavbarEmitter = new EventEmitter<boolean>();
   @Input() showNav: boolean;
   currentUser: CurrentUser;
+  shouldShowGuide: boolean;
   private subscription: Subscription;
 
   constructor(
@@ -55,5 +56,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   hideNavbar(): void {
     this.showNavbarEmitter.emit(false);
+  }
+
+  toggleGuideModal(): void {
+    this.shouldShowGuide = !this.shouldShowGuide;
+  }
+
+  onModalClicked(event: Event): void {
+    // click only parent, not children
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    this.shouldShowGuide = false;
   }
 }
