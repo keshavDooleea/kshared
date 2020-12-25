@@ -333,11 +333,12 @@
   position: absolute;
   top: 50%;
   z-index: -1;
-  text-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
   transition: 1s transform cubic-bezier(0.175, 0.885, 0.32, 1.275);
   transition-delay: 0.25s;
   font-size: 15rem;
-  color: #68727f;
+  color: rgba($color: styles.$containers, $alpha: 1);
+  filter: brightness(105%);
 }
 
 .login-design-mobile {
