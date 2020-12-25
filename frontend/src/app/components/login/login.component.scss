@@ -15,49 +15,7 @@
   height: 10vh;
   padding-right: 20px;
   position: relative;
-  @include styles.displayFlex(row, center, space-between);
-
-  .stars-header {
-    width: 20%;
-    height: 100%;
-    @include styles.displayFlex(column, center, center);
-
-    .stars-text {
-      width: 100%;
-      height: 35%;
-
-      h4 {
-        text-align: center;
-        color: styles.$fadeText;
-        letter-spacing: 1px;
-      }
-    }
-
-    .stars-container {
-      width: 80%;
-      height: 50%;
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      grid-template-rows: 100%;
-      align-items: center;
-      justify-items: center;
-      align-self: center;
-      position: relative;
-
-      .stars-span {
-        @include styles.displayFlex(row, center, center);
-
-        img {
-          max-width: 60%;
-          filter: grayscale(100%);
-
-          &.light-star {
-            filter: grayscale(0%);
-          }
-        }
-      }
-    }
-  }
+  @include styles.displayFlex(row, center, flex-end);
 
   .modal-button {
     padding: 6px 10px;
@@ -444,10 +402,6 @@
   .login-container {
     width: 70%;
   }
-
-  .stars-header {
-    width: 30% !important;
-  }
 }
 
 @media all and (max-width: 500px) {
@@ -458,18 +412,6 @@
   .register-container,
   .login-container {
     width: 90%;
-  }
-
-  .stars-header {
-    width: 35% !important;
-
-    .stars-text {
-      @include styles.displayFlex(row, flex-end, center);
-
-      h4 {
-        font-size: 14px;
-      }
-    }
   }
 
   .kshare-title {

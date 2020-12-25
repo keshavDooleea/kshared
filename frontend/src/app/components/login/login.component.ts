@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import * as confetti from 'canvas-confetti';
@@ -16,7 +16,6 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  readonly stars = [1, 2, 3, 4, 5];
   hidePassword: boolean[] = [true, true, true];
 
   isRegister: boolean;
@@ -31,11 +30,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private socket: SocketService,
     private userService: UserService,
     private localStorage: LocalStorageService,
-    private router: Router,
-    private elementRef: ElementRef
+    private router: Router
   ) {
     this.checkUser();
-    this.updateGlobalStars();
     this.initialiseRegisterForm();
     this.inialiseLoginForm();
   }
@@ -80,24 +77,6 @@ export class LoginComponent implements OnInit, OnDestroy {
         '',
         Validators.compose([Validators.required, validatePassword])
       ),
-    });
-  }
-
-  private updateGlobalStars(): void {
-    this.socket.emit('getGlobalStars', {});
-
-    this.socketSubscription = this.socket
-      .listen('avgStars')
-      .subscribe((starsAmount: number) => {
-        this.fillStars(starsAmount);
-      });
-  }
-
-  private fillStars(index: number): void {
-    this.svgStars.forEach((star, i) => {
-      if (i <= index - 1) {
-        star.classList.add('light-star');
-      }
     });
   }
 
@@ -260,9 +239,5 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   get registerConfirmPassword(): string {
     return this.registerForm.get('confirmPassword').value;
-  }
-
-  get svgStars(): HTMLImageElement[] {
-    return this.elementRef.nativeElement.querySelectorAll('.stars-span img');
   }
 }
