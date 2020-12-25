@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   user: CurrentUser;
   showDeleteModal: boolean;
   showFeedbackModal: boolean;
+  shoulLoadSplash: boolean;
   emailForm: FormGroup;
   emailClass: string;
   private subscriptions: Subscription[] = [];
@@ -112,8 +113,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   private subscribeToUser(): void {
     this.subscriptions.push(
       this.userService.getUserObservable().subscribe((user) => {
-        if (user) {
+        if (!user) {
+          this.shoulLoadSplash = true;
+        } else {
           this.user = user.user;
+
+          setTimeout(() => {
+            this.shoulLoadSplash = false;
+          }, 1500);
         }
       })
     );
