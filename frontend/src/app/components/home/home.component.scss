@@ -156,7 +156,7 @@ app-notes-container {
     width: 15%;
 
     .sidebar-close {
-      transform: translateX(0%);
+      transform: translateX(-150%);
     }
 
     .side-delay,
@@ -528,6 +528,12 @@ app-notes-container {
     min-height: 100vh;
     justify-content: initial;
     overflow-y: auto;
+  }
+
+  .show-navbar .sidebar {
+    .sidebar-close {
+      transform: translateX(0%);
+    }
   }
 
   app-navbar {
