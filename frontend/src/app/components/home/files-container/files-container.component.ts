@@ -69,8 +69,14 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   downloadFile(file: CustomFiles, index: number): void {
     // [href]="file.base64 | safeUrl"
 
+    if (file.isMongoFile) {
+      this.anchorTags[index].href = file.base64 as string;
+      return;
+    }
+
     // means that the anchor tag contains the link
     if (file.amazonURL) {
+      this.downloadTempFile(index, file.amazonURL);
       return;
     }
 
@@ -142,6 +148,14 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
         }, 10);
       })
     );
+  }
+
+  private downloadTempFile(index: number, url: string): void {
+    this.anchorTags[index].href = url;
+
+    setTimeout(() => {
+      this.anchorTags[index].href = '';
+    }, 10);
   }
 
   private subscribeToUser(): void {

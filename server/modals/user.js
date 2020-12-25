@@ -40,6 +40,8 @@ const UserSchema = new mongo.Schema({
       name: { type: String },
       amazonName: { type: String }, // userId + name
       innerHTML: { type: String },
+      base64: { type: String },
+      isMongoFile: { type: Boolean },
       isLocked: {
         type: Boolean,
         default: false,

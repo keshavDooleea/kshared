@@ -42,13 +42,16 @@ app.use(bodyParser.json({ limit: "200mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "200mb" }));
 app.use(express.json());
 
-const MAX_SIZE = 200;
+const MAX_SIZE = 200; // MB
+const MAX_MONGO_SIZE = 15; // MB
 
 app.post("/", async (req, res, next) => {
   req.setTimeout(300000); // 300 sec -> 5 mins
+
   const mbSize = parseFloat((req.files.file.size / (1024 * 1024)).toFixed(2));
   if (mbSize <= MAX_SIZE) {
-    await uploadFile(req, res);
+    // upload to mongo if size < 15, else to amazon
+    mbSize <= MAX_MONGO_SIZE ? await uploadToMongo(req, res) : await uploadToAmazon(req, res);
   }
 });
 
@@ -115,7 +118,8 @@ io.on("connection", async (socket) => {
     await toggleLock(data, io);
   });
 
-  socket.on("deleteSingleFile", async (data) => {
+  socket.on("deleteFile", async (data) => {
+    console.log("NAME: ", data.file.name);
     await onSingleFileDelete(data, io);
   });
 
@@ -146,7 +150,52 @@ const onLogOut = (oldToken, socket) => {
   console.log(`${user.username} left the server`);
 };
 
-const uploadFile = async (req, res) => {
+const uploadToMongo = async (req, res) => {
+  console.log("Uploading to Mongo");
+  const token = req.fields.token;
+  const base64 = JSON.parse(req.fields.base64);
+  const file = req.files.file;
+
+  if (!base64 || !file) return;
+
+  try {
+    const user = findUser(token);
+    const dbUser = await User.findById(user.id);
+
+    // check if exists
+    for (let i = 0; i < dbUser.files.length; i++) {
+      if (dbUser.files[i].name === file.name) {
+        res.json("File exists");
+        return;
+      }
+    }
+
+    const innerHtml = getInnerHTML(file.name);
+    const newFile = {
+      size: file.size,
+      name: file.name,
+      amazonName: "",
+      innerHTML: innerHtml,
+      base64,
+      isMongoFile: true,
+    };
+
+    dbUser.files.push(newFile);
+    await dbUser.save();
+
+    const savedFile = await User.findOne({ _id: user.id }, { files: { $elemMatch: newFile } });
+    newFile.id = savedFile.files[0]._id;
+
+    res.json("Success");
+    io.in(user.id).emit("uploadedFile", newFile);
+  } catch (eror) {
+    console.log(`Uploading to Mongo DB error: ${error}`);
+  }
+};
+
+const uploadToAmazon = async (req, res) => {
+  console.log("Uploading to Amazon");
+
   const token = req.fields.token;
   const file = req.files.file;
 
@@ -172,6 +221,8 @@ const uploadFile = async (req, res) => {
       name: file.name,
       amazonName: amazonName,
       innerHTML: innerHtml,
+      base64: "",
+      isMongoFile: false,
     };
 
     dbUser.files.push(newFile);
@@ -350,7 +401,10 @@ const deleteOneFile = async (file, token) => {
   const user = findUser(token);
   const fileID = file._id ? file._id : file.id;
   await User.updateOne({ _id: user.id }, { $pull: { files: { _id: fileID } } });
-  await awsDeleteSingleFile(file.amazonName);
+
+  if (!file.isMongoFile) {
+    await awsDeleteSingleFile(file.amazonName);
+  }
 };
 
 const clearFiles = async (data, io) => {

@@ -6,7 +6,8 @@ import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { SocketService } from '../web-socket/socket.service';
 
-const MAX_SIZE = 200;
+const MAX_SIZE = 200; // MB
+const MAX_MONGO_SIZE = 15; // MB
 
 @Injectable({
   providedIn: 'root',
@@ -43,15 +44,20 @@ export class FilesService {
       if (mbSize <= MAX_SIZE) {
         this.spinners.push(i);
         this.spinnerSubject.next(this.spinners);
-        this.postFile(newFiles.item(i));
+        this.postFile(newFiles.item(i), mbSize);
       }
     }
   }
 
-  private postFile(file: File): void {
+  private async postFile(file: File, mbSize: number): Promise<void> {
     const formData = new FormData();
     formData.append('token', this.localStorageService.getToken());
     formData.append('file', file);
+
+    if (mbSize < MAX_MONGO_SIZE) {
+      const base64 = await this.getBase64(file);
+      formData.append('base64', JSON.stringify(base64));
+    }
 
     const headers = {
       Accept: 'application/json',
@@ -77,18 +83,23 @@ export class FilesService {
 
   deleteFile(index: number): void {
     if (!this.files[index].isLocked) {
+      delete this.files[index].base64; // remove base64
+
       const data = {
         token: this.localStorageService.getToken(),
         file: this.files[index],
         index,
       };
 
-      this.socketService.emit('deleteSingleFile', data);
+      this.socketService.emit('deleteFile', data);
       this.fileSubscription.next(this.files);
     }
   }
 
   clearFiles(): void {
+    // remove base64 from object cuz too large
+    this.files.forEach((file) => delete file.base64);
+
     const data = {
       token: this.localStorageService.getToken(),
       files: this.files,
