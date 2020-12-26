@@ -1,5 +1,5 @@
 export interface CustomFiles {
-  id: string;
+  _id: string;
   size: number;
   name: string;
   amazonName?: string;

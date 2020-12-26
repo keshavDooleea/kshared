@@ -108,11 +108,10 @@ export class FilesService {
   }
 
   toggleLock(index: number): void {
-    this.files[index].isLocked = !this.files[index].isLocked;
-
     const data = {
       token: this.localStorageService.getToken(),
-      file: this.files[index],
+      _id: this.files[index]._id,
+      isLocked: !this.files[index].isLocked,
       index,
     };
 
@@ -121,7 +120,7 @@ export class FilesService {
   }
 
   updateLockFile(file: ActionFile): void {
-    this.files[file.index].isLocked = file.file.isLocked;
+    this.files[file.index].isLocked = !this.files[file.index].isLocked;
     this.fileSubscription.next(this.files);
   }
 

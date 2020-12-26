@@ -183,7 +183,7 @@ const uploadToMongo = async (req, res) => {
     await dbUser.save();
 
     const savedFile = await User.findOne({ _id: user.id }, { files: { $elemMatch: newFile } });
-    newFile.id = savedFile.files[0]._id;
+    newFile._id = savedFile.files[0]._id;
 
     res.json("Success");
     io.in(user.id).emit("uploadedFile", newFile);
@@ -227,7 +227,7 @@ const uploadToAmazon = async (req, res) => {
     dbUser.files.push(newFile);
     await dbUser.save();
     const savedFile = await User.findOne({ _id: user.id }, { files: { $elemMatch: newFile } });
-    newFile.id = savedFile.files[0]._id;
+    newFile._id = savedFile.files[0]._id;
 
     res.json("Success");
     io.in(user.id).emit("uploadedFile", newFile);
@@ -367,14 +367,13 @@ const toggleLock = async (data, io) => {
 
     // send the updated file with index to client
     const lockFileData = {
-      file: data.file,
       index: data.index,
     };
     io.in(user.id).emit("toggledLock", lockFileData);
 
     // update in mongo
-    const fileID = data.file._id ? data.file._id : data.file.id;
-    await User.updateOne({ _id: user.id }, { $set: { "files.$[currentFile].isLocked": data.file.isLocked } }, { arrayFilters: [{ "currentFile._id": fileID }] });
+    const fileID = data._id ? data._id : data.id;
+    await User.updateOne({ _id: user.id }, { $set: { "files.$[currentFile].isLocked": data.isLocked } }, { arrayFilters: [{ "currentFile._id": fileID }] });
   } catch (error) {
     console.log(`Toggle file lock error: ${error}`);
   }
