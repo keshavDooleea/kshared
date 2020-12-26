@@ -9,8 +9,3 @@ export interface CustomFiles {
   base64?: string;
   isMongoFile: boolean;
 }
-
-export interface ActionFile {
-  file: CustomFiles;
-  index: number;
-}

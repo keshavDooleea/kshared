@@ -366,10 +366,8 @@ const toggleLock = async (data, io) => {
     const user = findUser(data.token);
 
     // send the updated file with index to client
-    const lockFileData = {
-      index: data.index,
-    };
-    io.in(user.id).emit("toggledLock", lockFileData);
+    const index = data.index;
+    io.in(user.id).emit("toggledLock", index);
 
     // update in mongo
     const fileID = data._id ? data._id : data.id;
@@ -384,11 +382,8 @@ const onSingleFileDelete = async (data, io) => {
     const user = findUser(data.token);
 
     // send the updated file with index to client
-    const lockFileData = {
-      file: data.file,
-      index: data.index,
-    };
-    io.in(user.id).emit("deleteSingleFile", lockFileData);
+    const index = data.index;
+    io.in(user.id).emit("deleteSingleFile", index);
 
     // delete from mongo and s3
     await deleteOneFile(data.file, data.token);

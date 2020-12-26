@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ActionFile, CustomFiles } from 'src/app/classes/files';
+import { CustomFiles } from 'src/app/classes/files';
 import { SERVER_URL } from 'src/app/declarations/server-params';
 import { LocalStorageService } from '../local-storage/local-storage.service';
 import { SocketService } from '../web-socket/socket.service';
@@ -119,13 +119,13 @@ export class FilesService {
     this.fileSubscription.next(this.files);
   }
 
-  updateLockFile(file: ActionFile): void {
-    this.files[file.index].isLocked = !this.files[file.index].isLocked;
+  updateLockFile(index: number): void {
+    this.files[index].isLocked = !this.files[index].isLocked;
     this.fileSubscription.next(this.files);
   }
 
-  deleteSingleFile(file: ActionFile): void {
-    this.files.splice(file.index, 1);
+  deleteSingleFile(index: number): void {
+    this.files.splice(index, 1);
     this.fileSubscription.next(this.files);
   }
 

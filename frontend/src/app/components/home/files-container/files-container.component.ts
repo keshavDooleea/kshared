@@ -118,15 +118,15 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
 
     // toggling file lock
     this.subscriptions.push(
-      this.socketService.listen('toggledLock').subscribe((file) => {
-        this.fileService.updateLockFile(file);
+      this.socketService.listen('toggledLock').subscribe((index) => {
+        this.fileService.updateLockFile(index);
       })
     );
 
     // delete single file
     this.subscriptions.push(
-      this.socketService.listen('deleteSingleFile').subscribe((file) => {
-        this.fileService.deleteSingleFile(file);
+      this.socketService.listen('deleteSingleFile').subscribe((index) => {
+        this.fileService.deleteSingleFile(index);
       })
     );
 
