@@ -22,8 +22,6 @@ export class SplashComponent implements OnInit, OnDestroy {
   }
 
   private updateGlobalStars(): void {
-    this.socket.emit('getGlobalStars', {});
-
     this.socketSubscription = this.socket
       .listen('avgStars')
       .subscribe((starsAmount: number) => {

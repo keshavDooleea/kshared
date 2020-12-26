@@ -257,6 +257,7 @@ const deleteAccount = async (token, socket, io) => {
 const pageRefresh = async (data, socket) => {
   const user = findUser(data);
   socket.join(user.id);
+  getGlobalStars(socket);
   console.log(`${user.username} rejoined the server (page refresh)`);
 
   try {
