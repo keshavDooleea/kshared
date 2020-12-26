@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginForm: FormGroup;
   serverResponse: ServerResponse;
   showRegisteredMessage: boolean;
+  showLoginSpinner: boolean;
   private socketSubscription: Subscription;
 
   constructor(
@@ -136,6 +137,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.loginPassword,
     };
 
+    this.showLoginSpinner = true;
     this.socket.emit('newUserLogin', loginForm);
 
     this.socketSubscription = this.socket
@@ -179,6 +181,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private handleLoginResponse(data: ServerResponse): void {
+    this.showLoginSpinner = false;
     this.serverResponse = data;
 
     if (data.status === 200) {

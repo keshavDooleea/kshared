@@ -246,7 +246,10 @@
             ></i>
           </div>
         </div>
-        <div class="actions">
+        <div
+          class="actions"
+          [ngClass]="showLoginSpinner ? 'show-spinner' : 'hide-spinner'"
+        >
           <button
             class="btn"
             type="submit"
@@ -258,6 +261,7 @@
           <button class="btn" (click)="onSignUpClicked()">
             <h4>Sign Up</h4>
           </button>
+          <img src="assets/loading_gif.gif" alt="" />
         </div>
       </Form>
     </div>
