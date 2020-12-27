@@ -24,6 +24,13 @@
   </div>
 
   <div
+    class="duplicate-msg"
+    [ngClass]="shouldShowExistMsg ? 'show-duplicate' : 'hide-duplicate'"
+  >
+    <p>File already exists 🙁</p>
+  </div>
+
+  <div
     #fileContainer
     class="files-container"
     *ngIf="files.length > 0 || spinners.length > 0; else showEmptyFile"

@@ -15,6 +15,7 @@ const MAX_MONGO_SIZE = 15; // MB
 export class FilesService {
   private files: CustomFiles[];
   private spinners: number[];
+  private existsSubject: Subject<boolean>;
   private spinnerSubject: Subject<number[]>;
   private fileSubscription: BehaviorSubject<CustomFiles[]>;
 
@@ -25,8 +26,13 @@ export class FilesService {
   ) {
     this.files = [];
     this.spinners = [];
+    this.existsSubject = new Subject<boolean>();
     this.spinnerSubject = new Subject<number[]>();
     this.fileSubscription = new BehaviorSubject<CustomFiles[]>(this.files);
+  }
+
+  getFilesExistsObservable(): Observable<boolean> {
+    return this.existsSubject.asObservable();
   }
 
   getFilesObservable(): Observable<CustomFiles[]> {
@@ -68,6 +74,7 @@ export class FilesService {
       .post<string>(`${SERVER_URL}`, formData, { headers })
       .subscribe((data) => {
         if (data === 'File exists') {
+          this.existsSubject.next(true);
           this.spinners.pop();
           this.spinnerSubject.next(this.spinners);
         }

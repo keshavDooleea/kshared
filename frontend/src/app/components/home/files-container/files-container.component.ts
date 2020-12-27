@@ -22,6 +22,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   files: CustomFiles[];
   spinners: number[] = [];
   shouldStayFixed: boolean;
+  shouldShowExistMsg: boolean;
   private subscriptions: Subscription[] = [];
 
   @ViewChild('fileContainer') fileContainer: ElementRef;
@@ -94,6 +95,11 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.socketService.emit('getSignedUrl', data);
   }
 
+  private showDuplicateMsg(): void {
+    this.shouldShowExistMsg = true;
+    setTimeout(() => (this.shouldShowExistMsg = false), 2000);
+  }
+
   private subscribeToFile(): void {
     this.subscriptions.push(
       this.fileService.getFilesObservable().subscribe((newFiles) => {
@@ -102,6 +108,12 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
         if (this.fileContainer && !this.shouldStayFixed) {
           this.fileContainer.nativeElement.scrollLeft = this.fileContainer.nativeElement.scrollWidth;
         }
+      })
+    );
+
+    this.subscriptions.push(
+      this.fileService.getFilesExistsObservable().subscribe(() => {
+        this.showDuplicateMsg();
       })
     );
   }

@@ -45,6 +45,34 @@
     }
   }
 
+  .duplicate-msg {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: styles.$smallBorderRadius;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    background-color: styles.$itemNormal;
+    pointer-events: none;
+    transition: top 0.5s, opacity 0.45s;
+
+    p {
+      font-weight: bold;
+      font-size: 17px;
+      padding: 4px 7px;
+      color: styles.$mainBkg;
+    }
+
+    &.show-duplicate {
+      top: -3vh;
+      opacity: 1;
+    }
+
+    &.hide-duplicate {
+      top: -1vh;
+      opacity: 0;
+    }
+  }
+
   .files-container {
     width: calc(100% - 26px);
     height: 100%;
@@ -318,6 +346,9 @@
 }
 
 @media all and (max-width: 510px) {
+  .duplicate-msg {
+    left: 25% !important;
+  }
   .file-item {
     max-width: 100% !important;
     min-width: 100% !important;
