@@ -65,14 +65,20 @@ export class FilesService {
     };
 
     this.http
-      .post<CustomFiles>(`${SERVER_URL}`, formData, { headers })
+      .post<string>(`${SERVER_URL}`, formData, { headers })
       .subscribe((data) => {
-        this.spinners.pop();
-        this.spinnerSubject.next(this.spinners);
+        if (data === 'File exists') {
+          this.spinners.pop();
+          this.spinnerSubject.next(this.spinners);
+        }
       });
   }
 
   addCustomFiles(file: CustomFiles): void {
+    // remove last spinner which is replaced by actual file
+    this.spinners.pop();
+    this.spinnerSubject.next(this.spinners);
+
     if (this.files.includes(file)) {
       return;
     }

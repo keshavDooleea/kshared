@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { CurrentUser } from 'src/app/classes/user';
@@ -13,6 +13,8 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  @ViewChild('fileContainer') filesContainer;
+
   showNavbar: boolean;
   user: CurrentUser;
   showDeleteModal: boolean;
@@ -108,6 +110,18 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   closeResponse(): void {
     this.emailClass = 'show-email-btn';
+  }
+
+  alertHomeFileEvent(): void {
+    if (
+      this.showFeedbackModal ||
+      this.showDeleteModal ||
+      this.shoulLoadSplash
+    ) {
+      return;
+    }
+
+    this.filesContainer.openInput();
   }
 
   private subscribeToUser(): void {

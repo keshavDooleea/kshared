@@ -25,6 +25,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
 
   @ViewChild('fileContainer') fileContainer: ElementRef;
+  @ViewChild('fileInput') fileInput: ElementRef;
 
   constructor(
     private fileService: FilesService,
@@ -43,6 +44,10 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  openInput(): void {
+    this.fileInput.nativeElement.click();
   }
 
   onFileInput(newFiles: FileList, input: HTMLInputElement): void {

@@ -16,6 +16,7 @@ import { LoginComponent } from './components/login/login.component';
 import { SplashComponent } from './components/splash/splash.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
+import { FileBindingDirective } from './directives/file-binding.directive';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
     ConfettiIconComponent,
     GuideComponent,
     SplashComponent,
+    FileBindingDirective,
   ],
   imports: [
     BrowserModule,

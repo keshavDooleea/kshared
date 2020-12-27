@@ -1,4 +1,6 @@
 <div
+  appFileBinding
+  (alertHomeFile)="alertHomeFileEvent()"
   class="home-container"
   [ngClass]="showNavbar ? 'show-navbar' : 'hide-navbar'"
 >
@@ -42,7 +44,7 @@
       [showNav]="showNavbar"
     ></app-navbar>
     <app-notes-container></app-notes-container>
-    <app-files-container></app-files-container>
+    <app-files-container #fileContainer></app-files-container>
   </div>
 
   <div class="sidebar-line" (mouseover)="showNav()"></div>
