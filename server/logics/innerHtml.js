@@ -1,4 +1,6 @@
 const getInnerHTML = (fileName) => {
+  fileName = fileName.toLowerCase();
+
   // images
   if (fileName.endsWith("jpeg") || fileName.endsWith("jpg") || fileName.endsWith("svg") || fileName.endsWith("png") || fileName.endsWith("gif")) {
     return `<i class="fas fa-file-image icon"></i>`;
