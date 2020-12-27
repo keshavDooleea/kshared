@@ -51,10 +51,10 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.fileInput.nativeElement.click();
   }
 
-  onFileInput(newFiles: FileList, input: HTMLInputElement): void {
+  onFileInput(newFiles: FileList): void {
     this.shouldStayFixed = false;
     this.fileService.postFiles(newFiles);
-    input.value = '';
+    this.fileInput.nativeElement.value = '';
   }
 
   deleteFile(index: number): void {

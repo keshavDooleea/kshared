@@ -1,4 +1,4 @@
-<div class="files-body">
+<div class="files-body" appFileDrop (dropFilesEmitter)="onFileInput($event)">
   <div class="controls">
     <i class="fas fa-plus-square icon" (click)="fileInput.click()">
       <p class="tooltip">Upload files</p>
@@ -7,7 +7,7 @@
         type="file"
         style="display: none"
         multiple
-        (change)="onFileInput($event.target.files, fileInput)"
+        (change)="onFileInput($event.target.files)"
       />
     </i>
     <i
@@ -81,6 +81,7 @@
         Press the <i class="fas fa-plus-square"></i> icon or letter
         '<span>O</span>' to upload files
       </h4>
+      <h4>Or drag & drop files here!</h4>
       <p>(Max 200MB per file)</p>
     </div>
   </ng-template>

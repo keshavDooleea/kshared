@@ -17,6 +17,7 @@ import { SplashComponent } from './components/splash/splash.component';
 import { StarsComponent } from './components/stars/stars.component';
 import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
 import { FileBindingDirective } from './directives/file-binding.directive';
+import { FileDropDirective } from './directives/file-drop.directive';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { FileBindingDirective } from './directives/file-binding.directive';
     GuideComponent,
     SplashComponent,
     FileBindingDirective,
+    FileDropDirective,
   ],
   imports: [
     BrowserModule,
