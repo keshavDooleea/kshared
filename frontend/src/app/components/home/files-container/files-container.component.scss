@@ -15,6 +15,7 @@
   border-radius: styles.$borderRadius;
   position: relative;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  transition: 0.2s filter;
   @include styles.displayFlex(row, center, center);
 
   .controls {
