@@ -64,6 +64,23 @@
     }
   }
 
+  .modal-stores {
+    span {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    & > div {
+      width: 50%;
+      height: 7vh;
+      margin: auto;
+      margin-top: 15px;
+      display: grid;
+      place-items: center;
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 100%;
+    }
+  }
+
   .modal-media {
     @include styles.displayFlex(row, center, center);
     margin-top: 15px;

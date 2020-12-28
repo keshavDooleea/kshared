@@ -18,6 +18,8 @@ import { StarsComponent } from './components/stars/stars.component';
 import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
 import { FileBindingDirective } from './directives/file-binding.directive';
 import { FileDropDirective } from './directives/file-drop.directive';
+import { PlaystoreIconComponent } from './components/home/playstore-icon/playstore-icon.component';
+import { AppstoreIconComponent } from './components/home/appstore-icon/appstore-icon.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +37,8 @@ import { FileDropDirective } from './directives/file-drop.directive';
     SplashComponent,
     FileBindingDirective,
     FileDropDirective,
+    PlaystoreIconComponent,
+    AppstoreIconComponent,
   ],
   imports: [
     BrowserModule,

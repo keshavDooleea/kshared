@@ -58,7 +58,7 @@ app-notes-container {
 
 .sidebar-feedback {
   width: 90%;
-  height: 32%;
+  height: 28%;
   background-color: styles.$containers;
   border-radius: styles.$borderRadius;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -106,7 +106,7 @@ app-notes-container {
 
 .sidebar-account {
   width: 90%;
-  height: 32%;
+  height: 28%;
   background-color: styles.$containers;
   border-radius: styles.$borderRadius;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
@@ -146,6 +146,12 @@ app-notes-container {
       }
     }
   }
+}
+
+.sidebar-app {
+  width: 90%;
+  height: 8%;
+  @include styles.displayFlex(row, center, space-around);
 }
 
 .show-navbar {

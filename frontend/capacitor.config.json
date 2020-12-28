@@ -1,0 +1,13 @@
+{
+  "appId": "com.kshared.mobilekshared",
+  "appName": "mobileKshared",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "dist/frontend",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    }
+  },
+  "cordova": {}
+}

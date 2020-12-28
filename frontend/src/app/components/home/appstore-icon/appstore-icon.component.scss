@@ -1,0 +1,29 @@
+@use "../../../../styles.scss" as styles;
+
+:host {
+  width: 35%;
+  height: 100%;
+  background-color: styles.$containers;
+  border-radius: styles.$borderRadius;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+
+  a {
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    @include styles.displayFlex(column, center, center);
+
+    svg {
+      max-width: 70%;
+      max-height: 70%;
+      filter: grayscale(100%);
+      transition: 0.2s filter;
+    }
+
+    &:hover {
+      svg {
+        filter: grayscale(0);
+      }
+    }
+  }
+}

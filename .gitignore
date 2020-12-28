@@ -10,6 +10,7 @@ frontend/tmp
 frontend/out-tsc
 # Only exists if Bazel was run
 frontend/bazel-out
+frontend/android
 
 # dependencies
 frontend/node_modules
