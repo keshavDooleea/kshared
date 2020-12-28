@@ -151,7 +151,14 @@
 
   .modal-stores {
     & > div {
-      width: 100% !important;
+      width: 70% !important;
+
+      app-playstore-icon,
+      app-appstore-icon {
+        width: 50%;
+        background-color: initial;
+        box-shadow: none;
+      }
     }
   }
 }

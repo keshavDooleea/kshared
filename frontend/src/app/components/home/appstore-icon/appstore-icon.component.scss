@@ -27,3 +27,15 @@
     }
   }
 }
+
+@media all and (max-width: 665px) {
+  svg {
+    filter: grayscale(0) !important;
+  }
+}
+
+@media all and (max-width: 500px) {
+  :host {
+    width: 25%;
+  }
+}
