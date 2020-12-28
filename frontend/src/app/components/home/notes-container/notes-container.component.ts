@@ -10,6 +10,7 @@ import { TextareaType } from 'src/app/classes/textarea';
 import { NotesService } from 'src/app/services/notes/notes.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
+import { ResizeService } from 'src/app/services/window-resize/resize.service';
 
 @Component({
   selector: 'app-notes-container',
@@ -17,6 +18,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./notes-container.component.scss'],
 })
 export class NotesContainerComponent implements OnInit, OnDestroy {
+  textareaPlaceholder: string;
   textareaValue: string;
   shouldClearFilter: Subject<boolean>;
   private subscriptions: Subscription[] = [];
@@ -26,12 +28,14 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   constructor(
     private noteService: NotesService,
     private socketService: SocketService,
-    private userService: UserService
+    private userService: UserService,
+    private resizeService: ResizeService
   ) {
     this.shouldClearFilter = new Subject<boolean>();
   }
 
   ngOnInit(): void {
+    this.subscribeToWindowSize();
     this.subscribeToSocket();
     this.subscribeToUser();
     this.subscribeToNote();
@@ -62,7 +66,7 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
   clearTextarea(): void {
     this.textareaValue = '';
     this.noteService.saveCurrentText(this.textareaValue);
-    this.noteTextarea.nativeElement.placeholder = `Quick note\n\nPress Shift + Enter for quick save!\nTip: Your note stays here even without saving!`;
+    this.noteTextarea.nativeElement.placeholder = this.textareaPlaceholder;
   }
 
   copyToClipboard(noteTextarea: HTMLTextAreaElement): void {
@@ -85,6 +89,18 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
       noteTextarea.removeAttribute('readonly');
       noteTextarea.removeAttribute('disabled');
     }, 100);
+  }
+
+  private subscribeToWindowSize(): void {
+    this.subscriptions.push(
+      this.resizeService.getWindowSizeObservable().subscribe((isWindows) => {
+        if (isWindows) {
+          this.textareaPlaceholder = `Quick note\n\nPress Shift + Enter for quick save!\nTip: Your note stays here even without saving!`;
+        } else {
+          this.textareaPlaceholder = `Quick note\nTip: Your note stays here even without saving!`;
+        }
+      })
+    );
   }
 
   private subscribeToSocket(): void {

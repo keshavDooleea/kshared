@@ -11,6 +11,7 @@ import { CustomFiles } from 'src/app/classes/files';
 import { FilesService } from 'src/app/services/files/files.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
+import { ResizeService } from 'src/app/services/window-resize/resize.service';
 
 @Component({
   selector: 'app-files-container',
@@ -19,6 +20,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class FilesContainerComponent implements OnInit, OnDestroy {
+  emptyContainerText: string;
   files: CustomFiles[];
   spinners: number[] = [];
   shouldStayFixed: boolean;
@@ -32,11 +34,13 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     private fileService: FilesService,
     private userService: UserService,
     private socketService: SocketService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private resizeService: ResizeService
   ) {}
 
   ngOnInit(): void {
     this.shouldStayFixed = false;
+    this.subscribeToWindowSize();
     this.subscribeToFile();
     this.subscribeToSpinner();
     this.subscribeToSocket();
@@ -98,6 +102,26 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   private showDuplicateMsg(): void {
     this.shouldShowExistMsg = true;
     setTimeout(() => (this.shouldShowExistMsg = false), 2000);
+  }
+
+  private subscribeToWindowSize(): void {
+    this.subscriptions.push(
+      this.resizeService.getWindowSizeObservable().subscribe((isWindows) => {
+        if (isWindows) {
+          this.emptyContainerText = ` <h4>
+                                        Press the <i class="fas fa-plus-square"></i> icon or letter
+                                        '<span>O</span>' to upload files
+                                      </h4>
+                                      <h4>Or drag & drop files here!</h4>
+                                      <p>(Max 200MB per file)</p>`;
+        } else {
+          this.emptyContainerText = ` <h4>
+                                        Press the <i class="fas fa-plus-square"></i> icon to upload files!
+                                      </h4>
+                                      <p>(Max 200MB per file)</p>`;
+        }
+      })
+    );
   }
 
   private subscribeToFile(): void {

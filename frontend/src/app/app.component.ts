@@ -1,10 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 import { User } from './classes/user';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { UserService } from './services/user/user.service';
+import { ResizeService } from './services/window-resize/resize.service';
 
 @Component({
   selector: 'app-root',
@@ -18,16 +19,24 @@ export class AppComponent implements OnInit, OnDestroy {
     private socketService: SocketService,
     private localStorage: LocalStorageService,
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private resizeService: ResizeService
   ) {}
 
   ngOnInit(): void {
+    this.getWindowSize();
     this.checkUser();
     this.onLogOut();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getWindowSize(event?: Event): void {
+    const isWindows = window.innerWidth >= 650;
+    this.resizeService.emitWindowSize(isWindows);
   }
 
   private checkUser(): void {

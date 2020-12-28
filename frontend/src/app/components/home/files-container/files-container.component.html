@@ -76,13 +76,6 @@
   </div>
 
   <ng-template #showEmptyFile>
-    <div class="empty-container">
-      <h4>
-        Press the <i class="fas fa-plus-square"></i> icon or letter
-        '<span>O</span>' to upload files
-      </h4>
-      <h4>Or drag & drop files here!</h4>
-      <p>(Max 200MB per file)</p>
-    </div>
+    <div class="empty-container" [innerHTML]="emptyContainerText"></div>
   </ng-template>
 </div>

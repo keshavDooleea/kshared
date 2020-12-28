@@ -1,15 +1,10 @@
-import {
-  Component,
-  ElementRef,
-  HostListener,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import * as confetti from 'canvas-confetti';
 import { Subscription } from 'rxjs';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
+import { ResizeService } from 'src/app/services/window-resize/resize.service';
 
 @Component({
   selector: 'app-stars',
@@ -27,12 +22,12 @@ export class StarsComponent implements OnInit, OnDestroy {
     private elementRef: ElementRef,
     private socketService: SocketService,
     private localStorageService: LocalStorageService,
-    private userService: UserService
-  ) {
-    this.getWindowSize();
-  }
+    private userService: UserService,
+    private resizeService: ResizeService
+  ) {}
 
   ngOnInit(): void {
+    this.subscribeToWindowSize();
     this.subscribeToUser();
     this.subscribeToSocket();
   }
@@ -41,17 +36,20 @@ export class StarsComponent implements OnInit, OnDestroy {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
-  @HostListener('window:resize', ['$event'])
-  getWindowSize(event?: Event): void {
-    if (window.innerWidth >= 650) {
-      this.confettiAngle = 55;
-      this.confettiX = 0.08;
-      this.confettiVelocity = 90;
-    } else {
-      this.confettiAngle = 90;
-      this.confettiX = 0.5;
-      this.confettiVelocity = 50;
-    }
+  private subscribeToWindowSize(): void {
+    this.subscriptions.push(
+      this.resizeService.getWindowSizeObservable().subscribe((isWindows) => {
+        if (isWindows) {
+          this.confettiAngle = 55;
+          this.confettiX = 0.08;
+          this.confettiVelocity = 90;
+        } else {
+          this.confettiAngle = 90;
+          this.confettiX = 0.5;
+          this.confettiVelocity = 50;
+        }
+      })
+    );
   }
 
   private subscribeToUser(): void {
