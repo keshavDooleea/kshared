@@ -201,6 +201,10 @@ input {
   .tooltip {
     display: none;
   }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
 }
 
 @media all and (max-width: 600px) {
