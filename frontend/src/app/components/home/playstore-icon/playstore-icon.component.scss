@@ -16,21 +16,20 @@
     svg {
       max-width: 70%;
       max-height: 70%;
-      filter: grayscale(100%);
       transition: 0.2s filter;
     }
 
     &:hover {
       svg {
-        filter: grayscale(0);
+        filter: brightness(125%);
       }
     }
   }
 }
 
 @media all and (max-width: 665px) {
-  svg {
-    filter: grayscale(0) !important;
+  svg:hover {
+    filter: brightness(100%) !important;
   }
 }
 
