@@ -148,4 +148,10 @@
       margin-left: 8px;
     }
   }
+
+  .modal-stores {
+    & > div {
+      width: 100% !important;
+    }
+  }
 }
