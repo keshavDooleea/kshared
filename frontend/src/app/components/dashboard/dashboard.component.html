@@ -40,12 +40,17 @@
 
   <div class="item">
     <div class="title">
-      <h3>Users</h3>
+      <span class="user-title"
+        ><h3>Users</h3>
+        <h2>{{ content.users.length }}</h2></span
+      >
     </div>
     <table class="user-table">
       <tr>
         <th><h3>Username</h3></th>
+        <th><h3>Files</h3></th>
         <th><h3>File Size</h3></th>
+        <th><h3>Notes</h3></th>
         <th><h3>Stars</h3></th>
       </tr>
       <tr *ngFor="let user of content.users">
@@ -53,18 +58,18 @@
           <h3>{{ user.username }}</h3>
         </td>
         <td>
+          <h3>{{ user.files === 0 ? "-" : user.files }}</h3>
+        </td>
+        <td>
           <h3>{{ user.fileSize === "0 Bytes" ? "-" : user.fileSize }}</h3>
+        </td>
+        <td>
+          <h3>{{ user.notes === 0 ? "-" : user.notes }}</h3>
         </td>
         <td>
           <h3>{{ user.stars === 0 ? "-" : user.stars }}</h3>
         </td>
       </tr>
     </table>
-
-    <div class="nb-users">
-      <h2>
-        {{ content.users.length }}
-      </h2>
-    </div>
   </div>
 </div>

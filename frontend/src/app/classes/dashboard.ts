@@ -3,6 +3,8 @@ export interface Dashboard {
     {
       username: string;
       stars: number;
+      notes: number;
+      files: number;
       fileSize: string;
     }
   ];

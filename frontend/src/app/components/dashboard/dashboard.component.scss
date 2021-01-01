@@ -19,6 +19,15 @@
   .title {
     width: 15%;
 
+    .user-title {
+      display: flex;
+      align-items: center;
+
+      h2 {
+        transform: translateX(15px);
+      }
+    }
+
     h3 {
       color: white;
     }
@@ -29,7 +38,7 @@
 
     td,
     th {
-      width: calc(100% / 4);
+      width: calc(100% / 5);
       overflow: hidden;
       display: inline-block;
       white-space: nowrap;
@@ -95,17 +104,9 @@ h3 {
   }
 }
 
-@media all and (max-width: 615px) {
+@media all and (max-width: 650px) {
   table {
     width: 85% !important;
-  }
-
-  .nb-users {
-    left: 79% !important;
-
-    h2 {
-      font-size: 3rem;
-    }
   }
 
   h3 {
@@ -113,23 +114,46 @@ h3 {
   }
 }
 
-@media all and (max-width: 500px) {
+@media all and (max-width: 540px) {
   .dashboard {
     padding: 5px;
   }
 
-  .title {
-    padding-top: 5px;
+  h3 {
+    font-size: 14px;
+  }
+
+  table:not(.user-table) td,
+  table:not(.user-table) th {
+    width: calc(100% / 4) !important;
   }
 
   .user-table {
     td,
     th {
-      width: calc(100% / 3) !important;
+      &:nth-child(2) {
+        padding-left: 25px !important;
+      }
+      &:nth-child(3) {
+        padding-left: 10px !important;
+      }
+      &:nth-child(4),
+      &:nth-child(5) {
+        padding-left: 20px !important;
+      }
     }
   }
 
-  .nb-users {
-    left: 90% !important;
+  .title {
+    padding-top: 5px;
+
+    .user-title {
+      flex-direction: column;
+      align-items: flex-start !important;
+
+      h2 {
+        transform: none !important;
+      }
+    }
   }
 }

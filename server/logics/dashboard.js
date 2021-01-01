@@ -29,6 +29,8 @@ const getDashboardData = async (socket) => {
     content.users.push({
       username: doc.username,
       stars: doc.stars,
+      notes: doc.notes.length,
+      files: doc.files.length,
       fileSize: formatBytes(currentSize),
     });
 
