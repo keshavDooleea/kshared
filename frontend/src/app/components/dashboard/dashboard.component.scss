@@ -1,0 +1,134 @@
+@use "../../../styles.scss" as styles;
+
+.dashboard {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  overflow-y: auto;
+}
+
+.item {
+  width: 100%;
+  display: flex;
+  position: relative;
+
+  &:not(.notes-item) {
+    margin-top: 30px;
+  }
+
+  .title {
+    width: 15%;
+
+    h3 {
+      color: white;
+    }
+  }
+
+  table {
+    width: 70%;
+
+    td,
+    th {
+      width: calc(100% / 4);
+      overflow: hidden;
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    th {
+      text-align: left;
+      letter-spacing: 0.5px;
+
+      h3 {
+        color: white;
+      }
+    }
+
+    td h3 {
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+.btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+
+  h4 {
+    padding: 0 8px;
+    font-size: 16px;
+  }
+}
+
+.nb-users {
+  position: absolute;
+  top: 50%;
+  left: 67.5%;
+  transform: translateY(-50%);
+
+  h2 {
+    font-size: 4rem;
+    color: rgba($color: #fff, $alpha: 0.3);
+  }
+}
+
+h2 {
+  color: styles.$fadeText;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+h3 {
+  color: styles.$fadeText;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+}
+
+@media all and (max-width: 830px) {
+  table {
+    width: 80% !important;
+  }
+
+  .nb-users {
+    left: 75%;
+  }
+}
+
+@media all and (max-width: 615px) {
+  table {
+    width: 85% !important;
+  }
+
+  .nb-users {
+    left: 79% !important;
+
+    h2 {
+      font-size: 3rem;
+    }
+  }
+
+  h3 {
+    font-size: 16px;
+  }
+}
+
+@media all and (max-width: 500px) {
+  .dashboard {
+    padding: 5px;
+  }
+
+  .title {
+    padding-top: 5px;
+  }
+
+  .user-table {
+    td,
+    th {
+      width: calc(100% / 3) !important;
+    }
+  }
+
+  .nb-users {
+    left: 90% !important;
+  }
+}

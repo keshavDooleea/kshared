@@ -1,0 +1,70 @@
+<div class="dashboard" *ngIf="showContent">
+  <button class="btn" routerLink="/">
+    <h4>Home</h4>
+  </button>
+
+  <div class="item notes-item">
+    <div class="title">
+      <h3>Notes</h3>
+    </div>
+    <h2>{{ content.notesLength }}</h2>
+  </div>
+
+  <div class="item">
+    <div class="title">
+      <h3>Files</h3>
+    </div>
+    <table>
+      <tr>
+        <th><h3>Size</h3></th>
+        <th><h3>MongoDB</h3></th>
+        <th><h3>Amazon</h3></th>
+        <th><h3>Total</h3></th>
+      </tr>
+      <tr>
+        <td>
+          <h3>{{ content.files.totalSize }}</h3>
+        </td>
+        <td>
+          <h3>{{ content.files.mongoLength }}</h3>
+        </td>
+        <td>
+          <h3>{{ content.files.amazonLength }}</h3>
+        </td>
+        <td>
+          <h3>{{ content.files.totalLength }}</h3>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+  <div class="item">
+    <div class="title">
+      <h3>Users</h3>
+    </div>
+    <table class="user-table">
+      <tr>
+        <th><h3>Username</h3></th>
+        <th><h3>File Size</h3></th>
+        <th><h3>Stars</h3></th>
+      </tr>
+      <tr *ngFor="let user of content.users">
+        <td>
+          <h3>{{ user.username }}</h3>
+        </td>
+        <td>
+          <h3>{{ user.fileSize === "0 Bytes" ? "-" : user.fileSize }}</h3>
+        </td>
+        <td>
+          <h3>{{ user.stars === 0 ? "-" : user.stars }}</h3>
+        </td>
+      </tr>
+    </table>
+
+    <div class="nb-users">
+      <h2>
+        {{ content.users.length }}
+      </h2>
+    </div>
+  </div>
+</div>

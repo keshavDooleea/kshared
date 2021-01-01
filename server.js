@@ -5,6 +5,7 @@ const userLogin = require("./server/logics/user-login");
 const { awsFileUpload, awsGetFileUrl, awsDeleteSingleFile } = require("./server/logics/aws");
 const getInnerHTML = require("./server/logics/innerHtml");
 const sendEmail = require("./server/logics/email");
+const getDashboardData = require("./server/logics/dashboard");
 const User = require("./server/modals/user").User;
 
 const formidableMiddleware = require("express-formidable");
@@ -137,6 +138,10 @@ io.on("connection", async (socket) => {
     } catch (error) {
       socket.emit("emailResponse", "500");
     }
+  });
+
+  socket.on("dashboardConnected", async () => {
+    await getDashboardData(socket);
   });
 
   socket.on("disconnect", async () => {});
