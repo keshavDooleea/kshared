@@ -61,6 +61,7 @@
       position: relative;
       margin: 0 auto;
       white-space: pre-wrap;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
 
       &:not(:last-child) {
         margin-bottom: 10px;
@@ -97,7 +98,7 @@
           transform: translate(-50%, -50%) rotate(-90deg);
           font-weight: 900;
           color: #63676d;
-          font-size: 13px;
+          font-size: 14px;
           opacity: 0;
           transition: 0.3s opacity, 0.4s left;
           cursor: auto;

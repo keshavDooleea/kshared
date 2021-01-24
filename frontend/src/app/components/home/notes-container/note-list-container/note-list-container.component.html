@@ -30,7 +30,7 @@
         (click)="onNoteClicked(note)"
         [style.maxHeight]="note.welcomeNote ? '6vh' : '10vh'"
       >
-        <small class="date">{{ note.date | date: "shortDate" }}</small>
+        <span class="date">{{ note.date | date: "MMM d" }}</span>
         <p>{{ note.text }}</p>
       </div>
       <div class="list-control">

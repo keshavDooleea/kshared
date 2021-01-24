@@ -55,7 +55,9 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
 
   private updateFilteredList(): void {
     this.noteList.forEach((note) => {
-      note.canShow = note.text.includes(this.filterText);
+      note.canShow = note.text
+        .toLowerCase()
+        .includes(this.filterText.toLowerCase());
     });
   }
 
