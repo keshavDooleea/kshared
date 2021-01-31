@@ -176,8 +176,8 @@
       .locked-text {
         position: absolute;
         top: 60%;
-        left: -1px;
-        transform: translate(0%, -50%);
+        left: -3px;
+        transform: translate(0%, -50%) rotate(180deg);
         writing-mode: vertical-lr;
         font-weight: 900;
         color: #63676d;
