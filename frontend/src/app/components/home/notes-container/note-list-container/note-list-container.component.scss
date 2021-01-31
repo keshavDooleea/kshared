@@ -22,6 +22,23 @@
     height: 15%;
     @include styles.displayFlex(row, center, center);
 
+    .notes-length {
+      position: absolute;
+      top: 7.5%;
+      left: 4%;
+      transform: translateY(-50%);
+
+      span {
+        font-size: 25px;
+        color: white;
+      }
+
+      .fa-signature {
+        margin-left: 3px;
+        color: #72767d;
+      }
+    }
+
     .input-container {
       width: 50%;
       height: 70%;
@@ -162,7 +179,7 @@
 
 @media all and (max-width: 780px) {
   .date {
-    left: -10px !important;
+    left: -7px !important;
     opacity: 1 !important;
   }
   .list-control {

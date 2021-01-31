@@ -66,6 +66,18 @@ body {
   }
 }
 
+.icon.left-note-icon {
+  cursor: initial;
+
+  &:hover {
+    color: $itemNormal;
+
+    .tooltip {
+      transform: translate(-10%, -30%) scale(1);
+    }
+  }
+}
+
 .tooltip {
   position: absolute;
   top: -4vh;
