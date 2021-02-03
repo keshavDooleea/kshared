@@ -39,9 +39,10 @@
         <span class="date">{{ note.date | date: "MMM d" }}</span>
         <p>{{ note.text }}</p>
       </div>
-      <div class="list-control">
-        <i class="fas fa-times-circle icon" (click)="deleteNote(note)"></i>
-      </div>
+      <i
+        class="fas fa-times-circle icon list-control"
+        (click)="deleteNote(note)"
+      ></i>
     </div>
   </div>
 </div>
