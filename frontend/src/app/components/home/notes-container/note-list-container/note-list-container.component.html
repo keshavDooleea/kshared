@@ -44,6 +44,10 @@
         (click)="deleteNote(note)"
       ></i>
     </div>
+
+    <div class="empty-list" *ngIf="filterText && isFilterEmpty()">
+      <h4>No such note was found 🤕</h4>
+    </div>
   </div>
 </div>
 
