@@ -44,10 +44,9 @@ const getWelcomeNote = (name) => {
     welcomeNote: true,
     text: `Helloo ${name}! Click Me 😉
 
-Write things, copy & paste link and stuff here.. Up to you!
+On this pannel, you can write and save some notes!
 
-Save your note or leave it here! Either way, it's always saved!
-Try refreshing the page 😌
+On the right pannel, you can write things, copy & paste link and stuff there..
 
 Transfer and download your files quickly via the bottom pannel.
 

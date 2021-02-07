@@ -1,62 +1,108 @@
 <div class="list-container" *ngIf="noteList?.length > 0; else emptyList">
-  <div class="filter-container">
-    <div class="notes-length icon left-note-icon">
-      <span>{{ noteList.length }}</span>
-      <i class="fas fa-signature">
-        <p class="tooltip">Number of notes saved</p>
-      </i>
-    </div>
-    <div class="input-container">
-      <input
-        type="text"
-        placeholder="Seach for note"
-        spellcheck="false"
-        autocomplete="off"
-        [(ngModel)]="filterText"
-        (ngModelChange)="onFilterChange()"
-      />
-      <div>
-        <i class="fas fa-times-circle icon" (click)="clearFilter()">
-          <p class="tooltip">Clear filter</p>
+  <div class="list-inner-container" *ngIf="!isNoteOpened; else openedContainer">
+    <div class="list-inner-header">
+      <div class="notes-length icon left-note-icon">
+        <span>{{ noteList.length }}</span>
+        <i class="fas fa-signature">
+          <p class="tooltip">Number of notes saved</p>
         </i>
       </div>
-    </div>
-  </div>
-  <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
-    <p class="tooltip">New note</p>
-  </i>
-  <div class="lists">
-    <div
-      class="list-item"
-      *ngFor="let note of noteList"
-      [style.display]="note.canShow ? 'flex' : 'none'"
-    >
-      <div
-        class="list-item-p"
-        (click)="onNoteClicked(note)"
-        [style.maxHeight]="note.welcomeNote ? '6vh' : '10vh'"
-      >
-        <span class="date">{{ note.date | date: "MMM d" }}</span>
-        <p>{{ note.text }}</p>
+      <div class="input-container">
+        <input
+          type="text"
+          placeholder="Seach for note"
+          spellcheck="false"
+          autocomplete="off"
+          [(ngModel)]="filterText"
+          (ngModelChange)="onFilterChange()"
+        />
+        <div>
+          <i class="fas fa-times-circle icon" (click)="clearFilter()">
+            <p class="tooltip">Clear filter</p>
+          </i>
+        </div>
       </div>
-      <i
-        class="fas fa-times-circle icon list-control"
-        (click)="deleteNote(note)"
-      ></i>
+      <div></div>
+
+      <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
+        <p class="tooltip">New note</p>
+      </i>
     </div>
 
-    <div class="empty-list" *ngIf="filterText && isFilterEmpty()">
-      <h4>No such note was found 🤕</h4>
+    <div class="lists">
+      <div
+        class="list-item"
+        *ngFor="let note of noteList"
+        [style.display]="note.canShow ? 'flex' : 'none'"
+      >
+        <div
+          class="list-item-p"
+          (click)="onNoteClicked(note)"
+          [style.maxHeight]="note.welcomeNote ? '6vh' : '10vh'"
+        >
+          <span class="date">{{ note.date | date: "MMM d" }}</span>
+          <p>{{ note.text }}</p>
+        </div>
+        <i
+          class="fas fa-times-circle icon list-control"
+          (click)="deleteNote(note)"
+        ></i>
+      </div>
+
+      <div class="empty-list" *ngIf="filterText && isFilterEmpty()">
+        <h4>No such note was found 🤕</h4>
+      </div>
     </div>
   </div>
 </div>
 
+<!-- when clicked on a note to open it -->
+<ng-template #openedContainer>
+  <div class="list-inner-container">
+    <div class="list-inner-header">
+      <div class="inner-date">
+        <span *ngIf="currentNote">
+          <span>Date created: </span>
+          <span>{{ currentNote.date | date: "d MMM YYYY" }}</span>
+        </span>
+      </div>
+      <div class="inner-header-actions">
+        <i class="fas fa-share icon" *ngIf="openTextAreaValue"
+          ><p class="tooltip">Share your note</p></i
+        >
+        <i
+          class="fas fa-copy icon"
+          *ngIf="openTextAreaValue"
+          (click)="copyToClipboard(openTextArea)"
+        >
+          <p class="tooltip">Copy note</p>
+        </i>
+        <i class="fas fa-check-circle icon" (click)="closeOpenNote()">
+          <p class="tooltip">Close note</p>
+        </i>
+      </div>
+    </div>
+
+    <div class="lists open-note-list">
+      <textarea
+        #openTextArea
+        class="open-note-textarea"
+        [(ngModel)]="openTextAreaValue"
+        (keyup)="onKeyup()"
+        spellcheck="false"
+        placeholder="{{ textareaPlaceholder }}"
+      ></textarea>
+    </div>
+  </div>
+</ng-template>
+
+<!-- when there is no note -->
 <ng-template #emptyList>
   <div class="empty-list">
     <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
       <p class="tooltip">New note</p>
     </i>
     <h4>No notes added yet 🤨</h4>
-    <p>Save your text and it appears as a note here!</p>
+    <p>Add a new note by pressing on the Plus sign at top right</p>
   </div>
 </ng-template>

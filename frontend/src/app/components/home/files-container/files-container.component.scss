@@ -44,6 +44,20 @@
       color: #72767d;
       pointer-events: none;
     }
+
+    .file-length {
+      @include styles.displayFlex(row, center, center);
+      cursor: initial;
+
+      span {
+        font-size: 23px;
+        color: white;
+      }
+
+      .fa-file-upload {
+        margin-left: 8px;
+      }
+    }
   }
 
   .duplicate-msg {

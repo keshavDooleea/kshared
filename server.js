@@ -14,6 +14,7 @@ const cors = require("cors");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const mongo = require("mongoose");
+const ObjectId = mongo.Types.ObjectId;
 const express = require("express");
 const app = express();
 const server = require("http").Server(app);
@@ -106,8 +107,12 @@ io.on("connection", async (socket) => {
     await updateText(data, socket);
   });
 
-  socket.on("openNote", async (data) => {
-    await updateNote(data, socket);
+  socket.on("updateNote", async (data) => {
+    await updateNote(data, socket, io);
+  });
+
+  socket.on("addNewNoteID", async (data) => {
+    await addNewNoteID(data, socket, io);
   });
 
   // new note being saved
@@ -268,6 +273,13 @@ const pageRefresh = async (data, socket) => {
   try {
     let currentUser = await User.findById(user.id);
 
+    currentUser.notes.forEach((note, index) => {
+      if (note.text === "") {
+        currentUser.notes.splice(index, 1);
+      }
+    });
+    await currentUser.save();
+
     // update user details
     user.currentText = currentUser.currentText;
     user.noteList = currentUser.notes;
@@ -308,13 +320,54 @@ const updateText = async (data, socket) => {
   }
 };
 
-// when clicked on individual note
-const updateNote = async (data, socket) => {
+// when wrintin on individual note
+const updateNote = async (data, socket, io) => {
   try {
     const user = findUser(data.token);
     socket.join(user.id);
-    io.in(user.id).emit("updatedText", data.text); // sending to every username except sender
-    await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
+
+    // io.in(user.id).emit("updatedText", data.text); // sending to every username except sender
+    const dbUser = await User.findById(user.id);
+    dbUser.notes.forEach((note, index) => {
+      if (note._id.equals(data.noteID)) {
+        note.text = data.text;
+      }
+    });
+    await dbUser.save();
+    io.in(user.id).emit("getNotes", dbUser.notes);
+
+    // await User.findByIdAndUpdate({ _id: user.id }, { currentText: data.text });
+  } catch (error) {
+    console.log("Updating current note error: ", error);
+  }
+};
+
+const addNewNoteID = async (data, socket, io) => {
+  try {
+    const user = findUser(data.token);
+    socket.join(user.id);
+
+    const newID = new ObjectId();
+    const newNote = {
+      _id: newID,
+      text: data.text,
+      date: Date.now(),
+      canShow: true,
+      welcomeNote: false,
+    };
+
+    const dbUser = await User.findById(user.id);
+    dbUser.notes.push(newNote);
+
+    // sort notes by latest date
+    dbUser.notes.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date);
+    });
+
+    await dbUser.save();
+
+    io.in(user.id).emit("currentNote", newNote);
+    io.in(user.id).emit("getNotes", dbUser.notes);
   } catch (error) {
     console.log("Updating current note error: ", error);
   }

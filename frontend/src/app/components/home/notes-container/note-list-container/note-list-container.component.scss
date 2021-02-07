@@ -1,13 +1,13 @@
 @use "../../../../../styles.scss" as styles;
 
 :host {
-  width: 32%;
+  width: 51%;
 }
 
 .plus-icon {
   position: absolute;
   top: 7.5%;
-  right: 4%;
+  right: 2.5%;
   transform: translateY(-50%);
   font-size: 18px;
 }
@@ -17,140 +17,166 @@
   height: 100%;
   position: relative;
 
-  .filter-container {
+  .list-inner-container {
     width: 100%;
-    height: 15%;
-    @include styles.displayFlex(row, center, center);
-
-    .notes-length {
-      position: absolute;
-      top: 7.5%;
-      left: 4%;
-      transform: translateY(-50%);
-
-      span {
-        font-size: 25px;
-        color: white;
-      }
-
-      .fa-signature {
-        margin-left: 3px;
-        color: #72767d;
-      }
-    }
-
-    .input-container {
-      width: 50%;
-      height: 70%;
-      background-color: #40444b;
-      border-radius: styles.$smallBorderRadius;
-      @include styles.displayFlex(row, center, center);
-
-      input {
-        width: 83%;
-        height: 100%;
-        border-radius: styles.$smallBorderRadius 0 0 styles.$smallBorderRadius;
-      }
-
-      div {
-        width: 17%;
-        height: 100%;
-        @include styles.displayFlex(row, center, center);
-      }
-    }
-  }
-
-  .lists {
-    width: 100%;
-    height: 85%;
-    padding: 15px 0;
+    height: 100%;
     position: relative;
-    overflow-y: auto;
-    overflow-x: hidden;
 
-    .list-item {
-      width: 92%;
-      padding: 2px 6px;
-      // background-color: #32353b;
-      background-color: #2f3136;
-      border-radius: styles.$smallBorderRadius;
-      position: relative;
+    .list-inner-header {
+      width: 95%;
+      height: 15%;
+      @include styles.displayFlex(row, center, space-between);
       margin: 0 auto;
-      box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
-      @include styles.displayFlex(row, center, center);
 
-      &:not(:last-child) {
-        margin-bottom: 10px;
-      }
-
-      &:active {
-        filter: brightness(1.2);
-      }
-
-      &::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 200%;
-        height: 100%;
-        transform: translateX(-25%);
-        z-index: -1;
-      }
-
-      .list-item-p {
-        flex: 1;
-        height: 100%;
-        overflow: hidden;
-        min-height: 6vh;
-        max-height: 10vh;
-        transition: 0.2s width;
-        cursor: pointer;
-
-        .date {
-          position: absolute;
-          top: 50%;
-          left: 2px;
-          transform: translate(-50%, -50%) rotate(-90deg);
-          font-weight: 900;
-          color: #63676d;
-          font-size: 14px;
-          opacity: 0;
-          transition: 0.3s opacity, 0.4s left;
-          cursor: auto;
-        }
-
-        p {
+      .notes-length {
+        span {
+          font-size: 25px;
           color: white;
-          text-align: justify;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-          overflow: hidden;
+        }
+
+        .fa-signature {
+          margin-left: 3px;
+          color: #72767d;
         }
       }
 
-      .list-control {
-        width: 0;
-        height: 31px;
-        @include styles.displayFlex(row, center, center);
-        transition: 0.1s width, 0.2s opacity;
-        opacity: 0;
-        pointer-events: none;
-        font-size: 19px;
+      .inner-date span {
+        &:nth-child(1) {
+          color: #72767d;
+        }
+        &:nth-child(2) {
+          color: white;
+        }
       }
 
-      &:hover {
+      .inner-header-actions i {
+        margin-left: 20px;
+      }
+
+      .input-container {
+        width: 50%;
+        height: 70%;
+        background-color: #40444b;
+        border-radius: styles.$smallBorderRadius;
+        @include styles.displayFlex(row, center, center);
+
+        input {
+          width: 85%;
+          height: 100%;
+          border-radius: styles.$smallBorderRadius 0 0 styles.$smallBorderRadius;
+        }
+
+        div {
+          flex: 1;
+          height: 100%;
+          padding-right: 5px;
+          @include styles.displayFlex(row, center, flex-end);
+        }
+      }
+    }
+
+    .lists {
+      width: 100%;
+      height: 85%;
+      padding: 15px 0;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      .list-item {
+        width: 95%;
+        padding: 2px 6px;
+        // background-color: #32353b;
+        background-color: #2f3136;
+        border-radius: styles.$smallBorderRadius;
+        position: relative;
+        margin: 0 auto;
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
+        @include styles.displayFlex(row, center, center);
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+
+        &:active {
+          filter: brightness(1.2);
+        }
+
+        &::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 200%;
+          height: 100%;
+          transform: translateX(-25%);
+          z-index: -1;
+        }
+
         .list-item-p {
+          flex: 1;
+          height: 100%;
+          overflow: hidden;
+          min-height: 6vh;
+          max-height: 10vh;
+          transition: 0.2s width;
+          cursor: pointer;
+
           .date {
-            opacity: 1;
-            left: -6px;
+            position: absolute;
+            top: 50%;
+            left: 2px;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            font-weight: 900;
+            color: #63676d;
+            font-size: 14px;
+            opacity: 0;
+            transition: 0.3s opacity, 0.4s left;
+            cursor: auto;
+          }
+
+          p {
+            color: white;
+            text-align: justify;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
           }
         }
+
         .list-control {
-          width: 25px;
-          opacity: 1;
-          pointer-events: auto;
-          margin-left: 10px;
+          width: 0;
+          height: 31px;
+          @include styles.displayFlex(row, center, center);
+          transition: 0.1s width, 0.2s opacity;
+          opacity: 0;
+          pointer-events: none;
+          font-size: 19px;
+        }
+
+        &:hover {
+          .list-item-p {
+            .date {
+              opacity: 1;
+              left: -6px;
+            }
+          }
+          .list-control {
+            width: 25px;
+            opacity: 1;
+            pointer-events: auto;
+            margin-left: 10px;
+          }
+        }
+      }
+
+      &.open-note-list {
+        padding-top: 0;
+        @include styles.displayFlex(column, center, center);
+
+        .open-note-textarea {
+          width: 95%;
+          height: 100%;
         }
       }
     }
@@ -187,5 +213,16 @@
   .input-container {
     height: 95% !important;
     margin-top: 5px;
+  }
+}
+
+@media all and (max-width: 565px) {
+  .list-inner-header,
+  .list-item,
+  .open-note-textarea {
+    width: 92% !important;
+  }
+  .plus-icon {
+    right: 4%;
   }
 }

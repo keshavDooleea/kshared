@@ -1,5 +1,13 @@
 <div class="files-body" appFileDrop (dropFilesEmitter)="onFileInput($event)">
   <div class="controls">
+    <div class="file-length icon" *ngIf="files.length > 0">
+      <span>
+        {{ files.length }}
+      </span>
+      <i class="fas fa-file-upload">
+        <p class="tooltip">Number of files uploaded</p>
+      </i>
+    </div>
     <i class="fas fa-plus-square icon" (click)="fileInput.click()">
       <p class="tooltip">Upload files</p>
       <input

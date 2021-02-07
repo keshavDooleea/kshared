@@ -6,18 +6,16 @@
     <textarea
       #noteTextarea
       [(ngModel)]="textareaValue"
-      (keydown.shift.enter)="onShiftEnter($event)"
       (keyup)="onKeyup()"
       spellcheck="false"
       placeholder="{{ textareaPlaceholder }}"
     ></textarea>
     <div class="textarea-action">
       <i
-        class="fas fa-save save-icon"
-        (click)="saveTextarea()"
+        class="fas fa-share save-icon"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
       >
-        <p class="tooltip">Save as note</p></i
+        <p class="tooltip">Share your text</p></i
       >
       <i
         class="fas fa-copy copy-icon"

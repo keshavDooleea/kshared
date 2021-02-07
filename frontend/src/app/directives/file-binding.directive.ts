@@ -22,8 +22,15 @@ export class FileBindingDirective {
     const textarea = this.elementRef.nativeElement.querySelector(
       '.text-container textarea'
     );
+    const openTextarea = this.elementRef.nativeElement.querySelector(
+      '.open-note-textarea'
+    );
 
-    if (event.target === textarea || event.target === input) {
+    if (
+      event.target === textarea ||
+      event.target === input ||
+      event.target === openTextarea
+    ) {
       return;
     }
 
