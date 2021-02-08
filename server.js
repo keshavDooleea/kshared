@@ -157,6 +157,10 @@ io.on("connection", async (socket) => {
     await sendNoteNotifications(io, data);
   });
 
+  socket.on("removeNotification", async (data) => {
+    await removeNotification(io, data, socket);
+  });
+
   socket.on("disconnect", async () => {});
 });
 
@@ -500,7 +504,7 @@ const sendNoteNotifications = async (io, data) => {
     data.users.forEach(async (shareUser) => {
       let currentUser = await User.findById(shareUser._id);
 
-      if (currentUser.notifications.some((notif) => notif.ID.equals(data.noteID))) {
+      if (currentUser.notifications.some((notif) => notif.ID.equals(data.refID))) {
         return;
       }
 
@@ -508,7 +512,7 @@ const sendNoteNotifications = async (io, data) => {
       currentUser.notifications.push({
         _id: newID,
         type: "Note",
-        ID: data.noteID,
+        refID: data.refID,
         name: data.name,
         from: user.username,
       });
@@ -518,6 +522,25 @@ const sendNoteNotifications = async (io, data) => {
     });
   } catch (error) {
     console.log(`sendNoteNotifications error: ${error}`);
+  }
+};
+
+const removeNotification = async (io, data, socket) => {
+  try {
+    const user = findUser(data.token);
+    socket.join(user.id);
+    let currentUser = await User.findById(user.id);
+
+    currentUser.notifications.forEach((notif, index) => {
+      if (notif._id.equals(data.notifID)) {
+        currentUser.notifications.splice(index, 1);
+      }
+    });
+    await currentUser.save();
+
+    io.in(user.id).emit("newNotifications", currentUser.notifications);
+  } catch (error) {
+    console.log(`removeNotification error: ${error}`);
   }
 };
 

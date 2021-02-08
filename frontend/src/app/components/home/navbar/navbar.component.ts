@@ -7,8 +7,9 @@ import {
   Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { CurrentUser, User } from 'src/app/classes/user';
+import { CurrentUser, Notification, User } from 'src/app/classes/user';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { ShareService } from 'src/app/services/share/share.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
@@ -28,7 +29,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   constructor(
     private localStorage: LocalStorageService,
     private userService: UserService,
-    private socketService: SocketService
+    private socketService: SocketService,
+    private shareService: ShareService
   ) {}
 
   ngOnInit(): void {
@@ -65,6 +67,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   showNotificationModal(): void {
     this.shouldShowNotifModal = true;
+  }
+
+  removeNotification(notif: Notification): void {
+    this.shareService.removeNotification(notif);
   }
 
   onModalClicked(event: Event): void {

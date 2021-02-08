@@ -51,7 +51,7 @@ const UserSchema = new mongo.Schema({
   notifications: [
     {
       type: { type: String },
-      ID: { type: mongo.Types.ObjectId },
+      refID: { type: mongo.Types.ObjectId },
       name: { type: String },
       from: { type: String },
     },

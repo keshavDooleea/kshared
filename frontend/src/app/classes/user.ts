@@ -5,7 +5,7 @@ import { Note } from './Note';
 export interface Notification {
   _id: ObjectId;
   type: string;
-  ID: ObjectId;
+  refID: ObjectId;
   name: string;
   from: string;
 }
