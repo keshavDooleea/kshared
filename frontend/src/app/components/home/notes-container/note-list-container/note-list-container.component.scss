@@ -232,11 +232,20 @@
       overflow: hidden;
       @include styles.displayFlex(column, flex-start, center);
 
-      p:nth-child(2) {
-        color: #72767d;
+      div {
+        width: 100%;
+        overflow: hidden;
+
+        p {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          color: white;
+        }
       }
-      p:nth-child(1) {
-        color: white;
+
+      & > p {
+        color: #72767d;
       }
     }
   }
