@@ -12,12 +12,6 @@
     ></textarea>
     <div class="textarea-action">
       <i
-        class="fas fa-share save-icon"
-        [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
-      >
-        <p class="tooltip">Share your text</p></i
-      >
-      <i
         class="fas fa-copy copy-icon"
         (click)="copyToClipboard(noteTextarea)"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"

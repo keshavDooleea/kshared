@@ -35,7 +35,6 @@
       position: absolute;
       bottom: 15px;
       right: 20px;
-      width: 125px;
       height: 5vh;
       display: flex;
       @include styles.displayFlex(row, center, space-between);
@@ -45,6 +44,7 @@
         opacity: 0;
         transform: translateY(9vh);
         transition: 0.35s transform, 0.2s opacity;
+        margin-left: 25px;
 
         &.copy-icon {
           transition-delay: 0.1s;
@@ -97,7 +97,6 @@
       overflow: visible;
 
       .textarea-action {
-        width: 155px;
         height: 6vh;
         bottom: -3vh;
         border-radius: styles.$smallBorderRadius;
@@ -108,6 +107,7 @@
         z-index: 5;
 
         i {
+          margin: 0 10px !important;
           font-size: 18px;
           transform: translateY(0);
           opacity: 1;

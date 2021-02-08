@@ -523,6 +523,7 @@ const sendNoteNotifications = async (io, data) => {
       await currentUser.save();
 
       io.in(shareUser._id).emit("newNotifications", currentUser.notifications);
+      // io.in(shareUser._id).emit("getNotes", currentUser.notes);
     });
   } catch (error) {
     console.log(`sendNoteNotifications error: ${error}`);
@@ -543,6 +544,7 @@ const removeNotification = async (io, data, socket) => {
     await currentUser.save();
 
     io.in(user.id).emit("newNotifications", currentUser.notifications);
+    io.in(user.id).emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log(`removeNotification error: ${error}`);
   }
@@ -560,6 +562,13 @@ const acceptNotification = async (io, data, socket) => {
     if (data.type === "Note") {
       // search for notif item in sender db
       const dbSender = await User.findById({ _id: sender[0]._id });
+
+      // check if note already exsists
+      if (currentUser.notes.some((note) => note._id.equals(data.refID))) {
+        removeNotification(io, data, socket);
+        return;
+      }
+
       dbSender.notes.forEach((note) => {
         // found current note
         if (note._id.equals(data.refID)) {
