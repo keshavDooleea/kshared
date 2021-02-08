@@ -200,6 +200,7 @@
 }
 
 .share-modal-body {
+  padding: 4px;
   @include styles.displayFlex(column, center, space-around);
 
   & > div {
