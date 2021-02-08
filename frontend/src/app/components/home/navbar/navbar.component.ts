@@ -65,6 +65,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.shouldShowGuide = !this.shouldShowGuide;
   }
 
+  getNotificationTitle(): string {
+    let title = `${this.currentUser.notifications.length} notification`;
+    return this.currentUser.notifications.length > 1 ? title + 's' : title;
+  }
+
   showNotificationModal(): void {
     this.shouldShowNotifModal = true;
   }

@@ -39,35 +39,53 @@
   <app-guide (closeModalEmitter)="toggleGuideModal()"></app-guide>
 </div>
 
+<!-- notification modal -->
 <div
   class="modal"
   (click)="onModalClicked($event)"
   [ngClass]="shouldShowNotifModal ? 'show-modal' : 'hide-modal'"
 >
-  <div class="modal-body notif-modal">
-    <h3>{{ currentUser?.notifications.length }} new notifications</h3>
-    <div class="notif-container">
-      <div
-        class="notif-item"
-        *ngFor="let notification of currentUser?.notifications; index as index"
-      >
-        <i class="fas fa-sticky-note"></i>
-        <div>
-          <p class="notif-name">{{ notification.name }}</p>
-          <p class="notif-sender">
-            <span>From: </span>
-            <span>{{ notification.from }}</span>
-          </p>
+  <div class="modal-body">
+    <i
+      class="fas fa-times-circle icon close-modal"
+      (click)="onModalClicked($event)"
+    ></i>
+    <div
+      class="notif-modal"
+      *ngIf="currentUser?.notifications.length > 0; else noNotif"
+    >
+      <h3>{{ getNotificationTitle() }}</h3>
+      <div class="notif-container">
+        <div
+          class="notif-item"
+          *ngFor="
+            let notification of currentUser?.notifications;
+            index as index
+          "
+        >
+          <i class="fas fa-sticky-note"></i>
+          <div>
+            <p class="notif-name">{{ notification.name }}</p>
+            <p class="notif-sender">
+              <span>From: </span>
+              <span>{{ notification.from }}</span>
+            </p>
+          </div>
+          <i
+            class="fas fa-check-circle icon"
+            (click)="acceptNotification(notification)"
+          ></i>
+          <i
+            class="fas fa-trash icon"
+            (click)="removeNotification(notification)"
+          ></i>
         </div>
-        <i
-          class="fas fa-check-circle icon"
-          (click)="acceptNotification(notification)"
-        ></i>
-        <i
-          class="fas fa-trash icon"
-          (click)="removeNotification(notification)"
-        ></i>
       </div>
     </div>
+    <ng-template #noNotif>
+      <div class="notif-modal">
+        <h3 class="no-notif-msg">No notification received 😔</h3>
+      </div>
+    </ng-template>
   </div>
 </div>
