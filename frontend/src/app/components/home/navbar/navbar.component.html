@@ -10,9 +10,9 @@
 <div class="navbar-item">
   <h3><span>@</span>{{ currentUser?.username }}</h3>
   <i class="fas fa-bell icon" (click)="showNotificationModal()">
-    <div *ngIf="currentUser?.notifications.length > 0">
-      <span>{{ currentUser?.notifications.length }}</span>
-    </div>
+    <span *ngIf="currentUser?.notifications.length > 0">{{
+      currentUser?.notifications.length
+    }}</span>
     <p class="tooltip show-bottom">Notifications</p>
   </i>
   <i class="confetti-icon icon">
