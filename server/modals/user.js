@@ -48,6 +48,13 @@ const UserSchema = new mongo.Schema({
       },
     },
   ],
+  notifications: [
+    {
+      type: { type: String },
+      ID: { type: mongo.Types.ObjectId },
+      from: { type: String },
+    },
+  ],
 });
 
 var User = mongo.model("User", UserSchema);

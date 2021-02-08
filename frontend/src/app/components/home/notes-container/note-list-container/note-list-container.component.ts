@@ -110,7 +110,10 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
 
   openShareModal(): void {
     this.showShareModal = true;
-    this.socketService.emit('getAllUsers', '');
+
+    if (!this.userService.getAllUsers()) {
+      this.socketService.emit('getAllUsers', '');
+    }
   }
 
   onModalClicked(event: Event): void {
@@ -118,7 +121,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.showShareModal = false;
+    this.cancelShare();
   }
 
   onShareUserChange(): void {
@@ -139,13 +142,24 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const foundUser = this.userService
+    const foundUser: DbUsers[] = this.userService
       .getAllUsers()
       .filter((user) => user.username.toLowerCase() === this.shareUserText);
 
     this.shareService.sharedUsers.push(foundUser[0]);
     this.shareUserText = '';
     this.hasFoundUser = false;
+  }
+
+  sendNoteNotification(): void {
+    this.shareService.shareNote(this.currentNote);
+  }
+
+  cancelShare(): void {
+    this.hasFoundUser = false;
+    this.showShareModal = false;
+    this.shareUserText = '';
+    this.shareService.sharedUsers = [];
   }
 
   private hideKeyboard(noteTextarea: HTMLTextAreaElement): void {

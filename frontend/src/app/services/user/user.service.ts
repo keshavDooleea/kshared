@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { DbUsers, User } from 'src/app/classes/user';
+import { DbUsers, Notification, User } from 'src/app/classes/user';
 
 @Injectable({
   providedIn: 'root',
@@ -37,6 +37,11 @@ export class UserService {
 
   setCurrentText(newText: string): void {
     this.currentUser.user.currentText = newText;
+  }
+
+  setNotifications(notif: Notification[]) {
+    this.currentUser.user.notifications = notif;
+    this.behaviorSubject.next(this.currentUser);
   }
 
   setDbUsers(users: DbUsers[]): void {

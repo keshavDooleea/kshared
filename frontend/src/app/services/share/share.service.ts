@@ -15,7 +15,17 @@ export class ShareService {
   }
 
   shareNote(note: Note): void {
-    console.log(note);
+    if (!note || this.sharedUsers.length === 0) {
+      return;
+    }
+
+    const data = {
+      token: this.currentUser.getToken(),
+      noteID: note._id,
+      users: this.sharedUsers,
+    };
+
+    this.socket.emit('sendNoteNotifications', data);
   }
 
   removeShareUser(index: number): void {

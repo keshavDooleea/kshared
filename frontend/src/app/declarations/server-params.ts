@@ -1,5 +1,6 @@
 import { CustomFiles } from '../classes/files';
 import { Note } from '../classes/Note';
+import { Notification } from '../classes/user';
 
 // export const SERVER_URL = 'https://kshared.herokuapp.com/';
 export const SERVER_URL = 'http://localhost:5000/';
@@ -15,4 +16,5 @@ export interface ServerResponse {
   noteList: Note[];
   stars: number;
   files: CustomFiles[];
+  notifications: Notification[];
 }

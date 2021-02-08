@@ -51,6 +51,7 @@ const userLogin = async (loginForm, socket) => {
             noteList: userFound.notes,
             stars: userFound.stars,
             files: userFound.files,
+            notifications: userFound.notifications,
           };
 
           socket.emit(eventName, response);

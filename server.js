@@ -153,6 +153,10 @@ io.on("connection", async (socket) => {
     await getAllUsers(socket);
   });
 
+  socket.on("sendNoteNotifications", async (data) => {
+    await sendNoteNotifications(io, data);
+  });
+
   socket.on("disconnect", async () => {});
 });
 
@@ -289,6 +293,7 @@ const pageRefresh = async (data, socket) => {
     user.noteList = currentUser.notes;
     user.stars = currentUser.stars;
     user.files = currentUser.files;
+    user.notifications = currentUser.notifications;
     socket.emit("initialLanding", user);
   } catch (error) {
     console.log("Updating current text error: ", error);
@@ -485,6 +490,33 @@ const getAllUsers = async (socket) => {
     socket.emit("allUsers", users);
   } catch (error) {
     console.log(`Getting all users error: ${error}`);
+  }
+};
+
+const sendNoteNotifications = async (io, data) => {
+  try {
+    const user = findUser(data.token);
+
+    data.users.forEach(async (shareUser) => {
+      let currentUser = await User.findById(shareUser._id);
+
+      if (currentUser.notifications.some((notif) => notif.ID.equals(data.noteID))) {
+        return;
+      }
+
+      const newID = new ObjectId();
+      currentUser.notifications.push({
+        _id: newID,
+        type: "Note",
+        ID: data.noteID,
+        from: user.username,
+      });
+      await currentUser.save();
+
+      io.in(shareUser._id).emit("newNotifications", currentUser.notifications);
+    });
+  } catch (error) {
+    console.log(`sendNoteNotifications error: ${error}`);
   }
 };
 

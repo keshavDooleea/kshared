@@ -44,6 +44,29 @@ i {
   }
 }
 
+.fa-bell {
+  position: relative;
+
+  div {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    top: -5px;
+    left: -5px;
+    background-color: styles.$invalidColor;
+    @include styles.displayFlex(row, center, center);
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.55);
+
+    span {
+      font-size: 10px;
+      margin-bottom: 1px;
+      font-weight: bolder;
+      color: white;
+    }
+  }
+}
+
 .hamburger {
   z-index: 2;
   height: 3vh;

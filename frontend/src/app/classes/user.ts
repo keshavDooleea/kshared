@@ -1,5 +1,13 @@
+import { ObjectId } from 'mongoose';
 import { CustomFiles } from './files';
 import { Note } from './Note';
+
+export interface Notification {
+  _id: ObjectId;
+  type: string;
+  ID: ObjectId;
+  from: string;
+}
 
 export interface CurrentUser {
   username: string;
@@ -10,6 +18,7 @@ export interface CurrentUser {
   noteList?: Note[];
   stars?: number;
   files?: CustomFiles[];
+  notifications: Notification[];
 }
 
 export interface DbUsers {

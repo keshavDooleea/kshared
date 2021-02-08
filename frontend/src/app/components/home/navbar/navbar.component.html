@@ -9,6 +9,12 @@
 </div>
 <div class="navbar-item">
   <h3><span>@</span>{{ currentUser?.username }}</h3>
+  <i class="fas fa-bell icon">
+    <div *ngIf="currentUser?.notifications.length > 0">
+      <span>{{ currentUser?.notifications.length }}</span>
+    </div>
+    <p class="tooltip show-bottom">Notifications</p>
+  </i>
   <i class="confetti-icon icon">
     <p class="tooltip show-bottom">Confettis</p>
     <app-confetti-icon></app-confetti-icon>

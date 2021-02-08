@@ -137,7 +137,11 @@
             (ngModelChange)="onShareUserChange()"
             (keyup.enter)="addShareUser()"
           />
-          <i class="fas fa-user-plus icon" (click)="addShareUser()">
+          <i
+            class="fas fa-user-plus"
+            [ngClass]="hasFoundUser ? 'icon' : 'disable-icon '"
+            (click)="addShareUser()"
+          >
             <p class="tooltip">Add User</p>
           </i>
         </div>
@@ -164,10 +168,10 @@
       </div>
     </div>
     <div class="share-actions">
-      <button class="btn">
+      <button class="btn" (click)="cancelShare()">
         <h4>Cancel</h4>
       </button>
-      <button class="btn">
+      <button class="btn" (click)="sendNoteNotification()">
         <h4>Share</h4>
       </button>
     </div>

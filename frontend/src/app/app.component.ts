@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
-import { User } from './classes/user';
+import { Notification, User } from './classes/user';
 import { LocalStorageService } from './services/local-storage/local-storage.service';
 import { UserService } from './services/user/user.service';
 import { ResizeService } from './services/window-resize/resize.service';
@@ -50,6 +50,14 @@ export class AppComponent implements OnInit, OnDestroy {
           const user = new User(data);
           this.userService.setUser(user);
         })
+      );
+
+      this.subscriptions.push(
+        this.socketService
+          .listen('newNotifications')
+          .subscribe((data: Notification[]) => {
+            this.userService.setNotifications(data);
+          })
       );
     }
 

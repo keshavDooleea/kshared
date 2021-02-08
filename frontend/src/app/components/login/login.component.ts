@@ -194,6 +194,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         noteList: data.noteList,
         stars: data.stars,
         files: data.files,
+        notifications: data.notifications,
       };
       const user = new User(currentUser);
       this.userService.setUser(user);
