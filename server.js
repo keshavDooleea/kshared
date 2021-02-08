@@ -161,6 +161,10 @@ io.on("connection", async (socket) => {
     await removeNotification(io, data, socket);
   });
 
+  socket.on("acceptNotification", async (data) => {
+    await acceptNotification(io, data, socket);
+  });
+
   socket.on("disconnect", async () => {});
 });
 
@@ -504,7 +508,7 @@ const sendNoteNotifications = async (io, data) => {
     data.users.forEach(async (shareUser) => {
       let currentUser = await User.findById(shareUser._id);
 
-      if (currentUser.notifications.some((notif) => notif.ID.equals(data.refID))) {
+      if (currentUser.notifications.some((notif) => notif.refID.equals(data.refID))) {
         return;
       }
 
@@ -541,6 +545,45 @@ const removeNotification = async (io, data, socket) => {
     io.in(user.id).emit("newNotifications", currentUser.notifications);
   } catch (error) {
     console.log(`removeNotification error: ${error}`);
+  }
+};
+
+const acceptNotification = async (io, data, socket) => {
+  try {
+    const user = findUser(data.token);
+    socket.join(user.id);
+    let currentUser = await User.findById(user.id);
+
+    // get note from sender
+    const sender = await User.find({ username: data.from }, { _id: 1 });
+
+    if (data.type === "Note") {
+      // search for notif item in sender db
+      const dbSender = await User.findById({ _id: sender[0]._id });
+      dbSender.notes.forEach((note) => {
+        // found current note
+        if (note._id.equals(data.refID)) {
+          currentUser.notes.push(note);
+        }
+      });
+
+      currentUser.notes.sort((a, b) => {
+        return new Date(b.date) - new Date(a.date);
+      });
+    }
+
+    // remove item from notif
+    currentUser.notifications.forEach((notif, index) => {
+      if (notif._id.equals(data.notifID)) {
+        currentUser.notifications.splice(index, 1);
+      }
+    });
+
+    await currentUser.save();
+    io.in(user.id).emit("newNotifications", currentUser.notifications);
+    io.in(user.id).emit("getNotes", currentUser.notes);
+  } catch (error) {
+    console.log(`acceptNotification error: ${error}`);
   }
 };
 

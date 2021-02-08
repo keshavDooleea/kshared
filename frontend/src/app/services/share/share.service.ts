@@ -39,6 +39,18 @@ export class ShareService {
     this.socket.emit('removeNotification', data);
   }
 
+  acceptNotification(notification: Notification): void {
+    const data = {
+      token: this.currentUser.getToken(),
+      from: notification.from,
+      type: notification.type,
+      refID: notification.refID,
+      notifID: notification._id,
+    };
+
+    this.socket.emit('acceptNotification', data);
+  }
+
   removeShareUser(index: number): void {
     this.sharedUsers.splice(index, 1);
   }

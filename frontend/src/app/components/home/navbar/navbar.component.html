@@ -59,7 +59,10 @@
             <span>{{ notification.from }}</span>
           </p>
         </div>
-        <i class="fas fa-check-circle icon"></i>
+        <i
+          class="fas fa-check-circle icon"
+          (click)="acceptNotification(notification)"
+        ></i>
         <i
           class="fas fa-trash icon"
           (click)="removeNotification(notification)"

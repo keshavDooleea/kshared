@@ -73,6 +73,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.shareService.removeNotification(notif);
   }
 
+  acceptNotification(notif: Notification): void {
+    this.shareService.acceptNotification(notif);
+  }
+
   onModalClicked(event: Event): void {
     // click only parent, not children
     if (event.target !== event.currentTarget) {
