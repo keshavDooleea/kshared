@@ -160,6 +160,7 @@ i {
 
       .fa-check-circle:hover {
         color: styles.$validColor;
+        filter: brightness(70%);
       }
 
       .fa-trash:hover {
