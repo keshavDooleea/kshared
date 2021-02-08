@@ -22,6 +22,7 @@ export class ShareService {
     const data = {
       token: this.currentUser.getToken(),
       noteID: note._id,
+      name: note.text,
       users: this.sharedUsers,
     };
 

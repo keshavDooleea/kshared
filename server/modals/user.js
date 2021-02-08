@@ -52,6 +52,7 @@ const UserSchema = new mongo.Schema({
     {
       type: { type: String },
       ID: { type: mongo.Types.ObjectId },
+      name: { type: String },
       from: { type: String },
     },
   ],

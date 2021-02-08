@@ -22,6 +22,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   @Input() showNav: boolean;
   currentUser: CurrentUser;
   shouldShowGuide: boolean;
+  shouldShowNotifModal: boolean;
   private subscription: Subscription;
 
   constructor(
@@ -62,6 +63,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.shouldShowGuide = !this.shouldShowGuide;
   }
 
+  showNotificationModal(): void {
+    this.shouldShowNotifModal = true;
+  }
+
   onModalClicked(event: Event): void {
     // click only parent, not children
     if (event.target !== event.currentTarget) {
@@ -69,5 +74,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     }
 
     this.shouldShowGuide = false;
+    this.shouldShowNotifModal = false;
   }
 }

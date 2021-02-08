@@ -509,6 +509,7 @@ const sendNoteNotifications = async (io, data) => {
         _id: newID,
         type: "Note",
         ID: data.noteID,
+        name: data.name,
         from: user.username,
       });
       await currentUser.save();

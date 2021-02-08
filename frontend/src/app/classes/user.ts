@@ -6,6 +6,7 @@ export interface Notification {
   _id: ObjectId;
   type: string;
   ID: ObjectId;
+  name: string;
   from: string;
 }
 

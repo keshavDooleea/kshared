@@ -9,7 +9,7 @@
 </div>
 <div class="navbar-item">
   <h3><span>@</span>{{ currentUser?.username }}</h3>
-  <i class="fas fa-bell icon">
+  <i class="fas fa-bell icon" (click)="showNotificationModal()">
     <div *ngIf="currentUser?.notifications.length > 0">
       <span>{{ currentUser?.notifications.length }}</span>
     </div>
@@ -37,4 +37,31 @@
   [ngClass]="shouldShowGuide ? 'show-modal' : 'hide-modal'"
 >
   <app-guide (closeModalEmitter)="toggleGuideModal()"></app-guide>
+</div>
+
+<div
+  class="modal"
+  (click)="onModalClicked($event)"
+  [ngClass]="shouldShowNotifModal ? 'show-modal' : 'hide-modal'"
+>
+  <div class="modal-body notif-modal">
+    <h3>{{ currentUser?.notifications.length }} new notifications</h3>
+    <div class="notif-container">
+      <div
+        class="notif-item"
+        *ngFor="let notification of currentUser?.notifications; index as index"
+      >
+        <i class="fas fa-sticky-note"></i>
+        <div>
+          <p class="notif-name">{{ notification.name }}</p>
+          <p class="notif-sender">
+            <span>From: </span>
+            <span>{{ notification.from }}</span>
+          </p>
+        </div>
+        <i class="fas fa-check-circle icon"></i>
+        <i class="fas fa-trash icon"></i>
+      </div>
+    </div>
+  </div>
 </div>
