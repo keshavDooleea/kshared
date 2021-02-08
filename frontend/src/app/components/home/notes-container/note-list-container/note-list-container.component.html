@@ -67,7 +67,10 @@
         </span>
       </div>
       <div class="inner-header-actions">
-        <i class="fas fa-share icon" *ngIf="openTextAreaValue"
+        <i
+          class="fas fa-share icon"
+          *ngIf="openTextAreaValue"
+          (click)="openShareModal()"
           ><p class="tooltip">Share your note</p></i
         >
         <i
@@ -106,3 +109,67 @@
     <p>Add a new note by pressing on the Plus sign at top right</p>
   </div>
 </ng-template>
+
+<div
+  class="modal"
+  (click)="onModalClicked($event)"
+  [ngClass]="showShareModal ? 'show-modal' : 'hide-modal'"
+>
+  <div class="modal-body share-modal-body">
+    <div class="share-details">
+      <div class="share-iconn">
+        <i class="fas fa-sticky-note"></i>
+      </div>
+      <div class="share-info">
+        <p>{{ currentNote?.text }}</p>
+        <p>{{ currentNote?.date | date: "d MMM YYYY" }}</p>
+      </div>
+    </div>
+    <div class="shared-main">
+      <div class="share-search">
+        <div class="search-input">
+          <input
+            type="text"
+            placeholder="Search for user"
+            spellcheck="false"
+            autocomplete="off"
+            [(ngModel)]="shareUserText"
+            (ngModelChange)="onShareUserChange()"
+            (keyup.enter)="addShareUser()"
+          />
+          <i class="fas fa-user-plus icon" (click)="addShareUser()">
+            <p class="tooltip">Add User</p>
+          </i>
+        </div>
+        <p class="search-error" *ngIf="!hasFoundUser">No user found</p>
+        <p class="search-found" *ngIf="hasFoundUser">User found</p>
+      </div>
+      <div class="selected-users">
+        <p *ngIf="getAddedShareUsers().length === 0; else showUsers">
+          No users added..
+        </p>
+        <ng-template #showUsers>
+          <div
+            class="shared-lists"
+            *ngFor="let user of shareService.sharedUsers; index as index"
+          >
+            <i class="fas fa-user"></i>
+            <p>{{ user.username }}</p>
+            <i
+              class="fas fa-times-circle icon"
+              (click)="shareService.removeShareUser(index)"
+            ></i>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <div class="share-actions">
+      <button class="btn">
+        <h4>Cancel</h4>
+      </button>
+      <button class="btn">
+        <h4>Share</h4>
+      </button>
+    </div>
+  </div>
+</div>

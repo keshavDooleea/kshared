@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { User } from 'src/app/classes/user';
+import { DbUsers, User } from 'src/app/classes/user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
+  private dbUsers: DbUsers[];
   private currentUser: User;
   private behaviorSubject: BehaviorSubject<User>;
 
@@ -22,6 +23,10 @@ export class UserService {
     return this.currentUser;
   }
 
+  getAllUsers(): DbUsers[] {
+    return this.dbUsers;
+  }
+
   getUserObservable(): Observable<User> {
     return this.behaviorSubject.asObservable();
   }
@@ -32,5 +37,19 @@ export class UserService {
 
   setCurrentText(newText: string): void {
     this.currentUser.user.currentText = newText;
+  }
+
+  setDbUsers(users: DbUsers[]): void {
+    // remove own username
+    users.forEach((user, index) => {
+      if (
+        user.username.toLowerCase() ===
+        this.currentUser.user.username.toLowerCase()
+      ) {
+        users.splice(index, 1);
+      }
+    });
+
+    this.dbUsers = users;
   }
 }

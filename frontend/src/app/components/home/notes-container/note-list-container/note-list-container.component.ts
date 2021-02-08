@@ -1,7 +1,9 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Note } from 'src/app/classes/Note';
+import { DbUsers } from 'src/app/classes/user';
 import { NotesService } from 'src/app/services/notes/notes.service';
+import { ShareService } from 'src/app/services/share/share.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
@@ -16,7 +18,10 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   private subscriptions: Subscription[] = [];
   noteList: Note[];
   filterText: string;
+  shareUserText: string;
   isNoteOpened: boolean;
+  showShareModal: boolean;
+  hasFoundUser: boolean;
   openTextAreaValue: string;
   currentNote: Note;
   readonly textareaPlaceholder =
@@ -26,17 +31,23 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     private noteService: NotesService,
     private socketService: SocketService,
     private userService: UserService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private shareService: ShareService
   ) {}
 
   ngOnInit(): void {
     this.subscribeToSocket();
     this.subscribeToUser();
     this.subscribeToParentFilter();
+    this.getAddedShareUsers();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  getAddedShareUsers(): DbUsers[] {
+    return this.shareService.sharedUsers;
   }
 
   clearFilter(): void {
@@ -97,6 +108,46 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.hideKeyboard(noteTextarea);
   }
 
+  openShareModal(): void {
+    this.showShareModal = true;
+    this.socketService.emit('getAllUsers', '');
+  }
+
+  onModalClicked(event: Event): void {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    this.showShareModal = false;
+  }
+
+  onShareUserChange(): void {
+    this.hasFoundUser = this.userService
+      .getAllUsers()
+      .some(
+        (user) =>
+          user.username.toLowerCase() === this.shareUserText.toLowerCase()
+      );
+  }
+
+  addShareUser(): void {
+    const userExists = this.shareService.sharedUsers.some(
+      (user) => user.username.toLowerCase() === this.shareUserText
+    );
+
+    if (!this.hasFoundUser || userExists) {
+      return;
+    }
+
+    const foundUser = this.userService
+      .getAllUsers()
+      .filter((user) => user.username.toLowerCase() === this.shareUserText);
+
+    this.shareService.sharedUsers.push(foundUser[0]);
+    this.shareUserText = '';
+    this.hasFoundUser = false;
+  }
+
   private hideKeyboard(noteTextarea: HTMLTextAreaElement): void {
     noteTextarea.setAttribute('readonly', 'readonly');
     noteTextarea.setAttribute('disabled', 'true');
@@ -130,6 +181,12 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
         // this.elementRef.nativeElement
         //   .querySelector('.open-note-textarea')
         //   .focus();
+      })
+    );
+
+    this.subscriptions.push(
+      this.socketService.listen('allUsers').subscribe((users: DbUsers[]) => {
+        this.userService.setDbUsers(users);
       })
     );
   }

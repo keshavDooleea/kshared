@@ -19,6 +19,9 @@ export class FileBindingDirective {
     const input = this.elementRef.nativeElement.querySelector(
       '.filter-container input'
     );
+    const shareInput = this.elementRef.nativeElement.querySelector(
+      '.share-search input'
+    );
     const textarea = this.elementRef.nativeElement.querySelector(
       '.text-container textarea'
     );
@@ -29,7 +32,8 @@ export class FileBindingDirective {
     if (
       event.target === textarea ||
       event.target === input ||
-      event.target === openTextarea
+      event.target === openTextarea ||
+      event.target === shareInput
     ) {
       return;
     }

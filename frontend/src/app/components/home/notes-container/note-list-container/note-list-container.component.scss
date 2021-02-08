@@ -199,6 +199,147 @@
   }
 }
 
+.share-modal-body {
+  @include styles.displayFlex(column, center, space-around);
+
+  & > div {
+    width: 98%;
+    border-radius: styles.$smallBorderRadius;
+  }
+
+  .share-details {
+    height: 15%;
+    padding: 0 8px;
+    background-color: #1f2024;
+    @include styles.displayFlex(row, center, space-between);
+
+    .share-iconn {
+      width: 10%;
+      height: 90%;
+      margin-right: 8px;
+      @include styles.displayFlex(column, center, center);
+
+      i {
+        font-size: 37px;
+        color: styles.$itemNormal;
+      }
+    }
+
+    .share-info {
+      flex: 1;
+      height: 90%;
+      overflow: hidden;
+      @include styles.displayFlex(column, flex-start, center);
+
+      p:nth-child(2) {
+        color: #72767d;
+      }
+      p:nth-child(1) {
+        color: white;
+      }
+    }
+  }
+
+  .shared-main {
+    height: 70%;
+    padding: 8px;
+    background-color: #1f2024;
+    border-radius: styles.$smallBorderRadius;
+    @include styles.displayFlex(column, center, space-between);
+
+    .share-search {
+      width: 100%;
+      height: 22%;
+      @include styles.displayFlex(column, center, center);
+
+      .search-input {
+        width: 100%;
+        height: 90%;
+        background-color: #40444b;
+        border-radius: styles.$smallBorderRadius;
+        @include styles.displayFlex(row, center, center);
+
+        input {
+          flex: 1;
+          height: 100%;
+          border-radius: styles.$smallBorderRadius 0 0 styles.$smallBorderRadius;
+        }
+
+        i {
+          width: 10%;
+          height: 100%;
+          margin: 0 5px;
+          @include styles.displayFlex(row, center, flex-end);
+        }
+      }
+
+      .search-error {
+        width: 100%;
+        margin-top: 4px;
+        color: styles.$invalidColor;
+      }
+
+      .search-found {
+        width: 100%;
+        margin-top: 4px;
+        color: styles.$validColor;
+      }
+    }
+
+    .selected-users {
+      width: 100%;
+      height: 70%;
+      overflow-y: auto;
+      position: relative;
+
+      & > p {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+      }
+    }
+
+    .shared-lists {
+      width: 100%;
+      height: 35px;
+      background-color: styles.$containers;
+      margin-bottom: 10px;
+      border-radius: styles.$smallBorderRadius;
+      @include styles.displayFlex(row, center, center);
+
+      .fa-user {
+        margin: 0 15px 0 8px;
+        color: styles.$itemNormal;
+      }
+
+      p {
+        flex: 1;
+        color: white;
+      }
+
+      .fa-times-circle {
+        margin: 8px;
+      }
+    }
+  }
+
+  .share-actions {
+    height: 10%;
+    @include styles.displayFlex(row, center, flex-end);
+
+    button {
+      margin-left: 20px;
+      padding: 6px 10px;
+
+      &:nth-child(2) {
+        background-color: styles.$btnColor;
+      }
+    }
+  }
+}
+
 @media all and (max-width: 780px) {
   .date {
     left: -7px !important;

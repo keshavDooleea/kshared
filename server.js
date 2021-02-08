@@ -149,6 +149,10 @@ io.on("connection", async (socket) => {
     await getDashboardData(socket);
   });
 
+  socket.on("getAllUsers", async () => {
+    await getAllUsers(socket);
+  });
+
   socket.on("disconnect", async () => {});
 });
 
@@ -472,6 +476,15 @@ const clearFiles = async (data, io) => {
     io.in(user.id).emit("clearedFiles");
   } catch (error) {
     console.log(`Clearing files error: ${error}`);
+  }
+};
+
+const getAllUsers = async (socket) => {
+  try {
+    const users = await User.find({}, { username: 1, _id: 1 });
+    socket.emit("allUsers", users);
+  } catch (error) {
+    console.log(`Getting all users error: ${error}`);
   }
 };
 

@@ -12,6 +12,11 @@ export interface CurrentUser {
   files?: CustomFiles[];
 }
 
+export interface DbUsers {
+  username: string;
+  _id: string;
+}
+
 export class User {
   private currentUser: CurrentUser;
 
