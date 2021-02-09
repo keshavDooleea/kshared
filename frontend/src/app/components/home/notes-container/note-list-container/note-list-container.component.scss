@@ -259,12 +259,12 @@
 
     .share-search {
       width: 100%;
-      height: 22%;
-      @include styles.displayFlex(column, center, center);
+      height: 16%;
+      @include styles.displayFlex(column, center, space-between);
 
       .search-input {
         width: 100%;
-        height: 90%;
+        height: 85%;
         background-color: #40444b;
         border-radius: styles.$smallBorderRadius;
         @include styles.displayFlex(row, center, center);
@@ -283,41 +283,54 @@
         }
       }
 
-      .search-error {
+      .search-input-msg {
         width: 100%;
-        margin-top: 4px;
-        color: styles.$invalidColor;
-      }
+        height: 8%;
 
-      .search-found {
-        width: 100%;
-        margin-top: 4px;
-        color: styles.$validColor;
+        .search-error {
+          width: 100%;
+          color: styles.$invalidColor;
+        }
+
+        .search-found {
+          width: 100%;
+          color: styles.$validColor;
+
+          small {
+            margin: auto 0 0 4px;
+            color: styles.$fadeText;
+          }
+        }
       }
     }
 
     .selected-users {
       width: 100%;
-      height: 70%;
+      height: 74%;
       overflow-y: auto;
       position: relative;
+      background-color: styles.$containers;
+      border-radius: styles.$smallBorderRadius;
 
-      & > p {
+      & > h3 {
         position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        color: styles.$fadeText;
+        white-space: nowrap;
+        color: white;
+        letter-spacing: 1.5px;
       }
     }
 
     .shared-lists {
-      width: 100%;
+      width: 98%;
       height: 35px;
-      background-color: styles.$containers;
-      margin-bottom: 10px;
+      background-color: #1f2024;
+      margin: 10px auto 0 auto;
       border-radius: styles.$smallBorderRadius;
       @include styles.displayFlex(row, center, center);
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
 
       .fa-user {
         margin: 0 15px 0 8px;

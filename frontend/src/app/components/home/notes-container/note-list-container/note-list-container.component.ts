@@ -136,12 +136,18 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
       );
   }
 
-  addShareUser(): void {
-    const userExists = this.shareService.sharedUsers.some(
+  getSharedUsersLength(): number {
+    return this.shareService.sharedUsers.length;
+  }
+
+  checkIfShareUserExists(): boolean {
+    return this.shareService.sharedUsers.some(
       (user) => user.username.toLowerCase() === this.shareUserText
     );
+  }
 
-    if (!this.hasFoundUser || userExists) {
+  addShareUser(): void {
+    if (!this.hasFoundUser || this.checkIfShareUserExists()) {
       return;
     }
 

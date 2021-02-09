@@ -49,8 +49,8 @@ i {
 
   span {
     position: absolute;
-    top: -0px;
-    left: -0px;
+    top: 0;
+    left: -1px;
     @include styles.displayFlex(row, center, center);
     font-size: 10px;
     font-weight: bolder;

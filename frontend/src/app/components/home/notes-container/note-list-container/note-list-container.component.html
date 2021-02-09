@@ -141,19 +141,54 @@
           />
           <i
             class="fas fa-user-plus"
-            [ngClass]="hasFoundUser ? 'icon' : 'disable-icon '"
+            [ngClass]="
+              hasFoundUser && !checkIfShareUserExists()
+                ? 'icon'
+                : 'disable-icon '
+            "
             (click)="addShareUser()"
           >
             <p class="tooltip">Add User</p>
           </i>
         </div>
-        <p class="search-error" *ngIf="!hasFoundUser">No user found</p>
-        <p class="search-found" *ngIf="hasFoundUser">User found</p>
+
+        <div class="search-input-msg">
+          <p
+            class="search-error"
+            [style.display]="
+              shareUserText?.length > 0 && !hasFoundUser ? 'flex' : 'none'
+            "
+          >
+            No user found!
+          </p>
+          <p
+            class="search-error"
+            [style.display]="checkIfShareUserExists() ? 'flex' : 'none'"
+          >
+            User already added!
+          </p>
+          <p
+            class="search-found"
+            [style.display]="
+              shareUserText?.length > 0 &&
+              hasFoundUser &&
+              !checkIfShareUserExists()
+                ? 'flex'
+                : 'none'
+            "
+          >
+            User found
+            <small
+              >Press Enter or click <i class="fas fa-user-plus"></i> to
+              select</small
+            >
+          </p>
+        </div>
       </div>
       <div class="selected-users">
-        <p *ngIf="getAddedShareUsers().length === 0; else showUsers">
-          No users added..
-        </p>
+        <h3 *ngIf="getAddedShareUsers().length === 0; else showUsers">
+          No users added.. 😕
+        </h3>
         <ng-template #showUsers>
           <div
             class="shared-lists"
@@ -173,7 +208,11 @@
       <button class="btn" (click)="cancelShare()">
         <h4>Cancel</h4>
       </button>
-      <button class="btn" (click)="sendNoteNotification()">
+      <button
+        class="btn"
+        (click)="sendNoteNotification()"
+        [ngClass]="getSharedUsersLength() === 0 ? 'disable-btn' : ''"
+      >
         <h4>Share</h4>
       </button>
     </div>
