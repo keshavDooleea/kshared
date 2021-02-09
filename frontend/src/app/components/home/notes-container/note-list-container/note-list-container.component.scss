@@ -201,11 +201,38 @@
 
 .share-modal-body {
   padding: 4px;
+  position: relative;
   @include styles.displayFlex(column, center, space-around);
 
   & > div {
     width: 98%;
     border-radius: styles.$smallBorderRadius;
+  }
+
+  .close-modal {
+    right: 8px !important;
+  }
+
+  .notif-sent-msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    @include styles.displayFlex(column, center, center);
+
+    i {
+      margin: 8px 0;
+      font-size: 25px;
+      color: styles.$validColor;
+    }
+
+    h3 {
+      margin: 8px 0;
+      color: white;
+      font-weight: bolder;
+      letter-spacing: 1.2px;
+    }
   }
 
   .share-details {

@@ -22,6 +22,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   isNoteOpened: boolean;
   showShareModal: boolean;
   hasFoundUser: boolean;
+  notificationSent: boolean;
   openTextAreaValue: string;
   currentNote: Note;
   readonly textareaPlaceholder =
@@ -162,11 +163,13 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
 
   sendNoteNotification(): void {
     this.shareService.shareNote(this.currentNote);
+    this.notificationSent = true;
   }
 
   cancelShare(): void {
     this.hasFoundUser = false;
     this.showShareModal = false;
+    this.notificationSent = false;
     this.shareUserText = '';
     this.shareService.sharedUsers = [];
   }

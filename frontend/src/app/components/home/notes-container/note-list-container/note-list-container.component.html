@@ -115,7 +115,10 @@
   (click)="onModalClicked($event)"
   [ngClass]="showShareModal ? 'show-modal' : 'hide-modal'"
 >
-  <div class="modal-body share-modal-body">
+  <div
+    class="modal-body share-modal-body"
+    *ngIf="!notificationSent; else showNotifSent"
+  >
     <div class="share-details">
       <div class="share-iconn">
         <i class="fas fa-sticky-note"></i>
@@ -217,4 +220,17 @@
       </button>
     </div>
   </div>
+
+  <ng-template #showNotifSent>
+    <div class="modal-body share-modal-body">
+      <i
+        class="fas fa-times-circle icon close-modal"
+        (click)="onModalClicked($event)"
+      ></i>
+      <div class="notif-sent-msg">
+        <i class="far fa-check-circle"></i>
+        <h3>Notifications sent</h3>
+      </div>
+    </div>
+  </ng-template>
 </div>
