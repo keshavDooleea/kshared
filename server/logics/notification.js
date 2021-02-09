@@ -55,13 +55,15 @@ const removeNotification = async (io, data, socket) => {
 
     currentUser.notifications.forEach((notif, index) => {
       if (notif._id.equals(data.notifID)) {
+        if (notif.type === "Note") {
+          io.in(user.id).emit("getNotes", currentUser.notes);
+        }
         currentUser.notifications.splice(index, 1);
       }
     });
     await currentUser.save();
 
     io.in(user.id).emit("newNotifications", currentUser.notifications);
-    io.in(user.id).emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log(`removeNotification error: ${error}`);
   }
