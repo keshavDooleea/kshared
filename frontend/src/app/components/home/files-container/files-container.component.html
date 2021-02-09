@@ -58,7 +58,10 @@
         class="fas fa-lock icon lock-icon is-lock"
         [style.display]="file.isLocked ? 'block' : 'none'"
       ></i>
-      <i class="fas fa-share sharee-icon icon"></i>
+      <i
+        class="fas fa-share sharee-icon icon"
+        (click)="openNotifModal(file)"
+      ></i>
       <i
         (click)="toggleLock(i)"
         class="fas fa-lock-open icon lock-icon"
@@ -86,4 +89,16 @@
   <ng-template #showEmptyFile>
     <div class="empty-container" [innerHTML]="emptyContainerText"></div>
   </ng-template>
+</div>
+
+<div
+  class="modal"
+  (click)="onModalClicked($event)"
+  [ngClass]="shouldShowNotifModal ? 'show-modal' : 'hide-modal'"
+>
+  <app-share
+    #shareModal
+    [currentItem]="currentFile"
+    (showShareModal)="closeShareModal()"
+  ></app-share>
 </div>

@@ -252,21 +252,6 @@
           font-size: 145px;
           transition: 0.3s color;
         }
-
-        .other-icon {
-          position: relative;
-
-          &::after {
-            content: "?";
-            color: #2f3136;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -35%) scale(1.2, 1.1);
-            font-size: 90px;
-            font-family: "Barlow Condensed", sans-serif;
-          }
-        }
       }
 
       .details-container {

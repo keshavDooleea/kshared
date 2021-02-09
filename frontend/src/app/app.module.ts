@@ -21,6 +21,7 @@ import { StarsComponent } from './components/stars/stars.component';
 import { SafeUrlPipe } from './custom-pipe/safe-url.pipe';
 import { FileBindingDirective } from './directives/file-binding.directive';
 import { FileDropDirective } from './directives/file-drop.directive';
+import { ShareComponent } from './components/share/share.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { FileDropDirective } from './directives/file-drop.directive';
     FileDropDirective,
     PlaystoreIconComponent,
     AppstoreIconComponent,
+    ShareComponent,
   ],
   imports: [
     BrowserModule,

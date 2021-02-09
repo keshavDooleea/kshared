@@ -5,7 +5,7 @@ export interface CustomFiles {
   amazonName?: string;
   amazonURL?: string;
   isLocked: boolean;
-  innerHtml: string;
+  innerHTML: string;
   base64?: string;
   isMongoFile: boolean;
 }

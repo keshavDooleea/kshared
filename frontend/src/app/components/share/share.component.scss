@@ -1,0 +1,197 @@
+@use "../../../styles.scss" as styles;
+
+.share-modal-body {
+  padding: 4px;
+  position: relative;
+  @include styles.displayFlex(column, center, space-around);
+
+  & > div {
+    width: 98%;
+    border-radius: styles.$smallBorderRadius;
+  }
+
+  .close-modal {
+    right: 8px !important;
+  }
+
+  .notif-sent-msg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    @include styles.displayFlex(column, center, center);
+
+    i {
+      margin: 8px 0;
+      font-size: 25px;
+      color: styles.$validColor;
+    }
+
+    h3 {
+      margin: 8px 0;
+      color: white;
+      font-weight: bolder;
+      letter-spacing: 1.2px;
+    }
+  }
+
+  .current-icon {
+    font-size: 37px;
+    color: styles.$itemNormal;
+  }
+
+  .share-details {
+    height: 15%;
+    padding: 0 8px;
+    background-color: #1f2024;
+    @include styles.displayFlex(row, center, space-between);
+
+    .share-iconn {
+      width: 10%;
+      height: 90%;
+      margin-right: 8px;
+      @include styles.displayFlex(column, center, center);
+    }
+
+    .share-info {
+      flex: 1;
+      height: 90%;
+      overflow: hidden;
+      @include styles.displayFlex(column, flex-start, center);
+
+      div {
+        width: 100%;
+        overflow: hidden;
+
+        p {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          color: white;
+        }
+      }
+
+      & > p {
+        color: #72767d;
+      }
+    }
+  }
+
+  .shared-main {
+    height: 70%;
+    padding: 8px;
+    background-color: #1f2024;
+    border-radius: styles.$smallBorderRadius;
+    @include styles.displayFlex(column, center, space-between);
+
+    .share-search {
+      width: 100%;
+      height: 16%;
+      @include styles.displayFlex(column, center, space-between);
+
+      .search-input {
+        width: 100%;
+        height: 85%;
+        background-color: #40444b;
+        border-radius: styles.$smallBorderRadius;
+        @include styles.displayFlex(row, center, center);
+
+        input {
+          flex: 1;
+          height: 100%;
+          border-radius: styles.$smallBorderRadius 0 0 styles.$smallBorderRadius;
+        }
+
+        i {
+          width: 10%;
+          height: 100%;
+          margin: 0 5px;
+          @include styles.displayFlex(row, center, flex-end);
+        }
+      }
+
+      .search-input-msg {
+        width: 100%;
+        height: 8%;
+
+        .search-error {
+          width: 100%;
+          color: styles.$invalidColor;
+        }
+
+        .search-found {
+          width: 100%;
+          color: styles.$validColor;
+
+          small {
+            margin: auto 0 0 4px;
+            color: styles.$fadeText;
+          }
+        }
+      }
+    }
+
+    .selected-users {
+      width: 100%;
+      height: 74%;
+      overflow-y: auto;
+      position: relative;
+      background-color: styles.$containers;
+      border-radius: styles.$smallBorderRadius;
+
+      & > h3 {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        white-space: nowrap;
+        color: white;
+        letter-spacing: 1.5px;
+      }
+    }
+
+    .shared-lists {
+      width: 98%;
+      height: 35px;
+      background-color: #1f2024;
+      margin: 10px auto 0 auto;
+      border-radius: styles.$smallBorderRadius;
+      @include styles.displayFlex(row, center, center);
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.08);
+
+      .fa-user {
+        margin: 0 15px 0 8px;
+        color: styles.$itemNormal;
+      }
+
+      p {
+        flex: 1;
+        color: white;
+      }
+
+      .fa-times-circle {
+        margin: 8px;
+      }
+    }
+  }
+
+  .share-actions {
+    height: 10%;
+    @include styles.displayFlex(row, center, flex-end);
+
+    button {
+      margin-left: 20px;
+      color: white;
+      padding: 10px 15px;
+
+      h4 {
+        letter-spacing: 1px;
+      }
+
+      &:nth-child(2) {
+        background-color: styles.$btnColor;
+      }
+    }
+  }
+}

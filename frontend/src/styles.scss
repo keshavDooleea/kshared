@@ -111,6 +111,32 @@ body {
   cursor: initial;
 }
 
+.current-icon {
+  font-size: 32px;
+  color: $itemNormal;
+  cursor: initial;
+  position: relative;
+
+  &:hover {
+    color: $itemNormal;
+  }
+}
+
+.other-icon {
+  position: relative;
+
+  &::after {
+    content: "?";
+    color: #2f3136;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -35%) scale(1.2, 1.1);
+    font-size: 50%;
+    font-family: "Barlow Condensed", sans-serif;
+  }
+}
+
 input {
   border: none;
   outline: none;

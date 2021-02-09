@@ -1,9 +1,15 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
 import { Note } from 'src/app/classes/Note';
 import { DbUsers } from 'src/app/classes/user';
 import { NotesService } from 'src/app/services/notes/notes.service';
-import { ShareService } from 'src/app/services/share/share.service';
 import { UserService } from 'src/app/services/user/user.service';
 import { SocketService } from 'src/app/services/web-socket/socket.service';
 
@@ -13,16 +19,14 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./note-list-container.component.scss'],
 })
 export class NoteListContainerComponent implements OnInit, OnDestroy {
+  @ViewChild('shareModal') shareModal;
   @Input() shouldClearFilter: Subject<boolean>;
 
   private subscriptions: Subscription[] = [];
   noteList: Note[];
   filterText: string;
-  shareUserText: string;
   isNoteOpened: boolean;
   showShareModal: boolean;
-  hasFoundUser: boolean;
-  notificationSent: boolean;
   openTextAreaValue: string;
   currentNote: Note;
   readonly textareaPlaceholder =
@@ -32,23 +36,17 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     private noteService: NotesService,
     private socketService: SocketService,
     private userService: UserService,
-    private elementRef: ElementRef,
-    private shareService: ShareService
+    private elementRef: ElementRef
   ) {}
 
   ngOnInit(): void {
     this.subscribeToSocket();
     this.subscribeToUser();
     this.subscribeToParentFilter();
-    this.getAddedShareUsers();
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
-  }
-
-  getAddedShareUsers(): DbUsers[] {
-    return this.shareService.sharedUsers;
   }
 
   clearFilter(): void {
@@ -120,58 +118,17 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     }
   }
 
+  closeShareModal(): void {
+    this.showShareModal = false;
+  }
+
   onModalClicked(event: Event): void {
     if (event.target !== event.currentTarget) {
       return;
     }
 
-    this.cancelShare();
-  }
-
-  onShareUserChange(): void {
-    this.hasFoundUser = this.userService
-      .getAllUsers()
-      .some(
-        (user) =>
-          user.username.toLowerCase() === this.shareUserText.toLowerCase()
-      );
-  }
-
-  getSharedUsersLength(): number {
-    return this.shareService.sharedUsers.length;
-  }
-
-  checkIfShareUserExists(): boolean {
-    return this.shareService.sharedUsers.some(
-      (user) => user.username.toLowerCase() === this.shareUserText
-    );
-  }
-
-  addShareUser(): void {
-    if (!this.hasFoundUser || this.checkIfShareUserExists()) {
-      return;
-    }
-
-    const foundUser: DbUsers[] = this.userService
-      .getAllUsers()
-      .filter((user) => user.username.toLowerCase() === this.shareUserText);
-
-    this.shareService.sharedUsers.push(foundUser[0]);
-    this.shareUserText = '';
-    this.hasFoundUser = false;
-  }
-
-  sendNoteNotification(): void {
-    this.shareService.shareNote(this.currentNote);
-    this.notificationSent = true;
-  }
-
-  cancelShare(): void {
-    this.hasFoundUser = false;
     this.showShareModal = false;
-    this.notificationSent = false;
-    this.shareUserText = '';
-    this.shareService.sharedUsers = [];
+    this.shareModal.cancelShare();
   }
 
   private hideKeyboard(noteTextarea: HTMLTextAreaElement): void {

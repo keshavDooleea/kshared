@@ -22,13 +22,16 @@ import { ResizeService } from 'src/app/services/window-resize/resize.service';
 export class FilesContainerComponent implements OnInit, OnDestroy {
   emptyContainerText: string;
   files: CustomFiles[];
+  currentFile: CustomFiles;
   spinners: number[] = [];
   shouldStayFixed: boolean;
   shouldShowExistMsg: boolean;
+  shouldShowNotifModal: boolean;
   private subscriptions: Subscription[] = [];
 
   @ViewChild('fileContainer') fileContainer: ElementRef;
   @ViewChild('fileInput') fileInput: ElementRef;
+  @ViewChild('shareModal') shareModal;
 
   constructor(
     private fileService: FilesService,
@@ -97,6 +100,29 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     };
 
     this.socketService.emit('getSignedUrl', data);
+  }
+
+  onModalClicked(event: Event): void {
+    // click only parent, not children
+    if (event.target !== event.currentTarget) {
+      return;
+    }
+
+    this.shouldShowNotifModal = false;
+    this.shareModal.cancelShare();
+  }
+
+  closeShareModal(): void {
+    this.shouldShowNotifModal = false;
+  }
+
+  openNotifModal(file: CustomFiles): void {
+    this.shouldShowNotifModal = true;
+    this.currentFile = file;
+
+    if (!this.userService.getAllUsers()) {
+      this.socketService.emit('getAllUsers', '');
+    }
   }
 
   private showDuplicateMsg(): void {
