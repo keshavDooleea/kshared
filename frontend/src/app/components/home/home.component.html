@@ -131,6 +131,9 @@
         </div>
       </div>
       <div class="email-action" [ngClass]="emailClass">
+        <button class="btn" (click)="toggleFeedbackModal()">
+          <h4>Cancel</h4>
+        </button>
         <button
           class="btn send-email-btn"
           type="submit"
@@ -138,9 +141,6 @@
           [ngClass]="emailForm.invalid ? 'disable-btn' : 'enable-btn pop-btn'"
         >
           <h4>Send Email</h4>
-        </button>
-        <button class="btn" (click)="toggleFeedbackModal()">
-          <h4>Cancel</h4>
         </button>
 
         <img src="assets/loading_gif.gif" alt="loading_gif" class="spinner" />

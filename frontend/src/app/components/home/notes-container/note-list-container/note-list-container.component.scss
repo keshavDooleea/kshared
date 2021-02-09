@@ -381,7 +381,12 @@
 
     button {
       margin-left: 20px;
-      padding: 6px 10px;
+      color: white;
+      padding: 10px 15px;
+
+      h4 {
+        letter-spacing: 1px;
+      }
 
       &:nth-child(2) {
         background-color: styles.$btnColor;
