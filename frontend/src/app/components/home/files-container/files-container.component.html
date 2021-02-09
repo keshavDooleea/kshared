@@ -58,13 +58,13 @@
         class="fas fa-lock icon lock-icon is-lock"
         [style.display]="file.isLocked ? 'block' : 'none'"
       ></i>
+      <i class="fas fa-share sharee-icon icon"></i>
       <i
         (click)="toggleLock(i)"
         class="fas fa-lock-open icon lock-icon"
         [style.display]="!file.isLocked ? 'block' : 'none'"
       ></i>
       <small class="file-size">{{ fileService.formatBytes(file.size) }}</small>
-      <!-- <small class="date">{{ file.date | date: "mediumDate" }}</small> -->
       <a
         #downloadTag
         (click)="downloadFile(file, i)"

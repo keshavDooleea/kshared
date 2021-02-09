@@ -158,6 +158,13 @@
           }
         }
 
+        .sharee-icon {
+          bottom: 8px;
+          left: 8px;
+          opacity: 0.5;
+          pointer-events: auto;
+        }
+
         .file-size {
           opacity: 1;
           top: 50%;
@@ -185,6 +192,15 @@
         transition: 0.4s right, 0.4s bottom, 0.3s opacity;
         pointer-events: none;
         transform: scaleX(-1);
+      }
+
+      .sharee-icon {
+        position: absolute;
+        bottom: -8px;
+        left: -8px;
+        opacity: 0;
+        transition: 0.4s left, 0.4s bottom, 0.3s opacity;
+        pointer-events: none;
       }
 
       .locked-text {
