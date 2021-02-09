@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { CurrentUser, Notification, User } from 'src/app/classes/user';
+import { FilesService } from 'src/app/services/files/files.service';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { ShareService } from 'src/app/services/share/share.service';
 import { UserService } from 'src/app/services/user/user.service';
@@ -30,7 +31,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private localStorage: LocalStorageService,
     private userService: UserService,
     private socketService: SocketService,
-    private shareService: ShareService
+    private shareService: ShareService,
+    private fileService: FilesService
   ) {}
 
   ngOnInit(): void {
@@ -68,6 +70,18 @@ export class NavbarComponent implements OnInit, OnDestroy {
   getNotificationTitle(): string {
     let title = `${this.currentUser.notifications.length} notification`;
     return this.currentUser.notifications.length > 1 ? title + 's' : title;
+  }
+
+  getNotificationIcon(notif: Notification): string {
+    if (notif.innerHTML) {
+      const newIcon =
+        notif.innerHTML.slice(0, 10) +
+        'current-icon ' +
+        notif.innerHTML.slice(10);
+      return newIcon;
+    } else {
+      return `<i class="fas fa-sticky-note current-icon"></i>`;
+    }
   }
 
   showNotificationModal(): void {

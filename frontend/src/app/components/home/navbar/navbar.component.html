@@ -63,12 +63,20 @@
             index as index
           "
         >
-          <i class="fas fa-sticky-note"></i>
+          <span [innerHtml]="getNotificationIcon(notification)"></span>
+
           <div>
             <p class="notif-name">{{ notification.name }}</p>
             <p class="notif-sender">
               <span>From: </span>
               <span>{{ notification.from }}</span>
+              <span
+                *ngIf="notification.type === 'File'"
+                [ngStyle]="{ 'margin-left': '10px' }"
+              >
+                <span>Size: </span>
+                <span>{{ fileService.formatBytes(notification.size) }}</span>
+              </span>
             </p>
           </div>
           <i

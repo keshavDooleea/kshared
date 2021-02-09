@@ -8,7 +8,7 @@ const sendEmail = require("./server/logics/email");
 const getDashboardData = require("./server/logics/dashboard");
 const findUser = require("./server/logics/jwt-user");
 const User = require("./server/modals/user").User;
-const { sendNoteNotifications, removeNotification, acceptNotification } = require("./server/logics/notification");
+const { sendNotifications, removeNotification, acceptNotification } = require("./server/logics/notification");
 
 const formidableMiddleware = require("express-formidable");
 const bodyParser = require("body-parser");
@@ -154,8 +154,8 @@ io.on("connection", async (socket) => {
     await getAllUsers(socket);
   });
 
-  socket.on("sendNoteNotifications", async (data) => {
-    await sendNoteNotifications(io, data);
+  socket.on("sendNotifications", async (data) => {
+    await sendNotifications(io, data);
   });
 
   socket.on("removeNotification", async (data) => {

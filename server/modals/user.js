@@ -54,6 +54,8 @@ const UserSchema = new mongo.Schema({
       refID: { type: mongo.Types.ObjectId },
       name: { type: String },
       from: { type: String },
+      size: { type: Number },
+      innerHTML: { type: String },
     },
   ],
 });

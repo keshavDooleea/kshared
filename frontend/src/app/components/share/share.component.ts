@@ -91,9 +91,8 @@ export class ShareComponent implements OnInit {
 
   sendNotification(): void {
     if ('size' in this.currentItem) {
-      // file
+      this.shareService.shareFile(this.currentItem as CustomFiles);
     } else {
-      // note
       this.shareService.shareNote(this.currentItem as Note);
     }
     this.notificationSent = true;

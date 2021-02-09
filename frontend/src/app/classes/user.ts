@@ -8,6 +8,8 @@ export interface Notification {
   refID: ObjectId;
   name: string;
   from: string;
+  size?: number;
+  innerHTML?: string;
 }
 
 export interface CurrentUser {

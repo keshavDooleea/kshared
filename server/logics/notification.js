@@ -3,32 +3,47 @@ const User = require("../modals/user").User;
 const mongo = require("mongoose");
 const ObjectId = mongo.Types.ObjectId;
 
-const sendNoteNotifications = async (io, data) => {
-  try {
-    const user = findUser(data.token);
+const saveNotification = async (type, currentUser, data) => {
+  const user = findUser(data.token);
 
+  const newNotification = {
+    _id: new ObjectId(),
+    type,
+    refID: data.refID,
+    name: data.name,
+    from: user.username,
+  };
+
+  if (type === "File") {
+    newNotification.size = data.size;
+    newNotification.innerHTML = data.innerHTML;
+  }
+
+  currentUser.notifications.push(newNotification);
+  await currentUser.save();
+};
+
+const sendNotifications = async (io, data) => {
+  try {
     data.users.forEach(async (shareUser) => {
       let currentUser = await User.findById(shareUser._id);
 
+      // prevent sending duplicate
       if (currentUser.notifications.some((notif) => notif.refID.equals(data.refID))) {
         return;
       }
 
-      const newID = new ObjectId();
-      currentUser.notifications.push({
-        _id: newID,
-        type: "Note",
-        refID: data.refID,
-        name: data.name,
-        from: user.username,
-      });
-      await currentUser.save();
+      if (data.isNote) {
+        saveNotification("Note", currentUser, data);
+        io.in(shareUser._id).emit("getNotes", currentUser.notes);
+      } else {
+        saveNotification("File", currentUser, data);
+      }
 
       io.in(shareUser._id).emit("newNotifications", currentUser.notifications);
-      io.in(shareUser._id).emit("getNotes", currentUser.notes);
     });
   } catch (error) {
-    console.log(`sendNoteNotifications error: ${error}`);
+    console.log(`sendNotifications error: ${error}`);
   }
 };
 
@@ -98,4 +113,4 @@ const acceptNotification = async (io, data, socket) => {
   }
 };
 
-module.exports = { sendNoteNotifications, removeNotification, acceptNotification };
+module.exports = { sendNotifications, removeNotification, acceptNotification };

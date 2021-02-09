@@ -148,13 +148,15 @@ i {
       margin-top: 10px;
       height: 50px;
       width: 100%;
+      padding-right: 10px;
       background-color: #1f2024;
       border-radius: styles.$smallBorderRadius;
       @include styles.displayFlex(row, center, center);
 
-      i {
-        margin: 0 10px;
+      & > span {
+        width: 50px;
         color: styles.$itemNormal;
+        @include styles.displayFlex(row, center, center);
       }
 
       .fa-check-circle:hover {

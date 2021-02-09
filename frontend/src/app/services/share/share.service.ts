@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CustomFiles } from 'src/app/classes/files';
 import { Note } from 'src/app/classes/Note';
 import { DbUsers, Notification } from 'src/app/classes/user';
 import { UserService } from '../user/user.service';
@@ -23,10 +24,29 @@ export class ShareService {
       token: this.currentUser.getToken(),
       refID: note._id,
       name: note.text,
+      isNote: true,
       users: this.sharedUsers,
     };
 
-    this.socket.emit('sendNoteNotifications', data);
+    this.socket.emit('sendNotifications', data);
+  }
+
+  shareFile(file: CustomFiles): void {
+    if (!file || this.sharedUsers.length === 0) {
+      return;
+    }
+
+    const data = {
+      token: this.currentUser.getToken(),
+      refID: file._id,
+      name: file.name,
+      size: file.size,
+      innerHTML: file.innerHTML,
+      isNote: false,
+      users: this.sharedUsers,
+    };
+
+    this.socket.emit('sendNotifications', data);
   }
 
   removeNotification(notification: Notification): void {
