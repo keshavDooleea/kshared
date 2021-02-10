@@ -41,7 +41,7 @@ export class UserService {
 
   setNotifications(notif: Notification[]) {
     this.currentUser.user.notifications = notif;
-    this.behaviorSubject.next(this.currentUser);
+    // this.behaviorSubject.next(this.currentUser);
   }
 
   setDbUsers(users: DbUsers[]): void {

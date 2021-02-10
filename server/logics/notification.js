@@ -34,10 +34,10 @@ const sendNotifications = async (io, data) => {
       }
 
       if (data.isNote) {
-        saveNotification("Note", currentUser, data);
+        await saveNotification("Note", currentUser, data);
         io.in(shareUser._id).emit("getNotes", currentUser.notes);
       } else {
-        saveNotification("File", currentUser, data);
+        await saveNotification("File", currentUser, data);
       }
 
       io.in(shareUser._id).emit("newNotifications", currentUser.notifications);
@@ -77,14 +77,12 @@ const acceptNotification = async (io, data, socket) => {
 
     // get note from sender
     const sender = await User.find({ username: data.from }, { _id: 1 });
+    const dbSender = await User.findById({ _id: sender[0]._id });
 
     if (data.type === "Note") {
-      // search for notif item in sender db
-      const dbSender = await User.findById({ _id: sender[0]._id });
-
       // check if note already exsists
-      if (currentUser.notes.some((note) => note._id.equals(data.refID))) {
-        removeNotification(io, data, socket);
+      if (currentUser.notes.some((curNote) => curNote._id.equals(data.refID))) {
+        await removeNotification(io, data, socket);
         return;
       }
 
@@ -98,6 +96,21 @@ const acceptNotification = async (io, data, socket) => {
       currentUser.notes.sort((a, b) => {
         return new Date(b.date) - new Date(a.date);
       });
+
+      io.in(user.id).emit("getNotes", currentUser.notes);
+    } else {
+      if (currentUser.files.some((file) => file._id.equals(data.refID))) {
+        await removeNotification(io, data, socket);
+        return;
+      }
+
+      dbSender.files.forEach((file) => {
+        // found current note
+        if (file._id.equals(data.refID)) {
+          currentUser.files.push(file);
+          io.in(user.id).emit("uploadedFile", file);
+        }
+      });
     }
 
     // remove item from notif
@@ -109,7 +122,6 @@ const acceptNotification = async (io, data, socket) => {
 
     await currentUser.save();
     io.in(user.id).emit("newNotifications", currentUser.notifications);
-    io.in(user.id).emit("getNotes", currentUser.notes);
   } catch (error) {
     console.log(`acceptNotification error: ${error}`);
   }
