@@ -5,7 +5,7 @@ const eventName = "registrationResponse";
 const errorMessage = "Sorry, an error has occured!";
 
 const registerUser = async (registerForm, socket) => {
-  await User.findOne({ username: registerForm.username }, async (err, user) => {
+  await User.findOne({ username: { $regex: `^${registerForm.username}$`, $options: "i" } }, async (err, user) => {
     if (err) {
       console.log("Register User DB ERROR: ", err);
       socket.emit(eventName, wrapResponse(500, errorMessage));
