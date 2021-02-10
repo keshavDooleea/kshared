@@ -76,7 +76,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.shouldClearFilter.next(true);
     this.openTextAreaValue = note.text;
 
-    setTimeout(() => this.focusTextarea(), 50);
+    // setTimeout(() => this.focusTextarea(), 50);
   }
 
   closeOpenNote(): void {
@@ -142,9 +142,9 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  private focusTextarea(): void {
-    this.elementRef.nativeElement.querySelector('.open-note-textarea').focus();
-  }
+  // private focusTextarea(): void {
+  //   this.elementRef.nativeElement.querySelector('.open-note-textarea').focus();
+  // }
 
   private updateFilteredList(): void {
     this.noteList.forEach((note) => {
@@ -165,7 +165,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.socketService.listen('currentNote').subscribe((data: Note) => {
         this.currentNote = data;
-        this.focusTextarea();
+        // this.focusTextarea();
       })
     );
 
