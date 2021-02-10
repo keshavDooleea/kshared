@@ -154,7 +154,7 @@ i {
       @include styles.displayFlex(row, center, center);
       box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 
-      & > span {
+      .notif-icon {
         width: 50px;
         color: styles.$itemNormal;
         @include styles.displayFlex(row, center, center);
@@ -192,6 +192,12 @@ i {
           &:nth-child(2) {
             color: white;
           }
+        }
+      }
+
+      .notif-actions {
+        img {
+          width: 40px;
         }
       }
     }

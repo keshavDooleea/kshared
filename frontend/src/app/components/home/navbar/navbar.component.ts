@@ -25,6 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentUser: CurrentUser;
   shouldShowGuide: boolean;
   shouldShowNotifModal: boolean;
+  hasClickedNotif: boolean[];
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -40,6 +41,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userService.getUserObservable().subscribe((user: User) => {
         if (user) {
           this.currentUser = user.user;
+          this.hasClickedNotif = new Array(
+            this.currentUser.notifications.length
+          ).fill(false);
         }
       })
     );
@@ -48,6 +52,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
       this.userService
         .getNotifObservable()
         .subscribe((notif: Notification[]) => {
+          this.hasClickedNotif = new Array(notif.length).fill(false);
           this.currentUser.notifications = notif;
         })
     );
@@ -96,12 +101,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.shouldShowNotifModal = true;
   }
 
-  removeNotification(notif: Notification): void {
+  removeNotification(notif: Notification, index: number): void {
     this.shareService.removeNotification(notif);
+    this.hasClickedNotif[index] = true;
   }
 
-  acceptNotification(notif: Notification): void {
+  acceptNotification(notif: Notification, index: number): void {
     this.shareService.acceptNotification(notif);
+    this.hasClickedNotif[index] = true;
   }
 
   onModalClicked(event: Event): void {

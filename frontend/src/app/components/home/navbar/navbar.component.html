@@ -63,7 +63,10 @@
             index as index
           "
         >
-          <span [innerHtml]="getNotificationIcon(notification)"></span>
+          <span
+            class="notif-icon"
+            [innerHtml]="getNotificationIcon(notification)"
+          ></span>
 
           <div>
             <p class="notif-name">{{ notification.name }}</p>
@@ -79,14 +82,23 @@
               </span>
             </p>
           </div>
-          <i
-            class="fas fa-check-circle icon"
-            (click)="acceptNotification(notification)"
-          ></i>
-          <i
-            class="fas fa-trash icon"
-            (click)="removeNotification(notification)"
-          ></i>
+          <span class="notif-actions">
+            <i
+              class="fas fa-check-circle icon"
+              (click)="acceptNotification(notification, index)"
+              *ngIf="!hasClickedNotif[index]"
+            ></i>
+            <i
+              class="fas fa-trash icon"
+              (click)="removeNotification(notification, index)"
+              *ngIf="!hasClickedNotif[index]"
+            ></i>
+            <img
+              src="assets/loading_gif.gif"
+              alt="notif-spinner"
+              *ngIf="hasClickedNotif[index]"
+            />
+          </span>
         </div>
       </div>
     </div>
