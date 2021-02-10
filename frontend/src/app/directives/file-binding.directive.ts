@@ -16,28 +16,16 @@ export class FileBindingDirective {
 
   @HostListener('document:keydown.o', ['$event'])
   onKeyDown(event: KeyboardEvent): void {
-    const input = this.elementRef.nativeElement.querySelector(
-      '.filter-container input'
-    );
-    const shareInput = this.elementRef.nativeElement.querySelector(
-      '.share-search input'
-    );
-    const textarea = this.elementRef.nativeElement.querySelector(
-      '.text-container textarea'
-    );
-    const openTextarea = this.elementRef.nativeElement.querySelector(
-      '.open-note-textarea'
+    const inputs = this.elementRef.nativeElement.querySelectorAll(
+      'input, textarea'
     );
 
-    if (
-      event.target === textarea ||
-      event.target === input ||
-      event.target === openTextarea ||
-      event.target === shareInput
-    ) {
-      return;
+    let isFocusingInput = Array.from(inputs).some(
+      (input) => event.target === input
+    );
+
+    if (!isFocusingInput) {
+      this.alertHomeFile.emit(true);
     }
-
-    this.alertHomeFile.emit(true);
   }
 }
