@@ -25,7 +25,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   currentUser: CurrentUser;
   shouldShowGuide: boolean;
   shouldShowNotifModal: boolean;
-  private subscription: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private localStorage: LocalStorageService,
@@ -36,17 +36,25 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.subscription = this.userService
-      .getUserObservable()
-      .subscribe((user: User) => {
+    this.subscriptions.push(
+      this.userService.getUserObservable().subscribe((user: User) => {
         if (user) {
           this.currentUser = user.user;
         }
-      });
+      })
+    );
+
+    this.subscriptions.push(
+      this.userService
+        .getNotifObservable()
+        .subscribe((notif: Notification[]) => {
+          this.currentUser.notifications = notif;
+        })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
   }
 
   onLogOutClicked(): void {

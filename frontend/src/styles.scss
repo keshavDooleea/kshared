@@ -34,8 +34,8 @@ $selectionColor: #8167a9;
   }
 
   &::selection {
-    color: $selectionColor;
-    background: $containers;
+    color: #000;
+    background: $itemNormal;
   }
 }
 

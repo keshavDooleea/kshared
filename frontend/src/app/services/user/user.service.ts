@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { DbUsers, Notification, User } from 'src/app/classes/user';
 
 @Injectable({
@@ -9,6 +9,7 @@ export class UserService {
   private dbUsers: DbUsers[];
   private currentUser: User;
   private behaviorSubject: BehaviorSubject<User>;
+  private notifSubject = new Subject<Notification[]>();
 
   constructor() {
     this.behaviorSubject = new BehaviorSubject<User>(this.currentUser);
@@ -31,6 +32,10 @@ export class UserService {
     return this.behaviorSubject.asObservable();
   }
 
+  getNotifObservable(): Observable<Notification[]> {
+    return this.notifSubject.asObservable();
+  }
+
   getToken(): string {
     return this.currentUser.user.token;
   }
@@ -40,7 +45,8 @@ export class UserService {
   }
 
   setNotifications(notif: Notification[]) {
-    this.currentUser.user.notifications = notif;
+    this.notifSubject.next(notif);
+    // this.currentUser.user.notifications = notif;
     // this.behaviorSubject.next(this.currentUser);
   }
 
