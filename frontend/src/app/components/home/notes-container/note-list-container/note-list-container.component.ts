@@ -57,8 +57,8 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   onPaste(event: ClipboardEvent): void {
     event.preventDefault();
 
-    let clipboardData = event.clipboardData;
-    this.openTextAreaValue = clipboardData.getData('text');
+    const clipboardData = event.clipboardData;
+    this.openTextAreaValue += clipboardData.getData('text');
     this.onKeyup();
   }
 
