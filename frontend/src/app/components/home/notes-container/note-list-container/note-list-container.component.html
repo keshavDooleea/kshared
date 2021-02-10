@@ -92,6 +92,7 @@
         class="open-note-textarea"
         [(ngModel)]="openTextAreaValue"
         (keyup)="onKeyup()"
+        (paste)="onPaste($event)"
         spellcheck="false"
         placeholder="{{ textareaPlaceholder }}"
       ></textarea>
