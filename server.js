@@ -290,12 +290,14 @@ const pageRefresh = async (data, socket) => {
   try {
     let currentUser = await User.findById(user.id);
 
-    currentUser.notes.forEach((note, index) => {
-      if (note.text === "") {
-        currentUser.notes.splice(index, 1);
-      }
-    });
-    await currentUser.save();
+    if (currentUser) {
+      currentUser.notes.forEach((note, index) => {
+        if (note.text === "") {
+          currentUser.notes.splice(index, 1);
+        }
+      });
+      await currentUser.save();
+    }
 
     // update user details
     user.currentText = currentUser.currentText;
