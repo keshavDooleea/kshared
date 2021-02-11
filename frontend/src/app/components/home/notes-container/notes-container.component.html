@@ -19,12 +19,35 @@
         <p class="tooltip">Copy text</p>
       </i>
       <i
+        class="fas fa-question-circle icon"
+        (click)="toggleQuestionContainer()"
+      >
+        <p class="tooltip">What's this?</p>
+      </i>
+      <i
         class="fas fa-times-circle clear-icon"
         (click)="clearTextarea()"
         [ngClass]="textareaValue ? 'icon' : 'disable-icon'"
       >
         <p class="tooltip move-left">Clear text</p>
       </i>
+    </div>
+    <div
+      class="question-container"
+      [ngClass]="
+        toggleQuestion ? 'show-question-container' : 'hide-question-container'
+      "
+    >
+      <div class="question-header">
+        <i class="fas fa-times-circle" (click)="toggleQuestionContainer()"></i>
+      </div>
+      <div class="question-body">
+        <p>
+          Text is here for quick text transfer! Copy links, texts, codes and
+          more rapidly from one place to another. Your text is saved & stays
+          here all the time!
+        </p>
+      </div>
     </div>
   </div>
 </div>

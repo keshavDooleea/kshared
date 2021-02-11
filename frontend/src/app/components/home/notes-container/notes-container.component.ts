@@ -16,6 +16,7 @@ import { SocketService } from 'src/app/services/web-socket/socket.service';
   styleUrls: ['./notes-container.component.scss'],
 })
 export class NotesContainerComponent implements OnInit, OnDestroy {
+  toggleQuestion: boolean;
   textareaValue: string;
   shouldClearFilter: Subject<boolean>;
   private subscriptions: Subscription[] = [];
@@ -39,6 +40,10 @@ export class NotesContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  toggleQuestionContainer(): void {
+    this.toggleQuestion = !this.toggleQuestion;
   }
 
   onKeyup(): void {
