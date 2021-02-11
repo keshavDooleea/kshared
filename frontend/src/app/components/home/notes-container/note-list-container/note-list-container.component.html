@@ -125,6 +125,12 @@
 <!-- when there is no note -->
 <ng-template #emptyList>
   <div class="empty-list">
+    <i
+      class="fas fa-question-circle info-icon icon"
+      (click)="toggleQuestionContainer()"
+    >
+      <p class="tooltip">What's note?</p>
+    </i>
     <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
       <p class="tooltip">New note</p>
     </i>

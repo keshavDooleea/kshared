@@ -289,7 +289,6 @@ const pageRefresh = async (data, socket) => {
 
   try {
     let currentUser = await User.findById(user.id);
-    console.log("CUURRRR: ", currentUser);
 
     if (currentUser === null) {
       onLogOut(data, socket);
@@ -311,7 +310,7 @@ const pageRefresh = async (data, socket) => {
     user.notifications = currentUser.notifications;
     socket.emit("initialLanding", user);
   } catch (error) {
-    console.log("Updating current text error: ", error);
+    console.log("Page refresh error: ", error);
   }
 };
 
