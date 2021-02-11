@@ -275,7 +275,7 @@ textarea {
   background-color: $itemNormal;
   border-radius: $borderRadius;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
-  transition: 0.3s clip-path;
+  transition: 0.45s clip-path;
   @include displayFlex(column, center, center);
   z-index: 20;
 
@@ -287,7 +287,7 @@ textarea {
   &.show-question-container {
     pointer-events: all;
     user-select: auto;
-    clip-path: circle(70% at 50% 50%);
+    clip-path: circle(100% at 50% 50%);
   }
 
   i {
