@@ -72,6 +72,7 @@ export class AppComponent implements OnInit, OnDestroy {
   private onLogOut(): void {
     this.subscriptions.push(
       this.socketService.listen('appLogOut').subscribe(() => {
+        this.localStorage.clearToken();
         this.router.navigateByUrl('/login');
       })
     );
