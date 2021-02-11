@@ -27,6 +27,7 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
   filterText: string;
   isNoteOpened: boolean;
   showShareModal: boolean;
+  toggleQuestion: boolean;
   openTextAreaValue: string;
   currentNote: Note;
   readonly textareaPlaceholder =
@@ -47,6 +48,10 @@ export class NoteListContainerComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  }
+
+  toggleQuestionContainer(): void {
+    this.toggleQuestion = !this.toggleQuestion;
   }
 
   clearFilter(): void {

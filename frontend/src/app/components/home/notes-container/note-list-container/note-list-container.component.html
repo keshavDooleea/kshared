@@ -23,7 +23,12 @@
         </div>
       </div>
       <div></div>
-
+      <i
+        class="fas fa-question-circle info-icon icon"
+        (click)="toggleQuestionContainer()"
+      >
+        <p class="tooltip">What's note?</p>
+      </i>
       <i class="fas fa-plus-square icon plus-icon" (click)="addNewNote()">
         <p class="tooltip">New note</p>
       </i>
@@ -53,6 +58,23 @@
         <h4>No such note was found 🤕</h4>
       </div>
     </div>
+  </div>
+</div>
+
+<div
+  class="question-container"
+  [ngClass]="
+    toggleQuestion ? 'show-question-container' : 'hide-question-container'
+  "
+>
+  <div class="question-header">
+    <i class="fas fa-times-circle" (click)="toggleQuestionContainer()"></i>
+  </div>
+  <div class="question-body">
+    <p>
+      Notes allow you to save several texts for future use! These notes are
+      automatically updated and saved! Notes can be shared to other users.
+    </p>
   </div>
 </div>
 

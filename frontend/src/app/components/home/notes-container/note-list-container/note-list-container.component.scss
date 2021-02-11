@@ -2,14 +2,24 @@
 
 :host {
   width: 51%;
+  position: relative;
 }
 
-.plus-icon {
+.plus-icon,
+.info-icon {
   position: absolute;
   top: 7.5%;
   right: 2.5%;
   transform: translateY(-50%);
   font-size: 18px;
+}
+
+.info-icon {
+  margin-right: 31px;
+}
+
+.question-container.hide-question-container {
+  clip-path: circle(0% at calc(97.5% - 34px) 7.5%);
 }
 
 .list-container {
