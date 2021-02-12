@@ -136,6 +136,24 @@
     </i>
     <h4>No notes added yet 🤨</h4>
     <p>Add a new note by pressing on the Plus sign at top right</p>
+
+    <div
+      class="question-container"
+      [ngClass]="
+        toggleQuestion ? 'show-question-container' : 'hide-question-container'
+      "
+    >
+      <div class="question-header">
+        <i class="fas fa-times-circle" (click)="toggleQuestionContainer()"></i>
+      </div>
+      <div class="question-body">
+        <p>
+          Notes allow you to save several texts for future use! These notes are
+          automatically updated and saved as you edit them! Notes can be shared
+          to other users.
+        </p>
+      </div>
+    </div>
   </div>
 </ng-template>
 
