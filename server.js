@@ -214,7 +214,7 @@ const uploadToMongo = async (req, res) => {
 
     res.json("Success");
     io.in(user.id).emit("uploadedFile", newFile);
-  } catch (eror) {
+  } catch (error) {
     console.log(`Uploading to Mongo DB error: ${error}`);
   }
 };
