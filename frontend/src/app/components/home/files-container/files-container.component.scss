@@ -158,11 +158,16 @@
           }
         }
 
-        .sharee-icon {
+        .sharee-icon,
+        .eye-icon {
           bottom: 8px;
           left: 8px;
           opacity: 0.5;
           pointer-events: auto;
+        }
+
+        .eye-icon {
+          bottom: 35px !important;
         }
 
         .file-size {
@@ -194,13 +199,21 @@
         transform: scaleX(-1);
       }
 
-      .sharee-icon {
+      .sharee-icon,
+      .eye-icon {
         position: absolute;
-        bottom: -8px;
         left: -8px;
         opacity: 0;
         transition: 0.4s left, 0.4s bottom, 0.3s opacity;
         pointer-events: none;
+      }
+
+      .sharee-icon {
+        bottom: -8px;
+      }
+
+      .eye-icon {
+        bottom: 8px;
       }
 
       .locked-text {
@@ -299,6 +312,41 @@
   }
 }
 
+.editor-modal {
+  padding: 8px;
+  @include styles.displayFlex(column, center, space-between);
+
+  .editor-header {
+    height: 5%;
+    width: 100%;
+    display: flex;
+
+    p {
+      width: 95%;
+      text-align: center;
+      color: white;
+    }
+
+    div {
+      width: 5%;
+      @include styles.displayFlex(column, flex-end, center);
+    }
+  }
+
+  .editor-view {
+    height: 93%;
+    width: 100%;
+    @include styles.displayFlex(column, center, center);
+
+    & > * {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: styles.$smallBorderRadius;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+    }
+  }
+}
+
 @keyframes move-up-arrow {
   0% {
     bottom: -120%;
@@ -331,11 +379,16 @@
       font-size: 18px;
     }
 
-    .sharee-icon {
+    .sharee-icon,
+    .eye-icon {
       bottom: 8px !important;
       left: 8px !important;
       opacity: 1 !important;
       pointer-events: auto !important;
+    }
+
+    .eye-icon {
+      bottom: 40px !important;
     }
 
     .lock-icon {

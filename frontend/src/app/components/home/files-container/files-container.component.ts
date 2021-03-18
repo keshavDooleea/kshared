@@ -21,12 +21,14 @@ import { ResizeService } from 'src/app/services/window-resize/resize.service';
 })
 export class FilesContainerComponent implements OnInit, OnDestroy {
   emptyContainerText: string;
+  editorInnerHtml: string;
   files: CustomFiles[];
   currentFile: CustomFiles;
   spinners: number[] = [];
   shouldStayFixed: boolean;
   shouldShowExistMsg: boolean;
   shouldShowNotifModal: boolean;
+  shouldShowEditorModal: boolean;
   private subscriptions: Subscription[] = [];
 
   @ViewChild('fileContainer') fileContainer: ElementRef;
@@ -109,6 +111,8 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     }
 
     this.shouldShowNotifModal = false;
+    this.shouldShowEditorModal = false;
+    this.editorInnerHtml = '';
     this.shareModal.cancelShare();
   }
 
@@ -123,6 +127,54 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     if (!this.userService.getAllUsers()) {
       this.socketService.emit('getAllUsers', '');
     }
+  }
+
+  canShowEditor(innerHTML: string): boolean {
+    return innerHTML.includes('video') || innerHTML.includes('image');
+  }
+
+  openEditor(file: CustomFiles, index: number): void {
+    this.shouldShowEditorModal = true;
+
+    // editor header title
+    this.elementRef.nativeElement.querySelector(
+      '.editor-header p'
+    ).textContent = file.name;
+
+    if (file.innerHTML.includes('video')) {
+      if (!file.isMongoFile && !file.amazonURL) {
+        // get signed url which does not exist
+        const data = {
+          index,
+          name: file.name,
+          amazonName: file.amazonName,
+        };
+
+        this.socketService.emit('getSignedUrl', data);
+      } else if (!file.isMongoFile && file.amazonURL) {
+        // signed url exists
+        this.editorInnerHtml = `<video autoplay muted loop>
+        <source src=${file.amazonURL} type="video/mp4" />
+        </video>`;
+      } else {
+        // video is from mongo < 16mb
+        this.editorInnerHtml = `<video autoplay muted loop>
+        <source src=${file.base64} type="video/mp4" />
+        </video>`;
+      }
+
+      return;
+    }
+
+    if (file.innerHTML.includes('image')) {
+      this.editorInnerHtml = `<img src=${file.base64} />`;
+      return;
+    }
+  }
+
+  closeEditor(): void {
+    this.shouldShowEditorModal = false;
+    this.editorInnerHtml = '';
   }
 
   private showDuplicateMsg(): void {
@@ -207,8 +259,16 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
     this.subscriptions.push(
       this.socketService.listen('signedUrl').subscribe((data) => {
         this.files[data.index].amazonURL = data.url;
-        this.anchorTags[data.index].href = data.url;
-        this.anchorTags[data.index].click();
+
+        // editor modal is opened
+        if (this.shouldShowEditorModal) {
+          this.editorInnerHtml = `<video autoplay muted loop>
+                                    <source src=${data.url} type="video/mp4" />
+                                  </video>`;
+        } else {
+          this.anchorTags[data.index].href = data.url;
+          this.anchorTags[data.index].click();
+        }
 
         setTimeout(() => {
           this.anchorTags[data.index].href = '';

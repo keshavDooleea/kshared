@@ -63,6 +63,11 @@
         (click)="openNotifModal(file)"
       ></i>
       <i
+        class="fas fa-eye icon eye-icon"
+        (click)="openEditor(file, i)"
+        *ngIf="canShowEditor(file.innerHTML)"
+      ></i>
+      <i
         (click)="toggleLock(i)"
         class="fas fa-lock-open icon lock-icon"
         [style.display]="!file.isLocked ? 'block' : 'none'"
@@ -101,4 +106,20 @@
     [currentItem]="currentFile"
     (showShareModal)="closeShareModal()"
   ></app-share>
+</div>
+
+<div
+  class="modal"
+  (click)="onModalClicked($event)"
+  [ngClass]="shouldShowEditorModal ? 'show-modal' : 'hide-modal'"
+>
+  <div class="modal-body editor-modal">
+    <div class="editor-header">
+      <p></p>
+      <div>
+        <i class="fas fa-times-circle icon" (click)="closeEditor()"></i>
+      </div>
+    </div>
+    <div class="editor-view" [innerHTML]="editorInnerHtml"></div>
+  </div>
 </div>
