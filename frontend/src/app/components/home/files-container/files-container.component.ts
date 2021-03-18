@@ -29,6 +29,7 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
   shouldShowExistMsg: boolean;
   shouldShowNotifModal: boolean;
   shouldShowEditorModal: boolean;
+  canShowShrink: boolean;
   private subscriptions: Subscription[] = [];
 
   @ViewChild('fileContainer') fileContainer: ElementRef;
@@ -174,7 +175,12 @@ export class FilesContainerComponent implements OnInit, OnDestroy {
 
   closeEditor(): void {
     this.shouldShowEditorModal = false;
+    this.canShowShrink = false;
     this.editorInnerHtml = '';
+  }
+
+  toggleEditorSize(): void {
+    this.canShowShrink = !this.canShowShrink;
   }
 
   private showDuplicateMsg(): void {

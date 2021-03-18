@@ -324,6 +324,10 @@ textarea {
 @media all and (max-width: 825px) {
   .modal-body {
     width: 70vw !important;
+
+    &.editor-modal.enlarge-modal {
+      width: 100vw !important;
+    }
   }
 }
 
@@ -340,6 +344,10 @@ textarea {
 @media all and (max-width: 600px) {
   .modal-body {
     width: 90vw !important;
+
+    &.editor-modal.enlarge-modal {
+      width: 100vw !important;
+    }
   }
 
   .question-container .question-body {

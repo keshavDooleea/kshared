@@ -113,10 +113,23 @@
   (click)="onModalClicked($event)"
   [ngClass]="shouldShowEditorModal ? 'show-modal' : 'hide-modal'"
 >
-  <div class="modal-body editor-modal">
+  <div
+    class="modal-body editor-modal"
+    [ngClass]="canShowShrink ? 'enlarge-modal' : ''"
+  >
     <div class="editor-header">
       <p></p>
       <div>
+        <i
+          *ngIf="!canShowShrink"
+          class="fas fa-expand-arrows-alt icon"
+          (click)="toggleEditorSize()"
+        ></i>
+        <i
+          *ngIf="canShowShrink"
+          class="fas fa-compress-arrows-alt icon"
+          (click)="toggleEditorSize()"
+        ></i>
         <i class="fas fa-times-circle icon" (click)="closeEditor()"></i>
       </div>
     </div>
