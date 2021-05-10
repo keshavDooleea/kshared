@@ -342,6 +342,10 @@ textarea {
 }
 
 @media all and (max-width: 600px) {
+  body {
+    overflow-y: auto;
+  }
+
   .modal-body {
     width: 90vw !important;
 

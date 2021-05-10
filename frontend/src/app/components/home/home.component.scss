@@ -503,7 +503,7 @@ app-notes-container {
 
 @media all and (max-width: 780px) {
   .main-app {
-    min-height: 100vh;
+    height: 125vh;
     justify-content: initial;
     overflow-y: auto;
   }
