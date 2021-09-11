@@ -503,9 +503,12 @@ app-notes-container {
 
 @media all and (max-width: 780px) {
   .main-app {
-    height: 125vh;
     justify-content: initial;
     overflow-y: auto;
+  }
+
+  .home-container.hide-navbar .main-app {
+    min-height: 125vh;
   }
 
   .show-navbar .sidebar {

@@ -148,6 +148,14 @@
   }
 }
 
+@media all and (max-width: 600px) {
+  :host {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+}
+
 @media all and (max-width: 500px) {
   .stars-header {
     width: 65% !important;
